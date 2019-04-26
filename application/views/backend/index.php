@@ -37,10 +37,10 @@
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      <div class="navbar-custom-menu" style="padding: 10px">
-        <a href="?>" class="btn btn-link" style="color: white">Change Password</a>
+      <div class="navbar-custom-menu">
+        <a href="" class="btn btn-link" style="color: white; padding: 15px"><span class="fa fa-key"></span> UBAH PASSWORD</a>
         &nbsp;
-        <a href="?>" class="btn btn-danger">Logout</a>
+        <a href="" class="btn btn-danger" style="padding: 15px; border-radius: 0px;"><span class="fa fa-sign-out"></span> LOGOUT</a>
       </div>
     </nav>
   </header>
@@ -49,17 +49,17 @@
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Halaman Navigasi</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Halaman Jurusan</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Halaman Informasi</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Artikel</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Prestasi</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Galeri Foto</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Links</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Data Alumni</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Kepala Sekolah</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Media Sosial</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>Profil</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN NAVIGASI</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN JURUSAN</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN INFORMASI</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>ARTIKEL</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>PRESTASI</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>GALERI FOTO</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>LINKS</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>DATA ALUMNI</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>KEPALA SEKOLAH</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>MEDIA SOSIAL</span></a></li>
+        <li><a href=""><i class="fa fa-link"></i> <span>PROFIL</span></a></li>
         <!-- <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
@@ -79,7 +79,7 @@
   <div class="content-wrapper">
     <section class="content-header">
       <h1>
-        Title
+      <span class="ion-ios-arrow-right"></span> <?= $title ?>
         <small></small>
       </h1>
     </section>
@@ -89,7 +89,7 @@
         <div class="col-lg-12">
           <div class="box">
             <div class="box-body">
-              <h3>Sample</h3>
+              <?php $this->load->view($content); ?>
             </div>
           </div>
         </div>
