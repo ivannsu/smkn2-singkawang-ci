@@ -4,14 +4,13 @@
     let tableBody = $('#table-body')
     let detail_url = '<?= $detail_url; ?>'
     let edit_url = '<?= $edit_url; ?>'
-    let page = '<?= $page; ?>'
 
     $.ajax({
       url: '<?= $action; ?>',
       type: 'GET',
-      data: {
-        page: page
-      },
+      // data: {
+      //   page: page
+      // },
       success: (res) => {
         if (res.status == 'success') {
           console.log(res)

@@ -24,7 +24,7 @@ class Posts extends CI_Controller {
       'delete_action' => site_url('posts/delete'),
       'detail_url' => site_url('posts/detail/'),
       'edit_url' => site_url('posts/edit/'),
-      'page' => $this->uri->segment(3, 1)
+      // 'page' => $this->uri->segment(3, 1)
     ];
 
     $this->load->view('backend/index', $data);
@@ -104,10 +104,11 @@ class Posts extends CI_Controller {
   public function get_all() {
     if ($this->input->is_ajax_request()) {
       $vars = [];
-      $count = $this->model->count_all($this->table);
-      $limit = 5;
-      $offset = ($this->input->get('page') * $limit) - $limit;
-      $data = $this->m_posts->get_all($limit, $offset);
+      // $count = $this->model->count_all($this->table);
+      // $limit = 5;
+      // $offset = ($this->input->get('page') * $limit) - $limit;
+      // $data = $this->m_posts->get_all($limit, $offset);
+      $data = $this->m_posts->get_all();
 
       if ($data) {
         $vars['message'] = 'Sukses menampilkan data';

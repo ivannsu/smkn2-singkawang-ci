@@ -77,10 +77,12 @@
   </aside>
 
   <div class="content-wrapper">
-    <section class="content-header">
+    <section class="content-header" style="padding: 20px 20px 15px 20px; background-color: #fff; border-bottom: 1px solid #ccc;">
       <h1>
-      <span class="ion-ios-arrow-right"></span> <?= $title ?>
-        <small></small>
+        <?= isset($title) ? $title : ''; ?>
+        <small>
+          <?= isset($sub_title) ? $sub_title : ''; ?>
+        </small>
       </h1>
     </section>
 
