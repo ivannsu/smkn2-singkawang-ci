@@ -66,10 +66,11 @@
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN NAVIGASI</span></a></li>
+        <!-- DASHBOARD -->
+        <li><a href=""><i class="fa fa-dashboard"></i> <span>BERANDA</span></a></li>
         <!-- JURUSAN -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>JURUSAN</span>
+          <a href="#"><i class="fa fa-list"></i> <span>JURUSAN</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -79,10 +80,21 @@
             <li><a href="<?= site_url('jurusan/create'); ?>">TAMBAH BARU</a></li>
           </ul>
         </li>
-        <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN INFORMASI</span></a></li>
+        <!-- INFORMASI -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-edit"></i> <span>INFORMASI</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('information'); ?>">DATA INFORMASI</a></li>
+            <li><a href="<?= site_url('information/create'); ?>">TAMBAH BARU</a></li>
+          </ul>
+        </li>
         <!-- ARTIKEL -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>ARTIKEL</span>
+          <a href="#"><i class="fa fa-edit"></i> <span>ARTIKEL</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -94,7 +106,7 @@
         </li>
         <!-- PRESTASI -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>PRESTASI</span>
+          <a href="#"><i class="fa fa-edit"></i> <span>PRESTASI</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -104,24 +116,59 @@
             <li><a href="<?= site_url('prestasi/create'); ?>">TAMBAH BARU</a></li>
           </ul>
         </li>
-        <li><a href=""><i class="fa fa-link"></i> <span>GALERI FOTO</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>LINKS</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>DATA ALUMNI</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>KEPALA SEKOLAH</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>MEDIA SOSIAL</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>PROFIL</span></a></li>
-        <!-- <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+        <!-- PROFIL -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+          <a href="#"><i class="fa fa-wrench"></i> <span>PROFIL</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li><a href="<?= site_url('profile'); ?>">PROFIL SEKOLAH</a></li>
+            <li><a href="<?= site_url('headmaster'); ?>">PROFIL KEPALA SEKOLAH</a></li>
           </ul>
-        </li> -->
+        </li>
+        <li><a href=""><i class="fa fa-image"></i> <span>GALERI FOTO</span></a></li>
+        <!-- NAVIGASI -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-file-o"></i> <span>NAVIGASI</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('profile'); ?>">SINGLE PAGE</a></li>
+            <li><a href="<?= site_url('headmaster'); ?>">DROP DOWN NAVIGATION</a></li>
+          </ul>
+        </li>
+        <!-- LINKS -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>LINKS</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('prestasi'); ?>">DATA LINKS</a></li>
+            <li><a href="<?= site_url('prestasi/create'); ?>">TAMBAH BARU</a></li>
+          </ul>
+        </li>
+        <!-- DATA INDUK -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-address-book-o"></i> <span>DATA INDUK</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('prestasi'); ?>">DATA ALUMNI</a></li>
+          </ul>
+        </li>
+        <!-- <li><a href=""><i class="fa fa-link"></i> <span>LINKS</span></a></li> -->
+        <!-- <li><a href=""><i class="fa fa-link"></i> <span>DATA ALUMNI</span></a></li> -->
+        <!-- <li><a href=""><i class="fa fa-link"></i> <span>KEPALA SEKOLAH</span></a></li> -->
+        <!-- <li><a href=""><i class="fa fa-link"></i> <span>MEDIA SOSIAL</span></a></li> -->
+        <!-- <li><a href=""><i class="fa fa-link"></i> <span>PROFIL</span></a></li> -->
       </ul>
     </section>
   </aside>
