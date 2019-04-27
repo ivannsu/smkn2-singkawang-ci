@@ -35,8 +35,8 @@ class Prestasi extends CI_Controller {
   public function detail() {
     $data = [
       'title' => 'Detail Prestasi',
-      'action' => site_url('posts/get_by_id/'),
-      'content' => 'posts/detail',
+      'action' => site_url('prestasi/get_by_id/'),
+      'content' => 'prestasi/detail',
       'id' => $this->uri->segment(3)
     ];
 
@@ -82,10 +82,10 @@ class Prestasi extends CI_Controller {
 
   public function edit() {
     $data = [
-      'title' => 'Edit Artikel',
-      'content' => 'posts/edit',
-      'get_action' => site_url('posts/get_by_id/'),
-      'action' => site_url('posts/edit_action'),
+      'title' => 'Edit Prestasi',
+      'content' => 'prestasi/edit',
+      'get_action' => site_url('prestasi/get_by_id/'),
+      'action' => site_url('prestasi/edit_action'),
       'id' => $this->uri->segment(3)
     ];
 
@@ -118,8 +118,8 @@ class Prestasi extends CI_Controller {
       // $count = $this->model->count_all($this->table);
       // $limit = 5;
       // $offset = ($this->input->get('page') * $limit) - $limit;
-      // $data = $this->m_posts->get_all($limit, $offset);
-      $data = $this->m_posts->get_all();
+      // $data = $this->m_prestasi->get_all($limit, $offset);
+      $data = $this->m_prestasi->get_all();
 
       if ($data) {
         $vars['message'] = 'Sukses menampilkan data';
