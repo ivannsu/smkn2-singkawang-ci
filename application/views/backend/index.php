@@ -25,6 +25,9 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+  <script>
+  let BASE_URL = '<?= base_url(); ?>'
+  </script>
   <script src="<?= base_url('assets/js/jquery/jquery-3.3.1.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/adminlte/adminlte.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/datatables/jquery.dataTables.min.js'); ?>"></script>
@@ -64,8 +67,20 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"></li>
         <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN NAVIGASI</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN JURUSAN</span></a></li>
+        <!-- JURUSAN -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>JURUSAN</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('jurusan'); ?>">DATA JURUSAN</a></li>
+            <li><a href="<?= site_url('jurusan/create'); ?>">TAMBAH BARU</a></li>
+          </ul>
+        </li>
         <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN INFORMASI</span></a></li>
+        <!-- ARTIKEL -->
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>ARTIKEL</span>
             <span class="pull-right-container">
@@ -77,6 +92,7 @@
             <li><a href="<?= site_url('posts/create'); ?>">TAMBAH BARU</a></li>
           </ul>
         </li>
+        <!-- PRESTASI -->
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>PRESTASI</span>
             <span class="pull-right-container">

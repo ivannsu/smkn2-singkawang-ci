@@ -3,7 +3,7 @@
   function getData() {
     let id = '<?= $id; ?>'
     let action = '<?= $action; ?>' + id
-    let img_src_url = BASE_URL + 'media_library/prestasi/'
+    let img_src_url = BASE_URL + 'media_library/jurusan/'
 
     $.ajax({
       url: action,
@@ -40,6 +40,6 @@
   <img src="" id="post-img" />
 </div>
 <h3 id="post-title"></h3>
-<small id="post-info"></small>
+<small id="post-info">29 Sep 2019</small>
 <hr>
 <p id="post-content"></p>
