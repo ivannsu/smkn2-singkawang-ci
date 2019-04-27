@@ -45,8 +45,8 @@
         }
       },
       failed: (error) => {
+        console.log(error)
         hideLoader()
-        console.log(error);
       }
     })
   }
@@ -56,6 +56,8 @@
     let userConfirm = confirm('Apa anda yakin untuk menghapus data ini ?')
 
     if (userConfirm) {
+      showLoader()
+
       $.ajax({
         url: '<?= $delete_action; ?>',
         method: 'POST',
@@ -64,12 +66,16 @@
         },
         success: (res) => {
           console.log(res)
-
+ 
           tableBody.html('')
           getData()
+          hideLoader()
+          showToast(res.status, res.message)
         },
         failed: (error) => {
-
+          console.log(error)
+          hideLoader()
+          showToast('failed', error)
         }
       })
     } else {

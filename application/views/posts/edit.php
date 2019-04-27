@@ -1,6 +1,8 @@
 <script>
 
   function getData() {
+    showLoader()
+
     let id = '<?= $id; ?>'
     let get_action = '<?= $get_action; ?>' + id
 
@@ -9,31 +11,41 @@
       method: 'GET',
       success: (res) => {
         $('#title').val(res.row.title)
-        $('#ckeditor-textarea').val(res.row.content)
+        CKEDITOR.instances['ckeditor-textarea'].setData(res.row.content)
+
+        hideLoader()
       },
       failed: (error) => {
-
+        hideLoader()
+        console.log(error)
       }
     })
   }
 
   function submitPost() {
+    showLoader()
+
     let id = '<?= $id; ?>'
-    let data = {
-      id: id,
-      title: $('#title').val(),
-      content: $('#ckeditor-textarea').val(),
-    }
+    let formData = new FormData()
+    formData.append('id', id)
+    formData.append('title', $('#title').val())
+    formData.append('content', CKEDITOR.instances['ckeditor-textarea'].getData())
 
     $.ajax({
       url: '<?= $action; ?>',
       method: 'POST',
-      data: data,
+      data: formData,
+      contentType: false,
+			processData: false,
       success: (res) => {
         console.log(res)
+        hideLoader()
+        showToast(res.status, res.message)
       },
       failed: (error) => {
-
+        console.log(error)
+        hideLoader()
+        showToast('failed', error)
       }
     })
   }

@@ -1,7 +1,7 @@
 <script>
 
   function submitPost() {
-    // showLoader()
+    showLoader()
 
     let formData = new FormData()
     formData.append('title', $('#title').val())
