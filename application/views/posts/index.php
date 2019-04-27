@@ -1,6 +1,8 @@
 <script>
 
   function getData() {
+    showLoader()
+
     let tableBody = $('#table-body')
     let detail_url = '<?= $detail_url; ?>'
     let edit_url = '<?= $edit_url; ?>'
@@ -12,6 +14,8 @@
       //   page: page
       // },
       success: (res) => {
+        hideLoader()
+
         if (res.status == 'success') {
           console.log(res)
 
@@ -41,6 +45,7 @@
         }
       },
       failed: (error) => {
+        hideLoader()
         console.log(error);
       }
     })
@@ -78,10 +83,10 @@
 
 </script>
 
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover" id="datatables-table">
   <thead>
     <tr>
-      <th width="50%">JUDUL</th>
+      <th>JUDUL</th>
       <th>PENULIS</th>
       <th>TANGGAL</th>
       <th></th>

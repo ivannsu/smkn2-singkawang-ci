@@ -9,8 +9,11 @@
   <?= link_tag('assets/css/boostrap/bootstrap.min.css'); ?>
   <?= link_tag('assets/fonts/font-awesome/css/font-awesome.min.css'); ?>
   <?= link_tag('assets/fonts/Ionicons/css/ionicons.min.css'); ?>
+  <?= link_tag('assets/css/datatables/dataTables.bootstrap.min.css'); ?>
+  <?= link_tag('assets/css/toastr/toastr.min.css'); ?>
   <?= link_tag('assets/css/adminlte/AdminLTE.min.css'); ?>
   <?= link_tag('assets/css/adminlte/skin-blue.css'); ?>
+  <?= link_tag('assets/css/backend.css'); ?>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,8 +26,19 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <script src="<?= base_url('assets/js/jquery/jquery-3.3.1.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/adminlte/adminlte.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/datatables/jquery.dataTables.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/datatables/dataTables.bootstrap.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/toastr/toastr.min.js'); ?>"></script>
+  <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+  <script src="<?= base_url('assets/js/backend.js'); ?>"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+
+<!-- SPINNER -->
+<div class="loading-container">
+  <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
 
 <div class="wrapper">
 
@@ -52,7 +66,17 @@
         <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN NAVIGASI</span></a></li>
         <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN JURUSAN</span></a></li>
         <li><a href=""><i class="fa fa-link"></i> <span>HALAMAN INFORMASI</span></a></li>
-        <li><a href=""><i class="fa fa-link"></i> <span>ARTIKEL</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>ARTIKEL</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('posts'); ?>">DATA ARTIKEL</a></li>
+            <li><a href="<?= site_url('posts/create'); ?>">TAMBAH BARU</a></li>
+          </ul>
+        </li>
         <li><a href=""><i class="fa fa-link"></i> <span>PRESTASI</span></a></li>
         <li><a href=""><i class="fa fa-link"></i> <span>GALERI FOTO</span></a></li>
         <li><a href=""><i class="fa fa-link"></i> <span>LINKS</span></a></li>
@@ -108,16 +132,6 @@
 
 </div>
 <!-- ./wrapper -->
-
-<script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
-<script>
-
-// If there is #ckeditor-textarea, Init CK-Editor
-if($('#ckeditor-textarea').length !== 0) {
-  CKEDITOR.replace('ckeditor-textarea');
-}
-
-</script>
 
 </body>
 </html>

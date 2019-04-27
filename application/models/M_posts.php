@@ -11,6 +11,7 @@ class M_posts extends CI_Model {
 
   public function get_all($limit = '18446744073709551615', $offset = '0') {
     return $this->db
+      ->where('type', 'article')
       ->order_by(self::$pk, 'DESC')
       ->limit($limit, $offset)
       ->get(self::$table)

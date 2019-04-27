@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Posts extends CI_Controller {
   private $pk = '';
   private $table = '';
+  private $vars = [];
+  private $tmp = [];
 
   public  function __construct() {
     parent::__construct();
@@ -51,21 +53,30 @@ class Posts extends CI_Controller {
   
   public function create_action() {
     if ($this->input->is_ajax_request()) {
-      $vars = [];
       $data = $this->get_post_data();
 
-      if ($this->model->create($this->table, $data)) {
-        $vars['message'] = 'Data baru berhasil dibuat';
-        $vars['status'] = 'success';
-        
-      } else {
-        $vars['message'] = 'Terjadi kesalahan saat menyimpan data';
-        $vars['status'] = 'failed';
+      $this->tmp['upload_failed'] = FALSE;
+      if (! empty($_FILES['image'])) {
+        $upload = $this->upload_image();
+        if ($upload) {
+          $data['image'] = $upload['file_name'];
+        }
+      }
+
+      if ( ! $this->tmp['upload_failed']) {
+        if ($this->model->create($this->table, $data)) {
+          $this->vars['message'] = 'Data baru berhasil dibuat';
+          $this->vars['status'] = 'success';
+          
+        } else {
+          $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';
+          $this->vars['status'] = 'failed';
+        }
       }
 
       $this->output
         ->set_content_type('application/json')
-        ->set_output(json_encode($vars));
+        ->set_output(json_encode($this->vars));
     }
   }
 
@@ -169,6 +180,69 @@ class Posts extends CI_Controller {
 
   private function get_post_id() {
     return $this->input->post('id', true);
+  }
+
+  private function upload_image() {
+    $config = [
+      'upload_path' => './media_library/posts/',
+      'allowed_types' => 'jpg|png|jpeg|gif',
+      'max_size' => 0,
+      'encrypt_name' => true
+    ];
+    $this->load->library('upload', $config);
+
+    if ( ! $this->upload->do_upload('image')) {
+      $this->vars['status'] = 'failed';
+      $this->vars['message'] = $this->upload->display_errors();
+      $this->tmp['upload_failed'] = TRUE;
+
+      return FALSE;
+    } else {
+      $file = $this->upload->data();
+      $this->resize_image(FCPATH.'media_library/posts', $file['file_name']);
+
+      return $file;
+    }
+  }
+
+  private function resize_image($path, $filename) {
+    $this->load->library('image_lib');
+
+		// Large Image
+		$large['image_library'] = 'gd2';
+		$large['source_image'] = $path .'/'. $filename;
+		$large['new_image'] = './media_library/posts/lg_'. $filename;
+    $large['maintain_ratio'] = false;
+    $large['width'] = 800;
+    $large['height'] = 600;
+		$this->image_lib->initialize($large);
+		$this->image_lib->resize();
+    $this->image_lib->clear();
+    
+    // Medium Image
+		$medium['image_library'] = 'gd2';
+		$medium['source_image'] = $path .'/'. $filename;
+		$medium['new_image'] = './media_library/posts/md_'. $filename;
+    $medium['maintain_ratio'] = false;
+    $medium['width'] = 460;
+    $medium['height'] = 308;
+		$this->image_lib->initialize($medium);
+		$this->image_lib->resize();
+    $this->image_lib->clear();
+    
+    // Small Image
+		$small['image_library'] = 'gd2';
+		$small['source_image'] = $path .'/'. $filename;
+		$small['new_image'] = './media_library/posts/sm_'. $filename;
+    $small['maintain_ratio'] = false;
+    $small['width'] = 200;
+    $small['height'] = 150;
+		$this->image_lib->initialize($small);
+		$this->image_lib->resize();
+    $this->image_lib->clear();
+    
+    // Unlink Old Image
+    @unlink($path.'/'.$filename);
   }
 }
 

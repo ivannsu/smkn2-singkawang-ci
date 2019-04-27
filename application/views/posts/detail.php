@@ -11,7 +11,7 @@
         if (res.status == 'success') {
           $('#post-title').text(res.row.title)
           $('#post-info').text(res.row.created_at)
-          $('#post-content').text(res.row.content)
+          $('#post-content').html(res.row.content)
         }
       },
       failed: (error) => {
@@ -29,7 +29,4 @@
 <h3 id="post-title"></h3>
 <small id="post-info">29 Sep 2019</small>
 <hr>
-
-<p id="post-content">
-
-</p>
+<p id="post-content"></p>
