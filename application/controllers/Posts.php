@@ -53,25 +53,31 @@ class Posts extends CI_Controller {
   
   public function create_action() {
     if ($this->input->is_ajax_request()) {
-      $data = $this->get_post_data();
+      if ($this->validation()) {
+        $data = $this->get_post_data();
 
-      $this->tmp['upload_failed'] = FALSE;
-      if (! empty($_FILES['image'])) {
-        $upload = $this->upload_image();
-        if ($upload) {
-          $data['image'] = $upload['file_name'];
+        $this->tmp['upload_failed'] = FALSE;
+        if (! empty($_FILES['image'])) {
+          $upload = $this->upload_image();
+          if ($upload) {
+            $data['image'] = $upload['file_name'];
+          }
         }
-      }
 
-      if ( ! $this->tmp['upload_failed']) {
-        if ($this->model->create($this->table, $data)) {
-          $this->vars['message'] = 'Data baru berhasil dibuat';
-          $this->vars['status'] = 'success';
-          
-        } else {
-          $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';
-          $this->vars['status'] = 'failed';
+        if ( ! $this->tmp['upload_failed']) {
+          if ($this->model->create($this->table, $data)) {
+            $this->vars['message'] = 'Data baru berhasil dibuat';
+            $this->vars['status'] = 'success';
+            
+          } else {
+            $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';
+            $this->vars['status'] = 'failed';
+          }
         }
+
+      } else {
+        $this->vars['status'] = 'failed';
+				$this->vars['message'] = validation_errors();
       }
 
       $this->output
@@ -180,6 +186,17 @@ class Posts extends CI_Controller {
 
   private function get_post_id() {
     return $this->input->post('id', true);
+  }
+
+  private function validation() {
+    $this->load->library('form_validation');
+
+		$val = $this->form_validation;
+		$val->set_rules('title', 'Title', 'trim|required');
+		$val->set_rules('content', 'Content', 'trim|required');
+    $val->set_error_delimiters('<div>&sdot; ', '</div>');
+    
+		return $val->run();
   }
 
   private function upload_image() {
