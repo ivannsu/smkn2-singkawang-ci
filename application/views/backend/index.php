@@ -77,7 +77,17 @@
             <li><a href="<?= site_url('posts/create'); ?>">TAMBAH BARU</a></li>
           </ul>
         </li>
-        <li><a href=""><i class="fa fa-link"></i> <span>PRESTASI</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>PRESTASI</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('prestasi'); ?>">DATA PRESTASI</a></li>
+            <li><a href="<?= site_url('prestasi/create'); ?>">TAMBAH BARU</a></li>
+          </ul>
+        </li>
         <li><a href=""><i class="fa fa-link"></i> <span>GALERI FOTO</span></a></li>
         <li><a href=""><i class="fa fa-link"></i> <span>LINKS</span></a></li>
         <li><a href=""><i class="fa fa-link"></i> <span>DATA ALUMNI</span></a></li>

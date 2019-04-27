@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Posts extends CI_Controller {
+class Prestasi extends CI_Controller {
   private $pk = '';
   private $table = '';
   private $vars = [];
@@ -11,21 +11,21 @@ class Posts extends CI_Controller {
     parent::__construct();
 
     $this->load->model([
-      'm_posts'
+      'm_prestasi'
     ]);
 
-    $this->pk = M_posts::$pk;
-    $this->table = M_posts::$table;
+    $this->pk = M_prestasi::$pk;
+    $this->table = M_prestasi::$table;
   }
 
   public function index() {
     $data = [
-      'title' => 'Data Artikel',
-      'content' => 'posts/index',
-      'action' => site_url('posts/get_all'),
-      'delete_action' => site_url('posts/delete'),
-      'detail_url' => site_url('posts/detail/'),
-      'edit_url' => site_url('posts/edit/'),
+      'title' => 'Data Prestasi',
+      'content' => 'prestasi/index',
+      'action' => site_url('prestasi/get_all'),
+      'delete_action' => site_url('prestasi/delete'),
+      'detail_url' => site_url('prestasi/detail/'),
+      'edit_url' => site_url('prestasi/edit/'),
       // 'page' => $this->uri->segment(3, 1)
     ];
 
@@ -34,7 +34,7 @@ class Posts extends CI_Controller {
 
   public function detail() {
     $data = [
-      'title' => 'Detail Artikel',
+      'title' => 'Detail Prestasi',
       'action' => site_url('posts/get_by_id/'),
       'content' => 'posts/detail',
       'id' => $this->uri->segment(3)
@@ -44,9 +44,9 @@ class Posts extends CI_Controller {
   }
 
   public function create() {
-    $data['title'] = 'Tambah Artikel';
-    $data['action'] = site_url('posts/create_action');
-    $data['content'] = 'posts/create'; 
+    $data['title'] = 'Tambah Prestasi';
+    $data['action'] = site_url('prestasi/create_action');
+    $data['content'] = 'prestasi/create'; 
 
     $this->load->view('backend/index', $data);
   }
@@ -174,7 +174,7 @@ class Posts extends CI_Controller {
       'title' => $this->input->post('title', true),
       'content' => $this->input->post('content'),
       'author' => 1,
-      'type' => 'article'
+      'type' => 'prestasi'
     ];
   }
 
@@ -184,7 +184,7 @@ class Posts extends CI_Controller {
 
   private function upload_image() {
     $config = [
-      'upload_path' => './media_library/posts/',
+      'upload_path' => './media_library/prestasi/',
       'allowed_types' => 'jpg|png|jpeg|gif',
       'max_size' => 0,
       'encrypt_name' => true
@@ -199,7 +199,7 @@ class Posts extends CI_Controller {
       return FALSE;
     } else {
       $file = $this->upload->data();
-      $this->resize_image(FCPATH.'media_library/posts', $file['file_name']);
+      $this->resize_image(FCPATH.'media_library/prestasi', $file['file_name']);
 
       return $file;
     }
@@ -211,7 +211,7 @@ class Posts extends CI_Controller {
 		// Large Image
 		$large['image_library'] = 'gd2';
 		$large['source_image'] = $path .'/'. $filename;
-		$large['new_image'] = './media_library/posts/lg_'. $filename;
+		$large['new_image'] = './media_library/prestasi/lg_'. $filename;
     $large['maintain_ratio'] = true;
     $large['width'] = 800;
     $large['height'] = 600;
@@ -222,7 +222,7 @@ class Posts extends CI_Controller {
     // Medium Image
 		$medium['image_library'] = 'gd2';
 		$medium['source_image'] = $path .'/'. $filename;
-		$medium['new_image'] = './media_library/posts/md_'. $filename;
+		$medium['new_image'] = './media_library/prestasi/md_'. $filename;
     $medium['maintain_ratio'] = true;
     $medium['width'] = 460;
     $medium['height'] = 308;
@@ -233,7 +233,7 @@ class Posts extends CI_Controller {
     // Small Image
 		$small['image_library'] = 'gd2';
 		$small['source_image'] = $path .'/'. $filename;
-		$small['new_image'] = './media_library/posts/sm_'. $filename;
+		$small['new_image'] = './media_library/prestasi/sm_'. $filename;
     $small['maintain_ratio'] = true;
     $small['width'] = 200;
     $small['height'] = 150;
