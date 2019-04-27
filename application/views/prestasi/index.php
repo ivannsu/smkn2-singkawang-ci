@@ -14,8 +14,6 @@
       //   page: page
       // },
       success: (res) => {
-        hideLoader()
-
         if (res.status == 'success') {
           console.log(res)
 
@@ -42,7 +40,11 @@
             `
             tableBody.append(tableRow)
           })
+
+          $('#datatables-table').DataTable()
         }
+
+        hideLoader()
       },
       failed: (error) => {
         console.log(error)
