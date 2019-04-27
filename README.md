@@ -1,0 +1,1 @@
+# smkn2-singkawang-ci
