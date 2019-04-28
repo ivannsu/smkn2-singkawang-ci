@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class M_profile extends CI_Model {
+class M_headmaster extends CI_Model {
   public static $pk = 'id';
   public static $pk_val = '1';
-  public static $table = 'profile';
+  public static $table = 'headmaster';
 
   public function __construct() {
     parent::__construct();

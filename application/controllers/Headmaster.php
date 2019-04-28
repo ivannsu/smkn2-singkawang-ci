@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Profile extends CI_Controller {
+class Headmaster extends CI_Controller {
   private $pk = '';
   private $pk_val = '';
   private $table = '';
@@ -12,22 +12,22 @@ class Profile extends CI_Controller {
     parent::__construct();
 
     $this->load->model([
-      'm_profile'
+      'm_headmaster'
     ]);
 
-    $this->pk = M_profile::$pk;
-    $this->pk_val = M_profile::$pk_val;
-    $this->table = M_profile::$table;
+    $this->pk = M_headmaster::$pk;
+    $this->pk_val = M_headmaster::$pk_val;
+    $this->table = M_headmaster::$table;
   }
 
   public function index() {
     $data = [
-      'title' => 'Data Profil',
-      'content' => 'profile/index',
-      'action' => site_url('profile/get_all'),
-      'delete_action' => site_url('profile/delete'),
-      'detail_url' => site_url('profile/detail/'),
-      'edit_url' => site_url('profile/edit/'),
+      'title' => 'Data Kepala Sekolah',
+      'content' => 'headmaster/index',
+      'action' => site_url('headmaster/get_all'),
+      'delete_action' => site_url('headmaster/delete'),
+      'detail_url' => site_url('headmaster/detail/'),
+      'edit_url' => site_url('headmaster/edit/'),
       // 'page' => $this->uri->segment(3, 1)
     ];
 
@@ -36,9 +36,9 @@ class Profile extends CI_Controller {
 
   public function detail() {
     $data = [
-      'title' => 'Profil Sekolah',
-      'action' => site_url('profile/get_by_id/'),
-      'content' => 'profile/detail',
+      'title' => 'Profil Kepala Sekolah',
+      'action' => site_url('headmaster/get_by_id/'),
+      'content' => 'headmaster/detail',
       'id' => $this->pk_val
     ];
 
@@ -47,8 +47,8 @@ class Profile extends CI_Controller {
 
   public function create() {
     $data['title'] = 'Tambah Profil';
-    $data['action'] = site_url('profile/create_action');
-    $data['content'] = 'profile/create'; 
+    $data['action'] = site_url('headmaster/create_action');
+    $data['content'] = 'headmaster/create'; 
 
     $this->load->view('backend/index', $data);
   }
@@ -90,10 +90,10 @@ class Profile extends CI_Controller {
 
   public function edit() {
     $data = [
-      'title' => 'Edit Profil',
-      'content' => 'profile/edit',
-      'get_action' => site_url('profile/get_by_id/'),
-      'action' => site_url('profile/edit_action'),
+      'title' => 'Edit Profil Kepala Sekolah',
+      'content' => 'headmaster/edit',
+      'get_action' => site_url('headmaster/get_by_id/'),
+      'action' => site_url('headmaster/edit_action'),
       'id' => $this->pk_val
     ];
 
@@ -125,8 +125,8 @@ class Profile extends CI_Controller {
       // $count = $this->model->count_all($this->table);
       // $limit = 5;
       // $offset = ($this->input->get('page') * $limit) - $limit;
-      // $data = $this->m_profile->get_all($limit, $offset);
-      $data = $this->m_profile->get_all();
+      // $data = $this->m_headmaster->get_all($limit, $offset);
+      $data = $this->m_headmaster->get_all();
 
       if ($data) {
         $vars['message'] = 'Sukses menampilkan data';
@@ -178,15 +178,8 @@ class Profile extends CI_Controller {
 
   private function get_post_data() {
     return [
-      'address' => $this->input->post('address', true),
-      'phone' => $this->input->post('phone', true),
-      'email' => $this->input->post('email', true),
-      'pos' => $this->input->post('pos', true),
-      'video' => $this->input->post('video', true),
-      'facebook' => $this->input->post('facebook', true),
-      'twitter' => $this->input->post('twitter', true),
-      'youtube' => $this->input->post('youtube', true),
-      'instagram' => $this->input->post('instagram', true)
+      'name' => $this->input->post('name', true),
+      'content' => $this->input->post('content', true),
     ];
   }
 
@@ -198,7 +191,7 @@ class Profile extends CI_Controller {
     $this->load->library('form_validation');
 
 		$val = $this->form_validation;
-		$val->set_rules('title', 'Title', 'trim|required');
+		$val->set_rules('name', 'Name', 'trim|required');
 		$val->set_rules('content', 'Content', 'trim|required');
     $val->set_error_delimiters('<div>&sdot; ', '</div>');
     
