@@ -152,8 +152,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= site_url('prestasi'); ?>">DATA LINKS</a></li>
-            <li><a href="<?= site_url('prestasi/create'); ?>">TAMBAH BARU</a></li>
+            <li><a href="<?= site_url('links'); ?>">DATA LINKS</a></li>
+            <li><a href="<?= site_url('links/create'); ?>">TAMBAH BARU</a></li>
           </ul>
         </li>
         <!-- DATA INDUK -->
