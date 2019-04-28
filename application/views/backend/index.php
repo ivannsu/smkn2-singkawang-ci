@@ -186,7 +186,7 @@
       </h1>
     </section>
 
-    <section class="content container-fluid">
+    <section class="content container-fluid custom-content">
       <div class="row">
         <div class="col-lg-12">
           <div class="box">
