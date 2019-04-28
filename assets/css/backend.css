@@ -1,3 +1,20 @@
+/* .table, 
+.table thead,
+.table tbody,
+.table th,
+.table tr {
+  border-bottom-color: #657f97d8 !important;
+} */
+
+.table {
+  border-color: #657f9773;
+}
+
+table.dataTable {
+  margin-top: 10px !important;
+  margin-bottom: 20px !important;
+}
+
 /* SPINNER */
 .loading-container {
   width: 100%;
