@@ -124,8 +124,11 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= site_url('profile'); ?>">PROFIL SEKOLAH</a></li>
-            <li><a href="<?= site_url('headmaster'); ?>">PROFIL KEPALA SEKOLAH</a></li>
+            <li><a href="<?= site_url('profile/detail'); ?>">SEKOLAH</a></li>
+            <li><a href="<?= site_url('profile/edit'); ?>">EDIT SEKOLAH</a></li>
+            <li>&nbsp;<li>
+            <li><a href="<?= site_url('headmaster'); ?>">KEPALA SEKOLAH</a></li>
+            <li><a href="<?= site_url('profile/detail'); ?>">EDIT KEPALA SEKOLAH</a></li>
           </ul>
         </li>
         <li><a href=""><i class="fa fa-image"></i> <span>GALERI FOTO</span></a></li>
