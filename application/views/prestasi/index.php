@@ -91,7 +91,7 @@
 
 </script>
 
-<table class="table table-bordered table-hover" id="datatables-table">
+<table class="table table-bordered table-hover table-striped" id="datatables-table">
   <thead>
     <tr>
       <th>JUDUL</th>
