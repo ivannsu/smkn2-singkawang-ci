@@ -8,7 +8,7 @@ class Photos extends CI_Controller {
   private $table_album = '';
   private $vars = [];
   private $tmp = [];
-  private $image_path = FCPATH.'media_library/gallery';
+  private $image_path = FCPATH.'media_library/gallery/';
 
   public  function __construct() {
     parent::__construct();
@@ -146,11 +146,15 @@ class Photos extends CI_Controller {
   }
 
   public function delete() {
-    $id = $this->get_post_id();
-    $action = $this->model->delete($this->table, $id);
     $vars = [];
+    $id = $this->get_post_id();
+    $tmp_photo = $this->model->get_row($this->pk, $id, $this->table)->image;
+    $action = $this->model->delete($this->table, $id);
 
     if ($action) {
+      @unlink($this->image_path.'lg_'.$tmp_photo);
+      @unlink($this->image_path.'sm_'.$tmp_photo);
+
       $vars['message'] = 'Sukses menghapus data';
       $vars['status'] = 'success';
     } else {
@@ -163,7 +167,7 @@ class Photos extends CI_Controller {
       ->set_output(json_encode($vars));
   }
 
-  public function get_by_id() {
+  public function get_by_id($id = NULL) {
     $id = $this->uri->segment(3);
     $row = $this->model->get_row($this->pk, $id, $this->table);
 
