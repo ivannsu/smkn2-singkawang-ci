@@ -18,6 +18,12 @@ class M_photos extends CI_Model {
       ->get(self::$table)
       ->result();
   }
+
+  public function count_by_album($id) {
+    return $this->db
+      ->where(self::$fk_album, $id)
+      ->count_all_results(self::$table);
+  }
 }
 
 ?>

@@ -61,10 +61,13 @@
           id: id
         },
         success: (res) => {
-          console.log(res)
+          console.log(res, '<==== DELETE RES')
  
-          tableBody.html('')
-          getData()
+          if (res.status !== 'failed') {
+            tableBody.html('')
+            getData()
+          }
+          
           hideLoader()
           showToast(res.status, res.message)
         },

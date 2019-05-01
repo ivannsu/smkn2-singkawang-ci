@@ -11,7 +11,8 @@ class Albums extends CI_Controller {
     parent::__construct();
 
     $this->load->model([
-      'm_albums'
+      'm_albums',
+      'm_photos'
     ]);
 
     $this->pk = M_albums::$pk;
@@ -129,21 +130,33 @@ class Albums extends CI_Controller {
   }
 
   public function delete() {
+    $vars = [];
     // TODO: 
     // 1. Get Album ID & assign it to variable `album_id`
     // 2. Count all photos with Album ID = `album_id`
     // 3. If Counting == 0 it means no images with `album_id`, DELETE PROCESS CONTINUE
     // 4. Else CANCEL DELETE PROCESS, & TELL USER
 
+    // Todo #1
     $id = $this->get_post_id();
-    $action = $this->model->delete($this->table, $id);
-    $vars = [];
 
-    if ($action) {
-      $vars['message'] = 'Sukses menghapus data';
-      $vars['status'] = 'success';
+    // Todo #2
+    $count = $this->m_photos->count_by_album($id);
+
+    // Todo #3
+    if ($count == 0) {
+      $action = $this->model->delete($this->table, $id);
+      $action = TRUE;
+
+      if ($action) {
+        $vars['message'] = 'Sukses menghapus data';
+        $vars['status'] = 'success';
+      } else {
+        $vars['message'] = 'Terjadi kesalahan saat menghapus data';
+        $vars['status'] = 'failed';
+      }
     } else {
-      $vars['message'] = 'Terjadi kesalahan saat menghapus data';
+      $vars['message'] = 'Masih ada Foto di dalam Album, Hapus Semua Foto di Album terlebih dahulu !';
       $vars['status'] = 'failed';
     }
 

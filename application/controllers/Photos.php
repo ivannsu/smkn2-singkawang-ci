@@ -8,6 +8,7 @@ class Photos extends CI_Controller {
   private $table_album = '';
   private $vars = [];
   private $tmp = [];
+  private $image_path = FCPATH.'media_library/gallery';
 
   public  function __construct() {
     parent::__construct();
