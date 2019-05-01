@@ -7,7 +7,7 @@
 } */
 
 .table {
-  border-color: #657f9773;
+  border-color: #ccc;
 }
 
 table.dataTable {
@@ -21,7 +21,7 @@ table.dataTable {
 }
 
 .custom-content {
-  padding-top: 0px;
+  /* padding-top: 0px; */
 }
 
 .custom-content .col-lg-12 {
