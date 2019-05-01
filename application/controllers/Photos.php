@@ -1,9 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Links extends CI_Controller {
+class Photos extends CI_Controller {
   private $pk = '';
+  private $pk_album = '';
   private $table = '';
+  private $table_album = '';
   private $vars = [];
   private $tmp = [];
 
@@ -11,21 +13,23 @@ class Links extends CI_Controller {
     parent::__construct();
 
     $this->load->model([
-      'm_links'
+      'm_photos'
     ]);
 
-    $this->pk = M_links::$pk;
-    $this->table = M_links::$table;
+    $this->pk = M_photos::$pk;
+    $this->pk_album = 'id';
+    $this->table = M_photos::$table;
+    $this->table_album = 'albums';
   }
 
   public function index() {
+    $album_id = $this->uri->segment(3);
     $data = [
-      'title' => 'Data Link',
-      'content' => 'links/index',
-      'action' => site_url('links/get_all'),
-      'delete_action' => site_url('links/delete'),
-      'edit_url' => site_url('links/edit/'),
-      // 'page' => $this->uri->segment(3, 1)
+      'title' => $this->model->get_row($this->pk_album, $album_id, $this->table_album)->title,
+      'content' => 'photos/index',
+      'action' => site_url('photos/get_by_album'),
+      'delete_action' => site_url('photos/delete'),
+      'album_id' => $album_id,
     ];
 
     $this->load->view('backend/index', $data);
@@ -33,9 +37,9 @@ class Links extends CI_Controller {
 
   public function detail() {
     $data = [
-      'title' => 'Detail Link',
-      'action' => site_url('links/get_by_id/'),
-      'content' => 'links/detail',
+      'title' => 'Detail Artikel',
+      'action' => site_url('photos/get_by_id/'),
+      'content' => 'photos/detail',
       'id' => $this->uri->segment(3)
     ];
 
@@ -43,9 +47,10 @@ class Links extends CI_Controller {
   }
 
   public function create() {
-    $data['title'] = 'Tambah Link';
-    $data['action'] = site_url('links/create_action');
-    $data['content'] = 'links/create'; 
+    $data['title'] = 'Tambah Foto';
+    $data['get_action'] = site_url('albums/get_all');
+    $data['action'] = site_url('photos/create_action');
+    $data['content'] = 'photos/create'; 
 
     $this->load->view('backend/index', $data);
   }
@@ -73,12 +78,10 @@ class Links extends CI_Controller {
             $this->vars['status'] = 'failed';
           }
         }
-
       } else {
         $this->vars['status'] = 'failed';
 				$this->vars['message'] = validation_errors();
       }
-
       $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
@@ -87,10 +90,10 @@ class Links extends CI_Controller {
 
   public function edit() {
     $data = [
-      'title' => 'Edit Link',
-      'content' => 'links/edit',
-      'get_action' => site_url('links/get_by_id/'),
-      'action' => site_url('links/edit_action'),
+      'title' => 'Edit Album',
+      'content' => 'photos/edit',
+      'get_action' => site_url('photos/get_by_id/'),
+      'action' => site_url('photos/edit_action'),
       'id' => $this->uri->segment(3)
     ];
 
@@ -117,19 +120,19 @@ class Links extends CI_Controller {
       ->set_output(json_encode($vars));
   }
 
-  public function get_all() {
+  public function get_by_album() {
     if ($this->input->is_ajax_request()) {
       $vars = [];
-      // $count = $this->model->count_all($this->table);
-      // $limit = 5;
-      // $offset = ($this->input->get('page') * $limit) - $limit;
-      // $data = $this->m_links->get_all($limit, $offset);
-      $data = $this->m_links->get_all();
+      $id = $this->input->get('album_id');
+      $data = $this->m_photos->get_by_album($id);
 
       if ($data) {
         $vars['message'] = 'Sukses menampilkan data';
         $vars['status'] = 'success';
         $vars['data'] = $data;
+      } else if (count($data) == 0) {
+        $vars['message'] = 'Tidak ada data';
+        $vars['status'] = 'empty';
       } else {
         $vars['message'] = 'Terjadi kesalahan saat menampilkan data';
         $vars['status'] = 'failed';
@@ -164,20 +167,22 @@ class Links extends CI_Controller {
     $row = $this->model->get_row($this->pk, $id, $this->table);
 
     if ($row) {
-      $vars['message'] = 'Sukses menampilkan data';
-      $vars['status'] = 'success';
-      $vars['row'] = $row;
+      $this->vars['message'] = 'Sukses menampilkan data';
+      $this->vars['status'] = 'success';
+      $this->vars['row'] = $row;
+    } else {
+      $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
+      $this->vars['status'] = 'failed';
     }
 
     $this->output
       ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
+      ->set_output(json_encode($this->vars));
   }
 
   private function get_post_data() {
     return [
-      'name' => $this->input->post('name', true),
-      'href' => $this->input->post('href', true),
+      'album_id' => $this->input->post('album_id', true)
     ];
   }
 
@@ -189,8 +194,7 @@ class Links extends CI_Controller {
     $this->load->library('form_validation');
 
 		$val = $this->form_validation;
-		$val->set_rules('name', 'Name', 'trim|required');
-		$val->set_rules('href', 'Link', 'trim|required');
+    $val->set_rules('album_id', 'Album', 'trim|required');
     $val->set_error_delimiters('<div>&sdot; ', '</div>');
     
 		return $val->run();
@@ -198,7 +202,7 @@ class Links extends CI_Controller {
 
   private function upload_image() {
     $config = [
-      'upload_path' => './media_library/links/',
+      'upload_path' => './media_library/gallery/',
       'allowed_types' => 'jpg|png|jpeg|gif',
       'max_size' => 0,
       'encrypt_name' => true
@@ -213,7 +217,7 @@ class Links extends CI_Controller {
       return FALSE;
     } else {
       $file = $this->upload->data();
-      // $this->resize_image(FCPATH.'media_library/links', $file['file_name']);
+      $this->resize_image(FCPATH.'media_library/gallery', $file['file_name']);
 
       return $file;
     }
@@ -225,7 +229,7 @@ class Links extends CI_Controller {
 		// Large Image
 		$large['image_library'] = 'gd2';
 		$large['source_image'] = $path .'/'. $filename;
-		$large['new_image'] = './media_library/links/lg_'. $filename;
+		$large['new_image'] = './media_library/gallery/lg_'. $filename;
     $large['maintain_ratio'] = true;
     $large['width'] = 800;
     $large['height'] = 600;
@@ -233,21 +237,10 @@ class Links extends CI_Controller {
 		$this->image_lib->resize();
     $this->image_lib->clear();
     
-    // Medium Image
-		$medium['image_library'] = 'gd2';
-		$medium['source_image'] = $path .'/'. $filename;
-		$medium['new_image'] = './media_library/links/md_'. $filename;
-    $medium['maintain_ratio'] = true;
-    $medium['width'] = 460;
-    $medium['height'] = 308;
-		$this->image_lib->initialize($medium);
-		$this->image_lib->resize();
-    $this->image_lib->clear();
-    
     // Small Image
 		$small['image_library'] = 'gd2';
 		$small['source_image'] = $path .'/'. $filename;
-		$small['new_image'] = './media_library/links/sm_'. $filename;
+		$small['new_image'] = './media_library/gallery/sm_'. $filename;
     $small['maintain_ratio'] = true;
     $small['width'] = 200;
     $small['height'] = 150;

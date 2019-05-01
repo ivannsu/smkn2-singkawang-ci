@@ -131,7 +131,19 @@
             <li><a href="<?= site_url('headmaster/edit'); ?>">EDIT KEPALA SEKOLAH</a></li>
           </ul>
         </li>
-        <li><a href=""><i class="fa fa-image"></i> <span>GALERI FOTO</span></a></li>
+        <!-- GALERI FOTO -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-image"></i> <span>GALERI FOTO</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('gallery/index_album'); ?>">DATA ALBUM</a></li>
+            <li><a href="<?= site_url('gallery/create_album'); ?>">BUAT ALBUM</a></li>
+            <li><a href="<?= site_url('photos/create'); ?>">TAMBAH FOTO</a></li>
+          </ul>
+        </li>
         <!-- NAVIGASI -->
         <li class="treeview">
           <a href="#"><i class="fa fa-file-o"></i> <span>NAVIGASI</span>
