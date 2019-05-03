@@ -47,6 +47,35 @@ class M_navigations extends CI_Model {
     $this->db->trans_complete();
     return $this->db->trans_status();
   }
+
+  public function delete_page($id) {
+    $this->db->trans_start();
+
+    $this->db->where('post_id', $id);
+    $this->db->delete(self::$table_pages);
+
+    $this->db->where('id', $id);
+    $this->db->delete(self::$table_posts);
+
+    $this->db->trans_complete();
+
+    return $this->db->trans_status();
+  }
+
+  public function delete_nav($id) {
+    $this->db->trans_start();
+
+    $this->db->where('id', $id);
+    $this->db->delete(self::$table);
+
+    $this->db->trans_complete();
+
+    return $this->db->trans_status();
+  }
+
+  public function count_by_nav($id) {
+    return $this->db->where('nav_id', $id)->count_all_results(self::$table_pages);
+  }
 }
 
 ?>

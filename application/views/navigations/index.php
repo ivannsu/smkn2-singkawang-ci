@@ -28,9 +28,9 @@
                     <a href="${edit_page_url + row.post_id}" class="btn btn-xs btn-info">
                       <span class="fa fa-edit"></span> Edit
                     </a>
-                    <a href="#" class="btn btn-xs btn-danger">
+                    <button class="btn btn-xs btn-danger" onclick="deleteData(${row.post_id})">
                       <span class="fa fa-trash"></span> Delete
-                    </a>
+                    </button>
                   </div>
                 </li>
               `);
@@ -50,9 +50,9 @@
                       <a href="${edit_nav_url + dropdown_nav_id}" class="btn btn-xs btn-info">
                         <span class="fa fa-edit"></span> Edit
                       </a>
-                      <a href="#" class="btn btn-xs btn-danger">
+                      <button class="btn btn-xs btn-danger" onclick="deleteData(${dropdown_nav_id}, 'nav')">
                         <span class="fa fa-trash"></span> Delete
-                      </a>
+                      </button>
                     </div>
                     <ul id="nav-dropdown-container-${dropdown_nav_id}">
                       <li>
@@ -61,9 +61,9 @@
                           <a href="${edit_page_url + row.post_id}" class="btn btn-xs btn-info">
                             <span class="fa fa-edit"></span> Edit
                           </a>
-                          <a href="#" class="btn btn-xs btn-danger">
+                          <button class="btn btn-xs btn-danger" onclick="deleteData(${row.post_id})">
                             <span class="fa fa-trash"></span> Delete
-                          </a>
+                          </button>
                         </div>
                       </li>
                     </ul>
@@ -77,9 +77,9 @@
                       <a href="${edit_page_url + row.post_id}" class="btn btn-xs btn-info">
                         <span class="fa fa-edit"></span> Edit
                       </a>
-                      <a href="#" class="btn btn-xs btn-danger">
+                      <button class="btn btn-xs btn-danger" onclick="deleteData(${row.post_id})">
                         <span class="fa fa-trash"></span> Delete
-                      </a>
+                      </button>
                     </div>
                   </li>
                 `);
@@ -98,21 +98,22 @@
     })
   }
 
-  function deleteData(id) {
-    let tableBody = $('#table-body')
+  function deleteData(id, type) {
+    let navData = $('#nav-data')
     let userConfirm = confirm('Apa anda yakin untuk menghapus data ini ?')
 
     if (userConfirm) {
       showLoader()
 
       $.ajax({
-        url: '<?= $delete_action; ?>',
+        url: (type == 'nav') ? '<?= $delete_nav_action; ?>' : '<?= $delete_page_action; ?>',
         method: 'POST',
         data: {
           id: id
         },
         success: (res) => {
           console.log(res)
+          navData.html('')
           getData()
           hideLoader()
           showToast(res.status, res.message)

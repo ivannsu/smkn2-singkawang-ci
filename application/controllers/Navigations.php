@@ -23,7 +23,8 @@ class Navigations extends CI_Controller {
       'title' => 'Data Navigasi',
       'content' => 'navigations/index',
       'action' => site_url('navigations/get_all'),
-      'delete_action' => site_url('navigations/delete'),
+      'delete_page_action' => site_url('navigations/delete_page'),
+      'delete_nav_action' => site_url('navigations/delete_nav'),
       'detail_url' => site_url('navigations/detail_page/'),
       'edit_page_url' => site_url('navigations/edit_page/'),
       'edit_nav_url' => site_url('navigations/edit_nav/'),
@@ -194,38 +195,6 @@ class Navigations extends CI_Controller {
       ->set_output(json_encode($vars));
   }
 
-  // public function edit() {
-  //   $data = [
-  //     'title' => 'Edit navigations',
-  //     'content' => 'navigations/edit',
-  //     'get_action' => site_url('navigations/get_by_id/'),
-  //     'action' => site_url('navigations/edit_action'),
-  //     'id' => $this->uri->segment(3)
-  //   ];
-
-  //   $this->load->view('backend/index', $data);
-  // }
-
-  // public function edit_action() {
-  //   $id = $this->get_post_id();
-  //   $data = $this->get_post_data();
-
-  //   $action = $this->model->update($this->table, $data, $id);
-  //   $vars = [];
-
-  //   if ($action) {
-  //     $vars['message'] = 'Sukses mengedit data';
-  //     $vars['status'] = 'success';
-  //   } else {
-  //     $vars['message'] = 'Terjadi kesalahan saat mengedit data';
-  //     $vars['status'] = 'failed';
-  //   }
-
-  //   $this->output
-  //     ->set_content_type('application/json')
-  //     ->set_output(json_encode($vars));
-  // }
-
   public function get_all() {
     if ($this->input->is_ajax_request()) {
       $vars = [];
@@ -244,6 +213,49 @@ class Navigations extends CI_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($vars));
     }
+  }
+
+  public function delete_page() {
+    $id = $this->get_post_id();
+    $action = true;
+    $action = $this->m_navigations->delete_page($id);
+    $vars = [];
+
+    if ($action) {
+      $vars['message'] = 'Sukses menghapus data';
+      $vars['status'] = 'success';
+    } else {
+      $vars['message'] = 'Terjadi kesalahan saat menghapus data';
+      $vars['status'] = 'failed';
+    }
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($vars));
+  }
+
+  public function delete_nav() {
+    $vars = [];
+    $id = $this->get_post_id();
+    $count = $this->m_navigations->count_by_nav($id);
+
+    if ($count == 0) {
+      $action = $this->model->delete($this->table, $id);
+
+      if ($action) {
+        $vars['message'] = 'Sukses menghapus data';
+        $vars['status'] = 'success';
+      } else {
+        $vars['message'] = 'Terjadi kesalahan saat menghapus data';
+        $vars['status'] = 'failed';
+      }
+    } else {
+      $vars['message'] = 'Masih ada Data di Navigasi Dropdown ! Hapus terlebih dahulu';
+      $vars['status'] = 'failed';
+    }
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($vars));
   }
 
   public function delete() {
@@ -317,6 +329,38 @@ class Navigations extends CI_Controller {
       'type' => 'page'
     ];
   }
+
+  // public function edit() {
+  //   $data = [
+  //     'title' => 'Edit navigations',
+  //     'content' => 'navigations/edit',
+  //     'get_action' => site_url('navigations/get_by_id/'),
+  //     'action' => site_url('navigations/edit_action'),
+  //     'id' => $this->uri->segment(3)
+  //   ];
+
+  //   $this->load->view('backend/index', $data);
+  // }
+
+  // public function edit_action() {
+  //   $id = $this->get_post_id();
+  //   $data = $this->get_post_data();
+
+  //   $action = $this->model->update($this->table, $data, $id);
+  //   $vars = [];
+
+  //   if ($action) {
+  //     $vars['message'] = 'Sukses mengedit data';
+  //     $vars['status'] = 'success';
+  //   } else {
+  //     $vars['message'] = 'Terjadi kesalahan saat mengedit data';
+  //     $vars['status'] = 'failed';
+  //   }
+
+  //   $this->output
+  //     ->set_content_type('application/json')
+  //     ->set_output(json_encode($vars));
+  // }
 
   private function get_post_id() {
     return $this->input->post('id', true);
