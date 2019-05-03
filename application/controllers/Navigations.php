@@ -25,7 +25,8 @@ class Navigations extends CI_Controller {
       'action' => site_url('navigations/get_all'),
       'delete_action' => site_url('navigations/delete'),
       'detail_url' => site_url('navigations/detail_page/'),
-      'edit_url' => site_url('navigations/edit/')
+      'edit_page_url' => site_url('navigations/edit_page/'),
+      'edit_nav_url' => site_url('navigations/edit_nav/'),
     ];
 
     $this->load->view('backend/index', $data);
@@ -131,24 +132,23 @@ class Navigations extends CI_Controller {
     }
   }
 
-  public function edit() {
+  public function edit_page() {
     $data = [
-      'title' => 'Edit navigations',
-      'content' => 'navigations/edit',
-      'get_action' => site_url('navigations/get_by_id/'),
-      'action' => site_url('navigations/edit_action'),
+      'title' => 'Edit Halaman',
+      'content' => 'navigations/edit_page',
+      'get_action' => site_url('navigations/get_post_by_id/'),
+      'action' => site_url('navigations/edit_page_action'),
       'id' => $this->uri->segment(3)
     ];
 
     $this->load->view('backend/index', $data);
   }
 
-  public function edit_action() {
+  public function edit_page_action() {
+    $vars = [];
     $id = $this->get_post_id();
     $data = $this->get_post_data();
-
-    $action = $this->model->update($this->table, $data, $id);
-    $vars = [];
+    $action = $this->model->update('posts', $data, $id);
 
     if ($action) {
       $vars['message'] = 'Sukses mengedit data';
@@ -162,6 +162,69 @@ class Navigations extends CI_Controller {
       ->set_content_type('application/json')
       ->set_output(json_encode($vars));
   }
+
+  public function edit_nav() {
+    $data = [
+      'title' => 'Edit Navigasi Dropdown',
+      'content' => 'navigations/edit_nav',
+      'get_action' => site_url('navigations/get_nav_by_id/'),
+      'action' => site_url('navigations/edit_nav_action'),
+      'id' => $this->uri->segment(3)
+    ];
+
+    $this->load->view('backend/index', $data);
+  }
+
+  public function edit_nav_action() {
+    $vars = [];
+    $id = $this->get_post_id();
+    $data = ['title' => $this->input->post('title')];
+    $action = $this->model->update('navigations', $data, $id);
+
+    if ($action) {
+      $vars['message'] = 'Sukses mengedit data';
+      $vars['status'] = 'success';
+    } else {
+      $vars['message'] = 'Terjadi kesalahan saat mengedit data';
+      $vars['status'] = 'failed';
+    }
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($vars));
+  }
+
+  // public function edit() {
+  //   $data = [
+  //     'title' => 'Edit navigations',
+  //     'content' => 'navigations/edit',
+  //     'get_action' => site_url('navigations/get_by_id/'),
+  //     'action' => site_url('navigations/edit_action'),
+  //     'id' => $this->uri->segment(3)
+  //   ];
+
+  //   $this->load->view('backend/index', $data);
+  // }
+
+  // public function edit_action() {
+  //   $id = $this->get_post_id();
+  //   $data = $this->get_post_data();
+
+  //   $action = $this->model->update($this->table, $data, $id);
+  //   $vars = [];
+
+  //   if ($action) {
+  //     $vars['message'] = 'Sukses mengedit data';
+  //     $vars['status'] = 'success';
+  //   } else {
+  //     $vars['message'] = 'Terjadi kesalahan saat mengedit data';
+  //     $vars['status'] = 'failed';
+  //   }
+
+  //   $this->output
+  //     ->set_content_type('application/json')
+  //     ->set_output(json_encode($vars));
+  // }
 
   public function get_all() {
     if ($this->input->is_ajax_request()) {
@@ -194,6 +257,21 @@ class Navigations extends CI_Controller {
     } else {
       $vars['message'] = 'Terjadi kesalahan saat menghapus data';
       $vars['status'] = 'failed';
+    }
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($vars));
+  }
+
+  public function get_nav_by_id() {
+    $id = $this->uri->segment(3);
+    $row = $this->model->get_row('id', $id, 'navigations');
+
+    if ($row) {
+      $vars['message'] = 'Sukses menampilkan data';
+      $vars['status'] = 'success';
+      $vars['row'] = $row;
     }
 
     $this->output

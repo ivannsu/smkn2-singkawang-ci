@@ -3,7 +3,8 @@
   function getData() {
     showLoader()
     let detail_url = '<?= $detail_url; ?>'
-    let edit_url = '<?= $edit_url; ?>'
+    let edit_page_url = '<?= $edit_page_url; ?>'
+    let edit_nav_url = '<?= $edit_nav_url; ?>'
 
     $.ajax({
       url: '<?= $action; ?>',
@@ -21,7 +22,17 @@
             
             if (row.nav_id == '0') {
               $('#nav-data').append(`
-                <li><a href="${href}">${row.post_title}</a></li>
+                <li>
+                  <a href="${href}">${row.post_title}</a>
+                  <div style="margin-top: 10px;">
+                    <a href="${edit_page_url + row.post_id}" class="btn btn-xs btn-info">
+                      <span class="fa fa-edit"></span> Edit
+                    </a>
+                    <a href="#" class="btn btn-xs btn-danger">
+                      <span class="fa fa-trash"></span> Delete
+                    </a>
+                  </div>
+                </li>
               `);
               // console.log('SINGLE PAGE');
               // console.log(row);
@@ -31,16 +42,46 @@
 
                 $('#nav-data').append(`
                   <li>
-                    ${row.nav_title} |
-                    <a href="${SITE_URL + '/navigations/create_page/' + dropdown_nav_id}" class="btn btn-xs btn-link">Tambah Halaman</a>
+                    ${row.nav_title}
+                    <div style="margin-top: 10px">
+                      <a href="${SITE_URL + '/navigations/create_page/' + dropdown_nav_id}" class="btn btn-xs btn-success">
+                        <span class="fa fa-plus"></span> Tambah Halaman
+                      </a>
+                      <a href="${edit_nav_url + dropdown_nav_id}" class="btn btn-xs btn-info">
+                        <span class="fa fa-edit"></span> Edit
+                      </a>
+                      <a href="#" class="btn btn-xs btn-danger">
+                        <span class="fa fa-trash"></span> Delete
+                      </a>
+                    </div>
                     <ul id="nav-dropdown-container-${dropdown_nav_id}">
-                      <li><a href="${href}">${row.post_title}</a></li>
+                      <li>
+                        <a href="${href}">${row.post_title}</a>
+                        <div style="margin-top: 10px;">
+                          <a href="${edit_page_url + row.post_id}" class="btn btn-xs btn-info">
+                            <span class="fa fa-edit"></span> Edit
+                          </a>
+                          <a href="#" class="btn btn-xs btn-danger">
+                            <span class="fa fa-trash"></span> Delete
+                          </a>
+                        </div>
+                      </li>
                     </ul>
                   </li>
                 `);
               } else {
                 $(`#nav-dropdown-container-${dropdown_nav_id}`).append(`
-                  <li><a href="${href}">${row.post_title}</a></li>
+                  <li>
+                    <a href="${href}">${row.post_title}</a>
+                    <div style="margin-top: 10px;">
+                      <a href="${edit_page_url + row.post_id}" class="btn btn-xs btn-info">
+                        <span class="fa fa-edit"></span> Edit
+                      </a>
+                      <a href="#" class="btn btn-xs btn-danger">
+                        <span class="fa fa-trash"></span> Delete
+                      </a>
+                    </div>
+                  </li>
                 `);
               }
               // console.log('DROP PAGE');
