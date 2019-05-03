@@ -21,6 +21,7 @@ class M_navigations extends CI_Model {
       FROM pages 
       INNER JOIN navigations ON pages.nav_id = navigations.id
       INNER JOIN posts ON posts.id = pages.post_id
+      ORDER BY pages.nav_id ASC
     ')->result();
   }
 

@@ -24,18 +24,18 @@ class Navigations extends CI_Controller {
       'content' => 'navigations/index',
       'action' => site_url('navigations/get_all'),
       'delete_action' => site_url('navigations/delete'),
-      'detail_url' => site_url('navigations/detail/'),
+      'detail_url' => site_url('navigations/detail_page/'),
       'edit_url' => site_url('navigations/edit/')
     ];
 
     $this->load->view('backend/index', $data);
   }
 
-  public function detail() {
+  public function detail_page() {
     $data = [
-      'title' => 'Detail navigations',
-      'action' => site_url('navigations/get_by_id/'),
-      'content' => 'navigations/detail',
+      'title' => 'Detail Halaman',
+      'action' => site_url('navigations/get_post_by_id/'),
+      'content' => 'navigations/detail_page',
       'id' => $this->uri->segment(3)
     ];
 
@@ -45,7 +45,7 @@ class Navigations extends CI_Controller {
   public function create_page() {
     $nav_id = $this->uri->segment(3) ? $this->uri->segment(3) : 0;
 
-    if ($nav_id) {
+    if ($nav_id != 0) {
       $row = $this->model->get_row($this->pk, $nav_id, $this->table);
       $data['title'] = 'Tambah Halaman --> '.$row->title;
     } else {
@@ -194,6 +194,21 @@ class Navigations extends CI_Controller {
     } else {
       $vars['message'] = 'Terjadi kesalahan saat menghapus data';
       $vars['status'] = 'failed';
+    }
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($vars));
+  }
+
+  public function get_post_by_id() {
+    $id = $this->uri->segment(3);
+    $row = $this->model->get_row('id', $id, 'posts');
+
+    if ($row) {
+      $vars['message'] = 'Sukses menampilkan data';
+      $vars['status'] = 'success';
+      $vars['row'] = $row;
     }
 
     $this->output

@@ -153,8 +153,9 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= site_url('navigations'); ?>">SINGLE PAGE</a></li>
-            <li><a href="<?= site_url('navigations/create_navigation'); ?>">DROP DOWN NAVIGATION</a></li>
+            <li><a href="<?= site_url('navigations/'); ?>">DATA NAVIGASI</a></li>
+            <li><a href="<?= site_url('navigations/create_page/'); ?>">HALAMAN TUNGGAL</a></li>
+            <li><a href="<?= site_url('navigations/create_navigation'); ?>">BUAT DROPDOWN</a></li>
           </ul>
         </li>
         <!-- LINKS -->
