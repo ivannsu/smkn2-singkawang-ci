@@ -36,6 +36,49 @@ table.dataTable {
   padding: 20px;
 }
 
+#nav-data {
+  list-style: none;
+  padding: 0;
+}
+
+#nav-data a {
+  /* color: #fff; */
+  font-size: 1em;
+}
+
+#nav-data a.btn-link {
+  color: #fff;
+  border: 1px solid green;
+  background-color: teal;
+  margin-left: 5px;
+}
+
+#nav-data > li {
+  padding: 10px;
+  /* background-color: teal; */
+  border: 1px solid #999;
+  margin-bottom: 15px;
+}
+
+/* Childs */
+
+#nav-data > li > ul {
+  list-style: none;
+  padding: 10px;
+  padding-left: 20px;
+}
+
+#nav-data > li > ul > li {
+  padding: 10px;
+  /* background-color:orange; */
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+/* ul[class="nav-dropdown-container-"] {
+
+} */
+
 /* SPINNER */
 .loading-container {
   width: 100%;
