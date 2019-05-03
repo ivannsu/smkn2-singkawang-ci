@@ -45,6 +45,10 @@ class M_helper extends CI_Model {
   public function count_all($table) {
     return $this->db->count_all($table);
   }
+
+  public function last_id($table) {
+    return $this->db->insert_id();
+  }
 }
 
 ?>

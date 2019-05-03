@@ -27,6 +27,7 @@
 
   <script>
   let BASE_URL = '<?= base_url(); ?>'
+  let SITE_URL = '<?= site_url(); ?>'
   </script>
   <script src="<?= base_url('assets/js/jquery/jquery-3.3.1.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/adminlte/adminlte.min.js'); ?>"></script>
@@ -152,8 +153,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= site_url('profile'); ?>">SINGLE PAGE</a></li>
-            <li><a href="<?= site_url('headmaster'); ?>">DROP DOWN NAVIGATION</a></li>
+            <li><a href="<?= site_url('navigations'); ?>">SINGLE PAGE</a></li>
+            <li><a href="<?= site_url('navigations/create_navigation'); ?>">DROP DOWN NAVIGATION</a></li>
           </ul>
         </li>
         <!-- LINKS -->
