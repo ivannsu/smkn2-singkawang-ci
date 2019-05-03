@@ -20,13 +20,12 @@ class Navigations extends CI_Controller {
 
   public function index() {
     $data = [
-      'title' => 'Data navigations',
+      'title' => 'Data Navigasi',
       'content' => 'navigations/index',
       'action' => site_url('navigations/get_all'),
       'delete_action' => site_url('navigations/delete'),
       'detail_url' => site_url('navigations/detail/'),
-      'edit_url' => site_url('navigations/edit/'),
-      // 'page' => $this->uri->segment(3, 1)
+      'edit_url' => site_url('navigations/edit/')
     ];
 
     $this->load->view('backend/index', $data);
@@ -44,8 +43,16 @@ class Navigations extends CI_Controller {
   }
 
   public function create_page() {
-    $data['title'] = 'Tambah Halaman';
-    $data['action'] = site_url('navigations/create_action');
+    $nav_id = $this->uri->segment(3) ? $this->uri->segment(3) : 0;
+
+    if ($nav_id) {
+      $row = $this->model->get_row($this->pk, $nav_id, $this->table);
+      $data['title'] = 'Tambah Halaman --> '.$row->title;
+    } else {
+      $data['title'] = 'Tambah Halaman';
+    }
+    $data['nav_id'] = $nav_id;
+    $data['action'] = site_url('navigations/create_page_action');
     $data['content'] = 'navigations/create_page';
 
     $this->load->view('backend/index', $data);
@@ -59,16 +66,8 @@ class Navigations extends CI_Controller {
     $this->load->view('backend/index', $data);
   }
 
-  public function create_dropdown() {
-    $data['title'] = 'Tambah Halaman: Dropdown';
-    $data['action'] = site_url('navigations/create_action');
-    $data['content'] = 'navigations/create_dropdown';
-
-    $this->load->view('backend/index', $data);
-  }
-
   public function create_navigation_action() {
-    // if ($this->input->is_ajax_request()) {
+    if ($this->input->is_ajax_request()) {
       if ($this->validation()) {
         $data = ['title' => $this->input->post('title', true)];
         $last_id = $this->m_navigations->create($data);
@@ -90,24 +89,28 @@ class Navigations extends CI_Controller {
       $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
-    // }
+    }
   }
   
-  public function create_action() {
+  public function create_page_action() {
     if ($this->input->is_ajax_request()) {
       if ($this->validation()) {
         $data = $this->get_post_data();
+        $nav_id = $this->input->post('nav_id', true);
+
+        $this->vars['data'] = $data;
+        $this->vars['nav_id'] = $nav_id;
 
         $this->tmp['upload_failed'] = FALSE;
-        if (! empty($_FILES['image'])) {
-          $upload = $this->upload_image();
-          if ($upload) {
-            $data['image'] = $upload['file_name'];
-          }
-        }
+        // if (! empty($_FILES['image'])) {
+        //   $upload = $this->upload_image();
+        //   if ($upload) {
+        //     $data['image'] = $upload['file_name'];
+        //   }
+        // }
 
-        if ( ! $this->tmp['upload_failed']) {
-          if ($this->model->create($this->table, $data)) {
+        // if ( ! $this->tmp['upload_failed']) {
+          if ($this->m_navigations->create_page($data, $nav_id)) {
             $this->vars['message'] = 'Data baru berhasil dibuat';
             $this->vars['status'] = 'success';
             
@@ -115,7 +118,7 @@ class Navigations extends CI_Controller {
             $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';
             $this->vars['status'] = 'failed';
           }
-        }
+        // }
 
       } else {
         $this->vars['status'] = 'failed';
@@ -163,10 +166,6 @@ class Navigations extends CI_Controller {
   public function get_all() {
     if ($this->input->is_ajax_request()) {
       $vars = [];
-      // $count = $this->model->count_all($this->table);
-      // $limit = 5;
-      // $offset = ($this->input->get('page') * $limit) - $limit;
-      // $data = $this->m_navigations->get_all($limit, $offset);
       $data = $this->m_navigations->get_all();
 
       if ($data) {
@@ -222,7 +221,7 @@ class Navigations extends CI_Controller {
       'title' => $this->input->post('title', true),
       'content' => $this->input->post('content'),
       'author' => 1,
-      'type' => 'navigations'
+      'type' => 'page'
     ];
   }
 

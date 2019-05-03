@@ -1,29 +1,14 @@
 <script>
 
-  function getData() {
-    $.ajax({
-      url: '<?= $get_action; ?>',
-      method: 'GET',
-      success: (res) => {
-        res.data.forEach(row => {
-          let html = `
-            <option value="${row.id}">${row.title}</option>
-          `
-          $('#album').append(html)
-        })
-      },
-      failed: (error) => {
-        console.log(error)
-      }
-    })
-  }
-
   function submitPost() {
     showLoader()
 
     let formData = new FormData()
-    formData.append('album_id', $('#album option:selected').val())
+    formData.append('title', $('#title').val())
+    formData.append('content', $('#ckeditor-textarea').val())
+    // formData.append('content', CKEDITOR.instances['ckeditor-textarea'].getData())
     formData.append('image', $('input[name="image"]')[0].files[0])
+    formData.append('nav_id', '<?= $nav_id; ?>')
 
     $.ajax({
       url: '<?= $action; ?>',
@@ -47,11 +32,10 @@
 
   function clearForm() {
     $('input[type="text"], input[type="file"]').val('')
-    $('#album').prop('selectedIndex', 0)
+    // CKEDITOR.instances['ckeditor-textarea'].setData('')
   }
 
   $(document).ready(() => {
-    getData()
     
     $('#btn-create').on('click', () => {
       submitPost()
@@ -61,18 +45,19 @@
 </script>
 
 <div class="form-group">
-  <p>Album: </p>
-  <select name="album" id="album" class="form-control">
-    <option value="">Pilih</option>
-  </select>
+  <input type="text" name="title" id="title" class="form-control" placeholder="Title">
 </div>
 
 <div class="form-group">
-  <p>Foto: </p>
+  <textarea name="content" id="ckeditor-textarea" rows="10" class="form-control"></textarea>
+</div>
+
+<div class="form-group">
+  <p>Gambar: </p>
   <input type="file" name="image" />
 </div>
 
 <br>
 <div class="form-group">
-  <button name="btn-create" id="btn-create" type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Simpan</button>
+  <button name="btn-create" id="btn-create" type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Publish</button>
 </div>
