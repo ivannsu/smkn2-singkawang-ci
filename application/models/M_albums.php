@@ -16,6 +16,10 @@ class M_albums extends CI_Model {
       ->get(self::$table)
       ->result();
   }
+
+  public function count_all() {
+    return $this->db->count_all(self::$table);
+  }
 }
 
 ?>

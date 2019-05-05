@@ -76,6 +76,10 @@ class M_navigations extends CI_Model {
   public function count_by_nav($id) {
     return $this->db->where('nav_id', $id)->count_all_results(self::$table_pages);
   }
+
+  public function count_all() {
+    return $this->db->count_all(self::$table_pages);
+  }
 }
 
 ?>

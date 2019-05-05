@@ -17,6 +17,13 @@ class M_information extends CI_Model {
       ->get(self::$table)
       ->result();
   }
+
+  public function count_all() {
+    return $this->db
+      ->where('type', 'information')
+      ->from(self::$table)
+      ->count_all_results();
+  }
 }
 
 ?>
