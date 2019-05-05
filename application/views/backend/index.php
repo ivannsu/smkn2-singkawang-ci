@@ -13,6 +13,7 @@
   <?= link_tag('assets/css/toastr/toastr.min.css'); ?>
   <?= link_tag('assets/css/adminlte/AdminLTE.min.css'); ?>
   <?= link_tag('assets/css/adminlte/skin-blue.css'); ?>
+  <?= link_tag('assets/css/spinner.css'); ?>
   <?= link_tag('assets/css/backend.css'); ?>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -58,7 +59,7 @@
       <div class="navbar-custom-menu">
         <a href="" class="btn btn-link" style="color: white; padding: 15px"><span class="fa fa-key"></span> UBAH PASSWORD</a>
         &nbsp;
-        <a href="" class="btn btn-danger" style="padding: 15px; border-radius: 0px;"><span class="fa fa-sign-out"></span> LOGOUT</a>
+        <a href="<?= site_url('login/logout'); ?>" class="btn btn-danger" style="padding: 15px; border-radius: 0px;"><span class="fa fa-sign-out"></span> LOGOUT</a>
       </div>
     </nav>
   </header>
