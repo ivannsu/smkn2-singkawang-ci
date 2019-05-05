@@ -103,15 +103,31 @@ class Headmaster extends Admin_Controller {
   public function edit_action() {
     $id = $this->get_post_id();
     $data = $this->get_post_data();
+    $tmp_data = $this->model->get_row($this->pk, $id, $this->table);
 
-    $action = $this->model->update($this->table, $data, $id);
+    $this->tmp['upload_failed'] = FALSE;
 
-    if ($action) {
-      $this->vars['message'] = 'Sukses mengedit data';
-      $this->vars['status'] = 'success';
-    } else {
-      $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
-      $this->vars['status'] = 'failed';
+    if ( ! empty($_FILES['image'])) {
+      $upload = $this->upload_image();
+      if ($upload) {
+        $data['image'] = $upload['file_name'];
+      }
+    }
+
+    if ( ! $this->tmp['upload_failed']) {
+      $action = $this->model->update($this->table, $data, $id);
+
+      if ($action) {
+        @unlink($upload['file_path'].'lg_'.$tmp_data->image);
+        @unlink($upload['file_path'].'md_'.$tmp_data->image);
+        @unlink($upload['file_path'].'sm_'.$tmp_data->image);
+
+        $this->vars['message'] = 'Sukses mengedit data';
+        $this->vars['status'] = 'success';
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
+        $this->vars['status'] = 'failed';
+      }
     }
 
     $this->output
