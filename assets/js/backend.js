@@ -19,10 +19,6 @@ $(document).ready(() => {
     CKEDITOR.replace('ckeditor-textarea')
   }
 
-  // if($('#datatables-table').length !== 0) {
-  //   $('#datatables-table').DataTable()
-  // }
-
   toastr.options = {
     "closeButton": true,
     "debug": false,
