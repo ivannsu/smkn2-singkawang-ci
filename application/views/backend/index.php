@@ -48,7 +48,7 @@
 <div class="wrapper">
 
   <header class="main-header">
-    <a href="" class="logo">
+    <a href="<?= site_url('dashboard'); ?>" class="logo">
       <span class="logo-mini"><b></b></span>
       <span class="logo-lg">Admin</span>
     </a>
@@ -69,7 +69,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"></li>
         <!-- DASHBOARD -->
-        <li><a href=""><i class="fa fa-dashboard"></i> <span>BERANDA</span></a></li>
+        <li><a href="<?= site_url('dashboard'); ?>"><i class="fa fa-dashboard"></i> <span>BERANDA</span></a></li>
         <!-- JURUSAN -->
         <li class="treeview">
           <a href="#"><i class="fa fa-list"></i> <span>JURUSAN</span>
@@ -216,7 +216,7 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      Developed by <b><a href="https://ivannsu.com">Ivan</a></b>
+      Developed by <b><a href="https://www.ivannsu.com">Ivan</a></b>
     </div>
     <strong>Copyright &copy; 2019 <a href="#">SMK Negeri 2 Singkawang</a>.</strong> All rights reserved.
   </footer>
