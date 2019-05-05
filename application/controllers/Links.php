@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Links extends CI_Controller {
+class Links extends Admin_Controller {
   private $pk = '';
   private $table = '';
   private $vars = [];

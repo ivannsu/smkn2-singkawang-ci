@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Albums extends CI_Controller {
+class Albums extends Admin_Controller {
   private $pk = '';
   private $table = '';
   private $vars = [];

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Jurusan extends CI_Controller {
+class Jurusan extends Admin_Controller {
   private $pk = '';
   private $table = '';
   private $vars = [];

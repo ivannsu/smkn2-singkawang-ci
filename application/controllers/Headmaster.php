@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Headmaster extends CI_Controller {
+class Headmaster extends Admin_Controller {
   private $pk = '';
   private $pk_val = '';
   private $table = '';
