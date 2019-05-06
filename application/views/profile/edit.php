@@ -5,6 +5,7 @@
 
     let id = '<?= $id; ?>'
     let get_action = '<?= $get_action; ?>' + id
+    let img_src_url = BASE_URL + 'media_library/profile/'
 
     $.ajax({
       url: get_action,
@@ -19,6 +20,14 @@
         $('#twitter').val(res.row.twitter)
         $('#youtube').val(res.row.youtube)
         $('#instagram').val(res.row.instagram)
+
+        if (res.row.img_header) {
+          $('#img_header_href').attr('href', img_src_url + res.row.img_header)
+          $('#img_header').attr('src', img_src_url + res.row.img_header)
+        } else {
+          $('#img_header').attr('src', img_src_url + 'placeholder.png')
+          $('#img_header').css('width', 200)
+        }
 
         hideLoader()
       },
@@ -44,6 +53,7 @@
     formData.append('twitter', $('#twitter').val())
     formData.append('youtube', $('#youtube').val())
     formData.append('instagram', $('#instagram').val())
+    formData.append('img_header', $('input[name="img_header"]')[0].files[0])
 
     console.log(formData)
 
@@ -116,6 +126,16 @@
 <div class="form-group">
   <label for="instagram"><h4>Instagram</h4></label>
   <input type="text" name="instagram" id="instagram" class="form-control" placeholder="Instagram">
+</div>
+
+<div class="form-group">
+  <label><h4>Gambar Banner</h4></label>
+  <div>
+    <a href="" id="img_header_href">
+      <img src="" id="img_header" width="200" />
+    </a>
+  </div>
+  <input type="file" name="img_header" class="form-control" />
 </div>
 
 <div class="form-group">

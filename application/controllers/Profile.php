@@ -103,15 +103,29 @@ class Profile extends Admin_Controller {
   public function edit_action() {
     $id = $this->get_post_id();
     $data = $this->get_post_data();
+    $tmp_data = $this->model->get_row($this->pk, $id, $this->table);
 
-    $action = $this->model->update($this->table, $data, $id);
+    $this->tmp['upload_failed'] = FALSE;
 
-    if ($action) {
-      $this->vars['message'] = 'Sukses mengedit data';
-      $this->vars['status'] = 'success';
-    } else {
-      $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
-      $this->vars['status'] = 'failed';
+    if ( ! empty($_FILES['img_header'])) {
+      $upload = $this->upload_image('img_header');
+      if ($upload) {
+        $data['img_header'] = $upload['file_name'];
+      }
+    }
+
+    if ( ! $this->tmp['upload_failed']) {
+      $action = $this->model->update($this->table, $data, $id);
+
+      if ($action) {
+        @unlink($upload['file_path'].$tmp_data->img_header);
+
+        $this->vars['message'] = 'Sukses mengedit data';
+        $this->vars['status'] = 'success';
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
+        $this->vars['status'] = 'failed';
+      }
     }
 
     $this->output
@@ -205,7 +219,7 @@ class Profile extends Admin_Controller {
 		return $val->run();
   }
 
-  private function upload_image() {
+  private function upload_image($input_name) {
     $config = [
       'upload_path' => './media_library/profile/',
       'allowed_types' => 'jpg|png|jpeg|gif',
@@ -214,7 +228,7 @@ class Profile extends Admin_Controller {
     ];
     $this->load->library('upload', $config);
 
-    if ( ! $this->upload->do_upload('image')) {
+    if ( ! $this->upload->do_upload($input_name)) {
       $this->vars['status'] = 'failed';
       $this->vars['message'] = $this->upload->display_errors();
       $this->tmp['upload_failed'] = TRUE;
@@ -222,50 +236,9 @@ class Profile extends Admin_Controller {
       return FALSE;
     } else {
       $file = $this->upload->data();
-      $this->resize_image(FCPATH.'media_library/profile', $file['file_name']);
 
       return $file;
     }
-  }
-
-  private function resize_image($path, $filename) {
-    $this->load->library('image_lib');
-
-		// Large Image
-		$large['image_library'] = 'gd2';
-		$large['source_image'] = $path .'/'. $filename;
-		$large['new_image'] = './media_library/profile/lg_'. $filename;
-    $large['maintain_ratio'] = true;
-    $large['width'] = 800;
-    $large['height'] = 600;
-		$this->image_lib->initialize($large);
-		$this->image_lib->resize();
-    $this->image_lib->clear();
-    
-    // Medium Image
-		$medium['image_library'] = 'gd2';
-		$medium['source_image'] = $path .'/'. $filename;
-		$medium['new_image'] = './media_library/profile/md_'. $filename;
-    $medium['maintain_ratio'] = true;
-    $medium['width'] = 460;
-    $medium['height'] = 308;
-		$this->image_lib->initialize($medium);
-		$this->image_lib->resize();
-    $this->image_lib->clear();
-    
-    // Small Image
-		$small['image_library'] = 'gd2';
-		$small['source_image'] = $path .'/'. $filename;
-		$small['new_image'] = './media_library/profile/sm_'. $filename;
-    $small['maintain_ratio'] = true;
-    $small['width'] = 200;
-    $small['height'] = 150;
-		$this->image_lib->initialize($small);
-		$this->image_lib->resize();
-    $this->image_lib->clear();
-    
-    // Unlink Old Image
-    @unlink($path.'/'.$filename);
   }
 }
 

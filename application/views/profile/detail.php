@@ -3,7 +3,7 @@
   function getData() {
     let id = '<?= $id; ?>'
     let action = '<?= $action; ?>' + id
-    // let img_src_url = BASE_URL + 'media_library/prestasi/'
+    let img_src_url = BASE_URL + 'media_library/profile/'
 
     $.ajax({
       url: action,
@@ -20,16 +20,15 @@
           $('#p-twitter').text(res.row.twitter)
           $('#p-youtube').text(res.row.youtube)
           $('#p-instagram').text(res.row.instagram)
-          // $('#post-title').text(res.row.title)
-          // $('#post-info').text(res.row.created_at)
-          // $('#post-content').html(res.row.content)
 
-          // if (res.row.image) {
-          //   $('#post-img').attr('src', img_src_url + 'md_' + res.row.image)
-          // } else {
-          //   $('#post-img').attr('src', img_src_url + 'placeholder.png')
-          //   $('#post-img').css('width', 400)
-          // }
+
+          if (res.row.img_header) {
+            $('#p-banner-img-href').attr('href', img_src_url + res.row.img_header)
+            $('#p-banner-img').attr('src', img_src_url + res.row.img_header)
+          } else {
+            $('#p-banner-img').attr('src', img_src_url + 'placeholder.png')
+            $('#p-banner-img').css('width', 200)
+          }
         } else {
 
         }
@@ -48,10 +47,16 @@
 
 </script>
 
-<!-- <div class="img-container text-center">
-  <img src="" id="post-img" />
-</div> -->
 <table class="table table-bordered table-striped">
+  <tr>
+    <td>Banner</td>
+    <td>:</td>
+    <td>
+      <a href="" id="p-banner-img-href">
+        <img src="" id="p-banner-img" width="200" />
+      </a>
+    </td>
+  </tr>
   <tr>
     <td>Alamat</td>
     <td>:</td>

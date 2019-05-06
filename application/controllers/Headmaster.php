@@ -108,6 +108,8 @@ class Headmaster extends Admin_Controller {
     $this->tmp['upload_failed'] = FALSE;
 
     if ( ! empty($_FILES['image'])) {
+      echo 'masuk sini';
+      
       $upload = $this->upload_image();
       if ($upload) {
         $data['image'] = $upload['file_name'];
