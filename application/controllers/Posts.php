@@ -6,6 +6,7 @@ class Posts extends Admin_Controller {
   private $table = '';
   private $vars = [];
   private $tmp = [];
+  private $image_path = FCPATH.'media_library/posts/';
 
   public  function __construct() {
     parent::__construct();
@@ -143,11 +144,17 @@ class Posts extends Admin_Controller {
   }
 
   public function delete() {
-    $id = $this->get_post_id();
-    $action = $this->model->delete($this->table, $id);
     $vars = [];
+    $id = $this->get_post_id();
+    $tmp_image = $this->model->get_row($this->pk, $id, $this->table)->image;
+
+    $action = $this->model->delete($this->table, $id);
 
     if ($action) {
+      @unlink($this->image_path.'lg_'.$tmp_image);
+      @unlink($this->image_path.'md_'.$tmp_image);
+      @unlink($this->image_path.'sm_'.$tmp_image);
+
       $vars['message'] = 'Sukses menghapus data';
       $vars['status'] = 'success';
     } else {

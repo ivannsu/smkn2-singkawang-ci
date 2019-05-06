@@ -22,7 +22,7 @@ class Home extends Public_Controller {
     $data = [
       'profile' => $this->m_profile->get(),
       'headmaster' => $this->m_headmaster->get(),
-      'information' => $this->m_information->get_all(5),
+      'information' => $this->m_information->get_all(4),
       'links' => $this->m_links->get_all(),
       'articles' => $this->m_posts->get_all(4, 4),
       'slideshow' => $this->m_posts->get_all(4, 0),
