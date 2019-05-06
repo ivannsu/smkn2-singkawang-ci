@@ -10,6 +10,14 @@ class M_photos extends CI_Model {
     parent::__construct();
   }
 
+  public function get_all($limit = '18446744073709551615', $offset = '0') {
+    return $this->db
+      ->order_by(self::$pk, 'DESC')
+      ->limit($limit, $offset)
+      ->get(self::$table)
+      ->result();
+  }
+
   public function get_by_album($id, $limit = '18446744073709551615', $offset = '0') {
     return $this->db
       ->where(self::$fk_album, $id)

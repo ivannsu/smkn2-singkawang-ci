@@ -17,6 +17,13 @@ class M_headmaster extends CI_Model {
       ->get(self::$table)
       ->result();
   }
+
+  public function get() {
+    return $this->db
+      ->where(self::$pk, self::$pk_val)
+      ->get(self::$table)
+      ->row();
+  }
 }
 
 ?>

@@ -10,12 +10,11 @@ class M_profile extends CI_Model {
     parent::__construct();
   }
 
-  public function get_all($limit = '18446744073709551615', $offset = '0') {
+  public function get() {
     return $this->db
-      ->order_by(self::$pk, 'DESC')
-      ->limit($limit, $offset)
+      ->where(self::$pk, self::$pk_val)
       ->get(self::$table)
-      ->result();
+      ->row();
   }
 }
 
