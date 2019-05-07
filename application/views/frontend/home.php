@@ -300,6 +300,11 @@
       ?>
 
       </div>
+      <div class="section-bottom">
+        <div class="text-center">
+          <a href="<?= site_url('public/page/index/albums'); ?>" class="btn btn-primary btn-large btn-section">Selengkapnya &rarr;</a>
+        </div>
+      </div>
     </div>
   </section>
 

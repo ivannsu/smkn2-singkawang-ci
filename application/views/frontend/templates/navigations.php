@@ -49,7 +49,7 @@
       
       ?>
       <a class="nav-link" href="<?= site_url('public/page/index/all_prestasi'); ?>">Prestasi</a>
-      <a class="nav-link" href="<?= site_url("/page.php?name=gallery"); ?>">Gallery</a>
+      <a class="nav-link" href="<?= site_url('public/page/index/albums'); ?>">Gallery</a>
       <a class="nav-link" href="<?= site_url("/page.php?name=alumni"); ?>">Alumni</a>
     </ul>
   </div>

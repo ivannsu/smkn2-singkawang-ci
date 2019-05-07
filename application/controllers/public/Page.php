@@ -15,6 +15,8 @@ class Page extends Public_Controller {
       'm_photos',
       'm_navigations',
       'm_prestasi',
+      'm_albums',
+      'm_photos',
     ]);
     $this->load->helper(['datetime']);
   }
@@ -63,10 +65,21 @@ class Page extends Public_Controller {
       $data['content'] = 'public/jurusan/detail';
     }
 
+    else if ($name == 'album') {
+      $data['album_title'] = $this->model->get_row('id', $id, 'albums')->title;
+      $data['photos'] = $this->m_photos->get_by_album($id);
+      $data['content'] = 'public/albums/detail';
+    }
+
     else if ($name == 'articles') {
       $table = 'posts';
       $data['articles'] = $this->m_posts->get_all();
       $data['content'] = 'public/articles/index';
+    }
+
+    else if ($name == 'albums') {
+      $data['albums'] = $this->m_albums->get_all();
+      $data['content'] = 'public/albums/index';
     }
     
     else if ($name == 'all_information') {
