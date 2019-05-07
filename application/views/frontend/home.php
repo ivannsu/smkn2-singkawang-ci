@@ -1,92 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" href="<?= base_url('media_library/images/icon.ico'); ?>" type="image/x-icon">
-  <title><?= $profile->name; ?></title>
-  <?= link_tag('assets/boostrap4/bootstrap.min.css'); ?>
-  <?= link_tag('assets/slick/slick.css'); ?>
-  <?= link_tag('assets/slick/slick-theme.css'); ?>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <?= link_tag('assets/css/frontend.css'); ?>
-</head>
-<body>
+<?php $this->load->view('frontend/templates/open-html'); ?>
 
-  <header class="header">
-    <div class="container">
-      <h1>
-        <a href="<?= site_url('public/home'); ?>">
-          <?php if ($profile->img_header) { ?>
-            <img src="<?= base_url('media_library/profile/'.$profile->img_header); ?>" alt="Logo <?= $profile->name; ?>" class="img-logo" />
-          <?php 
-          } else {
-            echo '<p class="text-center" style="padding: 5%">'.$profile->name.'</p>';
-          }
-          ?>
-        </a>
-      </h1>
-    </div>
-  </header>
-
-  <nav class="navbar navbar-expand-lg custom-nav">
-    <div class="container">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#"><span class="fas fa-home"></span> Home</a>
-        </li>
-
-        <?php
-
-        foreach($navigations['single'] as $nav) {
-          echo '
-            <li class="nav-item">
-              <a class="nav-link" href="'
-              . site_url('pages/'.$nav['post_id'])
-              . '">'
-              . $nav['post_title']
-              . '</a>
-            </li>
-          ';
-        }
-
-        foreach($navigations['dropdown'] as $dropdown) {
-          echo '
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                '
-                .$dropdown['nav_title']
-                .'
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          ';
-
-          foreach($dropdown['navs'] as $dropdown_child) {
-            echo '
-              <a class="dropdown-item" href="'
-              . site_url('pages/'.$dropdown_child['post_id'])
-              . '">'
-              . $dropdown_child['post_title']
-              . '</a>
-            ';
-          }
-          echo '</div></li>';
-        }
-        
-        ?>
-        <a class="nav-link" href="<?= site_url("/page.php?name=prestasi_list"); ?>">Prestasi</a>
-        <a class="nav-link" href="<?= site_url("/page.php?name=gallery"); ?>">Gallery</a>
-        <a class="nav-link" href="<?= site_url("/page.php?name=alumni"); ?>">Alumni</a>
-      </ul>
-    </div>
-  </div>
-  </nav>
+  <?php $this->load->view('frontend/templates/header'); ?>
+  <?php $this->load->view('frontend/templates/navigations'); ?>
 
   <section class="section-slide">
     <div class="container">
@@ -407,32 +322,6 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <p>Copyright &copy; 2019 - <?= $profile->name; ?></p>
-      <!-- <p>Developed by <a href="https://ivannsu.com" class="footer-link">Ivan</a></p> -->
-    </div>
-  </footer>
+  <?php $this->load->view('frontend/templates/footer'); ?>
 
-  <script src="<?= base_url('assets/js/jquery/jquery-3.3.1.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/boostrap4/popper.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/boostrap4/bootstrap.min.js'); ?>"></script>
-  <script src="<?= base_url('assets/slick/slick.min.js'); ?>"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-  <script>
-  
-  $(document).ready(function(){
-    $('.slider').slick({
-      accessibility: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000,
-    });
-  });
-
-  </script>
-
-</body>
-</html>
+<?php $this->load->view('frontend/templates/close-html'); ?>

@@ -28,8 +28,30 @@ class Home extends Public_Controller {
       'slideshow' => $this->m_posts->get_all(4, 0),
       'jurusan' => $this->m_jurusan->get_all(),
       'photos' => $this->m_photos->get_all(6, 0),
+      'navigations' => $this->generate_navigations()
     ];
 
+    $this->load->view('frontend/home', $data);
+  }
+
+  public function page() {
+    $name = $this->uri->segment(4);
+    $data['page'] = $name;
+    $data['profile'] = $this->m_profile->get();
+    $data['navigations'] = $this->generate_navigations();
+    $data['information'] = $this->m_information->get_all(4);
+    $data['articles'] = $this->m_posts->get_all(4, 0);
+
+    if ($name == 'article') {
+      $data['content'] = 'public/articles/detail';
+    } else {
+      $data['content'] = 'public/404';
+    }
+
+    $this->load->view('frontend/page', $data);
+  }
+
+  private function generate_navigations() {
     $navigations = $this->m_navigations->get_all();
     $new_navigations = [
       'single' => [],
@@ -77,9 +99,7 @@ class Home extends Public_Controller {
         }
       }
     }
-    $data['navigations'] = $new_navigations;
-
-    $this->load->view('frontend/home', $data);
+    return $new_navigations;
   }
 }
 
