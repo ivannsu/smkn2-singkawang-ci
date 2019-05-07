@@ -5,8 +5,8 @@
 
     let formData = new FormData()
     formData.append('title', $('#title').val())
-    formData.append('content', $('#ckeditor-textarea').val())
-    // formData.append('content', CKEDITOR.instances['ckeditor-textarea'].getData())
+    // formData.append('content', $('#ckeditor-textarea').val())
+    formData.append('content', CKEDITOR.instances['ckeditor-textarea'].getData())
     formData.append('image', $('input[name="image"]')[0].files[0])
     formData.append('nav_id', '<?= $nav_id; ?>')
 
@@ -32,7 +32,7 @@
 
   function clearForm() {
     $('input[type="text"], input[type="file"]').val('')
-    // CKEDITOR.instances['ckeditor-textarea'].setData('')
+    CKEDITOR.instances['ckeditor-textarea'].setData('')
   }
 
   $(document).ready(() => {

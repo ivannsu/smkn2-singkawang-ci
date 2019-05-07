@@ -16,7 +16,7 @@
         echo '
           <li class="nav-item">
             <a class="nav-link" href="'
-            . site_url('pages/'.$nav['post_id'])
+            . site_url('public/page/index/page/'.$nav['post_id'])
             . '">'
             . $nav['post_title']
             . '</a>
@@ -38,7 +38,7 @@
         foreach($dropdown['navs'] as $dropdown_child) {
           echo '
             <a class="dropdown-item" href="'
-            . site_url('pages/'.$dropdown_child['post_id'])
+            . site_url('public/page/index/page/'.$dropdown_child['post_id'])
             . '">'
             . $dropdown_child['post_title']
             . '</a>
@@ -48,7 +48,7 @@
       }
       
       ?>
-      <a class="nav-link" href="<?= site_url("/page.php?name=prestasi_list"); ?>">Prestasi</a>
+      <a class="nav-link" href="<?= site_url('public/page/index/all_prestasi'); ?>">Prestasi</a>
       <a class="nav-link" href="<?= site_url("/page.php?name=gallery"); ?>">Gallery</a>
       <a class="nav-link" href="<?= site_url("/page.php?name=alumni"); ?>">Alumni</a>
     </ul>

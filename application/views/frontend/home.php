@@ -21,7 +21,7 @@
               '%created_at%' => $created_at,
               '%img_src%' => base_url("media_library/posts/$image"),
               '%img_alt%' => "$title image",
-              '%href%' => '#'
+              '%href%' => site_url('public/page/index/article/'.$id)
             ];
 
             $template = '
@@ -52,7 +52,7 @@
               $created_at =  explode(' ', $row->created_at);
 
               $vars = [
-                '%href%' => '#',
+                '%href%' => site_url('public/page/index/information/'.$id),
                 '%title%' => $title,
                 '%date%' => dateformat($created_at[0]),
                 '%time%' => timeformat($created_at[1]),
@@ -74,7 +74,7 @@
             <hr/>
             <div class="text-center">
               <p>
-              <a href="#" class="btn btn btn-outline-primary">Selengkapnya &rarr;</a>
+              <a href="<?= site_url('public/page/index/all_information'); ?>" class="btn btn btn-outline-primary">Selengkapnya &rarr;</a>
               </p>
             </div>
           </div>
@@ -129,7 +129,7 @@
             '%title%' => $title,
             '%img_src%' => base_url("media_library/posts/$image"),
             '%img_alt%' => "$title image",
-            '%href%' => '#',
+            '%href%' => site_url('public/page/index/article/'.$id),
             '%date%' => dateformat($created_at[0]),
             '%time%' => timeformat($created_at[1]),
           ];
@@ -160,7 +160,7 @@
       </div>
       <div class="section-bottom">
         <div class="text-center">
-          <a href="#" class="btn btn-primary btn-large btn-section">Selengkapnya &rarr;</a>
+          <a href="<?= site_url('public/page/index/articles'); ?>" class="btn btn-primary btn-large btn-section">Selengkapnya &rarr;</a>
         </div>
       </div>
     </div>
@@ -183,7 +183,7 @@
           '%name%' => $name,
           '%img_src%' => base_url("media_library/jurusan/$image"),
           '%img_alt%' => "Logo Jurusan $name",
-          '%href%' => '#'
+          '%href%' => site_url('public/page/index/jurusan/'.$id)
         ];
         $template = '
           <div class="col-lg-2">
@@ -198,6 +198,57 @@
       }
       ?>
 
+      </div>
+    </div>
+  </section>
+
+  <section class="section-prestasi">
+    <div class="container">
+      <div class="section-heading">
+        <h3>Prestasi</h3>
+      </div>
+      
+      <div class="row">
+      <?php
+      foreach ($prestasi as $row) {
+        $id = $row->id;
+        $title = $row->title;
+        $created_at =  explode(' ', $row->created_at);
+        $image = ($row->image) ? 'md_'.$row->image : 'placeholder.png';
+
+        $vars = [
+          '%title%' => $title,
+          '%img_src%' => base_url("media_library/prestasi/$image"),
+          '%img_alt%' => "Prestasi $title",
+          '%href%' => site_url('public/page/index/prestasi/'.$id),
+          '%date%' => dateformat($created_at[0]),
+          '%time%' => timeformat($created_at[1]),
+        ];
+        $template = '
+        <div class="col-lg-6">
+          <a href="%href%">
+            <div class="media prestasi-media">
+              <img class="mr-3" src="%img_src%" alt="%img_alt%" style="max-width: 250px" />
+              <div class="media-body">
+                <h5 class="mt-0">%title%</h5>
+                <small>
+                  <span class="fas fa-calendar-alt"></span> %date% | <span class="fas fa-clock"></span> %time%
+                </small>
+              </div>
+            </div>
+          <a/>
+        </div>
+        ';
+
+        echo strtr($template, $vars);
+      }
+      ?>
+      
+      </div>
+      <div class="section-bottom">
+        <div class="text-center">
+          <a href="<?= site_url('public/page/index/all_prestasi'); ?>" class="btn btn-primary btn-large btn-section">Selengkapnya &rarr;</a>
+        </div>
       </div>
     </div>
   </section>

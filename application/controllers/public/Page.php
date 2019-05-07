@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends Public_Controller {
+class Page extends Public_Controller {
 
   public function __construct() {
     parent::__construct();
@@ -20,24 +20,9 @@ class Home extends Public_Controller {
   }
 
   public function index() {
-    $data = [
-      'profile' => $this->m_profile->get(),
-      'headmaster' => $this->m_headmaster->get(),
-      'information' => $this->m_information->get_all(4),
-      'links' => $this->m_links->get_all(),
-      'articles' => $this->m_posts->get_all(4, 4),
-      'slideshow' => $this->m_posts->get_all(4, 0),
-      'jurusan' => $this->m_jurusan->get_all(),
-      'photos' => $this->m_photos->get_all(6, 0),
-      'navigations' => $this->generate_navigations(),
-      'prestasi' => $this->m_prestasi->get_all(2, 0),
-    ];
-
-    $this->load->view('frontend/home', $data);
-  }
-
-  public function page() {
     $name = $this->uri->segment(4);
+    $id = $this->uri->segment(5);
+
     $data['page'] = $name;
     $data['profile'] = $this->m_profile->get();
     $data['navigations'] = $this->generate_navigations();
@@ -45,8 +30,58 @@ class Home extends Public_Controller {
     $data['articles'] = $this->m_posts->get_all(4, 0);
 
     if ($name == 'article') {
+      $table = 'posts';
+      $data['article'] = $this->model->get_row('id', $id, $table);
+      $data['created_at'] = explode(' ', $data['article']->created_at);
       $data['content'] = 'public/articles/detail';
-    } else {
+    }
+
+    else if ($name == 'page') {
+      $table = 'posts';
+      $data['page'] = $this->model->get_row('id', $id, $table);
+      $data['created_at'] = explode(' ', $data['page']->created_at);
+      $data['content'] = 'public/page/detail';
+    }
+
+    else if ($name == 'prestasi') {
+      $table = 'posts';
+      $data['prestasi'] = $this->model->get_row('id', $id, $table);
+      $data['created_at'] = explode(' ', $data['prestasi']->created_at);
+      $data['content'] = 'public/prestasi/detail';
+    }
+
+    else if ($name == 'information') {
+      $table = 'posts';
+      $data['information'] = $this->model->get_row('id', $id, $table);
+      $data['created_at'] = explode(' ', $data['information']->created_at);
+      $data['content'] = 'public/information/detail';
+    }
+
+    else if ($name == 'jurusan') {
+      $table = 'posts';
+      $data['jurusan'] = $this->model->get_row('id', $id, $table);
+      $data['content'] = 'public/jurusan/detail';
+    }
+
+    else if ($name == 'articles') {
+      $table = 'posts';
+      $data['articles'] = $this->m_posts->get_all();
+      $data['content'] = 'public/articles/index';
+    }
+    
+    else if ($name == 'all_information') {
+      $table = 'posts';
+      $data['information'] = $this->m_information->get_all();
+      $data['content'] = 'public/information/index';
+    }
+
+    else if ($name == 'all_prestasi') {
+      $table = 'posts';
+      $data['prestasi'] = $this->m_prestasi->get_all();
+      $data['content'] = 'public/prestasi/index';
+    }
+
+    else {
       $data['content'] = 'public/404';
     }
 

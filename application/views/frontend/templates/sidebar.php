@@ -10,7 +10,7 @@
         $id = $row->id;
         $title = $row->title;
         $created_at =  explode(' ', $row->created_at);
-        $href = '#';
+        $href = site_url('public/page/index/information/'.$id);
 
         echo "<li><a href='$href'>$title<a/></li>";
       }
@@ -29,7 +29,7 @@
       foreach ($articles as $row) {
         $id = $row->id;
         $title = $row->title;
-        $href = '#';
+        $href = site_url('public/page/index/article/'.$id);
 
         echo "<li><a href='$href'>$title<a/></li>";
       }

@@ -11,8 +11,8 @@
       method: 'GET',
       success: (res) => {
         $('#title').val(res.row.title)
-        $('#ckeditor-textarea').val(res.row.content)
-        // CKEDITOR.instances['ckeditor-textarea'].setData(res.row.content)
+        // $('#ckeditor-textarea').val(res.row.content)
+        CKEDITOR.instances['ckeditor-textarea'].setData(res.row.content)
 
         hideLoader()
       },
@@ -30,8 +30,8 @@
     let formData = new FormData()
     formData.append('id', id)
     formData.append('title', $('#title').val())
-    formData.append('content', $('#ckeditor-textarea').val())
-    // formData.append('content', CKEDITOR.instances['ckeditor-textarea'].getData())
+    // formData.append('content', $('#ckeditor-textarea').val())
+    formData.append('content', CKEDITOR.instances['ckeditor-textarea'].getData())
 
     $.ajax({
       url: '<?= $action; ?>',
