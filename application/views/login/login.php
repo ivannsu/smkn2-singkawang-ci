@@ -64,7 +64,7 @@
     <button type="submit" class="login-button" name="login" id="btn-login">Login</button>
   </p>
   <br>
-  <p style="text-align:center;">
+  <!-- <p style="text-align:center;">
     <a href="<?= site_url('login/register'); ?>">Daftar</a>
-  </p>
+  </p> -->
 </div>

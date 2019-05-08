@@ -77,15 +77,15 @@ class Login extends Public_Controller {
     }
   }
 
-  public function register() {
-    $data = [
-      'content' => 'login/register',
-      'title' => 'Daftar',
-      'action' => site_url('login/register_action')
-    ];
+  // public function register() {
+  //   $data = [
+  //     'content' => 'login/register',
+  //     'title' => 'Daftar',
+  //     'action' => site_url('login/register_action')
+  //   ];
 
-    $this->load->view('login/index', $data);
-  }
+  //   $this->load->view('login/index', $data);
+  // }
 
   public function register_action() {
     if ($this->input->is_ajax_request()) {
@@ -120,13 +120,19 @@ class Login extends Public_Controller {
   }
 
   public function change_password() {
-    $data = [
-      'title' => 'Ubah Password',
-      'content' => 'login/change_password',
-      'action' => site_url('login/change_password_action')
-    ];
+    $level = $this->session->user_level;
 
-    $this->load->view('backend/index', $data);
+    if ($level == 'ADMIN' OR $level == 'STUDENTS' OR $level == 'CONTRIBUTORS') {
+      $data = [
+        'title' => 'Ubah Password',
+        'content' => 'login/change_password',
+        'action' => site_url('login/change_password_action')
+      ];
+  
+      $this->load->view('backend/index', $data);
+    } else {
+      show_404();
+    }
   }
 
   public function change_password_action() {
