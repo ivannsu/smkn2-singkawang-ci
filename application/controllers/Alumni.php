@@ -25,6 +25,7 @@ class Alumni extends Admin_Controller {
       'content' => 'alumni/index',
       'action' => site_url('alumni/get_all'),
       'delete_action' => site_url('alumni/delete'),
+      'import_action' => site_url('alumni/import_excel'),
       'detail_url' => site_url('alumni/detail/'),
       'edit_url' => site_url('alumni/edit/'),
       // 'page' => $this->uri->segment(3, 1)
@@ -35,7 +36,7 @@ class Alumni extends Admin_Controller {
 
   public function detail() {
     $data = [
-      'title' => 'Detail Artikel',
+      'title' => 'Detail Alumni',
       'action' => site_url('alumni/get_by_id/'),
       'content' => 'alumni/detail',
       'id' => $this->uri->segment(3)
@@ -91,24 +92,26 @@ class Alumni extends Admin_Controller {
   }
 
   public function edit() {
+    $this->load->model('m_jurusan');
     $data = [
-      'title' => 'Edit Artikel',
+      'title' => 'Edit Alumni',
       'content' => 'alumni/edit',
       'get_action' => site_url('alumni/get_by_id/'),
       'action' => site_url('alumni/edit_action'),
-      'id' => $this->uri->segment(3)
+      'id' => $this->uri->segment(3),
+      'jurusan' => $this->m_jurusan->get_all()
     ];
 
     $this->load->view('backend/index', $data);
   }
 
   public function edit_action() {
+    $vars = [];
     $id = $this->get_post_id();
     $data = $this->get_post_data();
 
     $action = $this->model->update($this->table, $data, $id);
-    $vars = [];
-
+  
     if ($action) {
       $vars['message'] = 'Sukses mengedit data';
       $vars['status'] = 'success';
@@ -145,14 +148,14 @@ class Alumni extends Admin_Controller {
   public function delete() {
     $vars = [];
     $id = $this->get_post_id();
-    $tmp_image = $this->model->get_row($this->pk, $id, $this->table)->image;
+    // $tmp_image = $this->model->get_row($this->pk, $id, $this->table)->image;
 
     $action = $this->model->delete($this->table, $id);
 
     if ($action) {
-      @unlink($this->image_path.'lg_'.$tmp_image);
-      @unlink($this->image_path.'md_'.$tmp_image);
-      @unlink($this->image_path.'sm_'.$tmp_image);
+      // @unlink($this->image_path.'lg_'.$tmp_image);
+      // @unlink($this->image_path.'md_'.$tmp_image);
+      // @unlink($this->image_path.'sm_'.$tmp_image);
 
       $vars['message'] = 'Sukses menghapus data';
       $vars['status'] = 'success';
@@ -168,17 +171,95 @@ class Alumni extends Admin_Controller {
 
   public function get_by_id() {
     $id = $this->uri->segment(3);
-    $row = $this->model->get_row($this->pk, $id, $this->table);
+    $row = $this->m_alumni->get_by_id($id);
 
     if ($row) {
-      $vars['message'] = 'Sukses menampilkan data';
-      $vars['status'] = 'success';
-      $vars['row'] = $row;
+      $this->vars['message'] = 'Sukses menampilkan data';
+      $this->vars['status'] = 'success';
+      $this->vars['row'] = $row;
     }
 
     $this->output
       ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
+      ->set_output(json_encode($this->vars));
+  }
+
+  public function import_excel() {
+    $this->tmp['upload_failed'] = FALSE;
+
+    if ( ! empty($_FILES['media_excel'])) {
+      $upload = $this->upload_excel();
+      if ($upload) {
+        include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+
+        $excel_reader = new PHPExcel_Reader_Excel2007();
+        $load_excel = $excel_reader->load(FCPATH.'media_library/excel/'.$upload['file_name']);
+        // $load_excel = $excel_reader->load(FCPATH.'media_library/excel/excel_data.xlsx');
+        $sheet = $load_excel->getActiveSheet()->toArray(null, true, true ,true);
+        $excel_data = [];
+
+        $numrow = 1;
+        foreach($sheet as $row){
+          if($numrow > 1){
+            array_push($excel_data, array(
+              'name' => $row['A'],
+              'gender' => $row['B'],
+              'address' => $row['C'],
+              'telp' => $row['D'],
+              'email' => $row['E'],
+              'angkatan' => $row['F'],
+              'jurusan_id' => $row['G'],
+              'job' => $row['H'],
+              'college' => $row['I'],
+            ));
+          }
+          $numrow++;
+        }
+
+        $insert = $this->insert_multiple($excel_data);
+
+        $this->vars['info'] = $insert;
+
+        if ($insert) {
+          $this->vars['message'] = 'Sukses mengimport data';
+          $this->vars['status'] = 'success';
+        } else {
+          $this->vars['status'] = 'failed';
+          $this->vars['message'] = 'Terjadi kesalahan saat mengimport data';
+        }
+
+      }
+    }
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($this->vars));
+  }
+
+  public function upload_excel() {
+    $this->load->library('upload');
+    
+    $config['upload_path'] = './media_library/excel/';
+    $config['allowed_types'] = 'xlsx';
+    $config['max_size']  = '2048';
+    $config['overwrite'] = true;
+    $config['file_name'] = 'excel_data';
+  
+    $this->upload->initialize($config);
+    if($this->upload->do_upload('media_excel')){
+      $file = $this->upload->data();
+
+      return $file;
+    }else{
+      $this->vars['message'] = $this->upload->display_errors();
+      $this->vars['status'] = 'failed';
+
+      return FALSE;
+    }
+  }
+
+  public function insert_multiple($data){
+    return $this->db->insert_batch('alumni', $data);
   }
 
   private function get_post_data() {

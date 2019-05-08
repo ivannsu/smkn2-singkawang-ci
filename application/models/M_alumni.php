@@ -11,13 +11,23 @@ class M_alumni extends CI_Model {
 
   public function get_all($limit = '18446744073709551615', $offset = '0') {
     return $this->db
-      ->select('*, posts.title as jurusan')
+      ->select('*, posts.title as jurusan, alumni.id as alumni_id')
       ->from(self::$table)
       ->join('posts', 'posts.id = alumni.jurusan_id')
       ->order_by('alumni.'.self::$pk, 'DESC')
       ->limit($limit, $offset)
       ->get()
       ->result();
+  }
+
+  public function get_by_id($id) {
+    return $this->db
+      ->select('*, posts.title as jurusan, alumni.id as alumni_id')
+      ->from(self::$table)
+      ->join('posts', 'posts.id = alumni.jurusan_id')
+      ->where('alumni.'.self::$pk, $id)
+      ->get()
+      ->row();
   }
 
   public function getByJurusan($jurusan_id, $limit = '18446744073709551615', $offset = '0') {

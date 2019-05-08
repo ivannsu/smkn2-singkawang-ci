@@ -31,6 +31,7 @@
   let SITE_URL = '<?= site_url(); ?>'
   </script>
   <script src="<?= base_url('assets/js/jquery/jquery-3.3.1.min.js'); ?>"></script>
+  <script src="<?= base_url('assets/js/boostrap/bootstrap.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/adminlte/adminlte.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/datatables/jquery.dataTables.min.js'); ?>"></script>
   <script src="<?= base_url('assets/js/datatables/dataTables.bootstrap.min.js'); ?>"></script>

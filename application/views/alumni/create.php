@@ -116,10 +116,10 @@
   <input type="text" class="form-control" name="college" id="college" />
 </div>
 
-<div class="form-group">
+<!-- <div class="form-group">
   <h5>Foto Profil <span class="text-danger">*</span></h5>
   <input type="file" name="image" required />
-</div>
+</div> -->
 
 <br>
 <div class="form-group">
