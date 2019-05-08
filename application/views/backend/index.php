@@ -58,7 +58,7 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
       <div class="navbar-custom-menu">
-        <a href="" class="btn btn-link" style="color: white; padding: 15px"><span class="fa fa-key"></span> UBAH PASSWORD</a>
+        <a href="<?= site_url('login/change_password'); ?>" class="btn btn-link" style="color: white; padding: 15px"><span class="fa fa-key"></span> UBAH PASSWORD</a>
         &nbsp;
         <a href="<?= site_url('login/logout'); ?>" class="btn btn-danger" style="padding: 15px; border-radius: 0px;"><span class="fa fa-sign-out"></span> LOGOUT</a>
       </div>

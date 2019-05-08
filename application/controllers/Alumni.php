@@ -185,58 +185,59 @@ class Alumni extends Admin_Controller {
   }
 
   public function import_excel() {
-    $this->tmp['upload_failed'] = FALSE;
+    if ($this->input->is_ajax_request()) {
+      if ( ! empty($_FILES['media_excel'])) {
+        $upload = $this->upload_excel();
+        if ($upload) {
+          include APPPATH.'third_party/PHPExcel/PHPExcel.php';
 
-    if ( ! empty($_FILES['media_excel'])) {
-      $upload = $this->upload_excel();
-      if ($upload) {
-        include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+          $excel_reader = new PHPExcel_Reader_Excel2007();
+          $load_excel = $excel_reader->load(FCPATH.'media_library/excel/'.$upload['file_name']);
+          $sheet = $load_excel->getActiveSheet()->toArray(null, true, true ,true);
+          $excel_data = [];
 
-        $excel_reader = new PHPExcel_Reader_Excel2007();
-        $load_excel = $excel_reader->load(FCPATH.'media_library/excel/'.$upload['file_name']);
-        // $load_excel = $excel_reader->load(FCPATH.'media_library/excel/excel_data.xlsx');
-        $sheet = $load_excel->getActiveSheet()->toArray(null, true, true ,true);
-        $excel_data = [];
-
-        $numrow = 1;
-        foreach($sheet as $row){
-          if($numrow > 1){
-            array_push($excel_data, array(
-              'name' => $row['A'],
-              'gender' => $row['B'],
-              'address' => $row['C'],
-              'telp' => $row['D'],
-              'email' => $row['E'],
-              'angkatan' => $row['F'],
-              'jurusan_id' => $row['G'],
-              'job' => $row['H'],
-              'college' => $row['I'],
-            ));
+          $numrow = 1;
+          foreach($sheet as $row){
+            if($numrow > 1){
+              array_push($excel_data, array(
+                'name' => $row['A'],
+                'gender' => $row['B'],
+                'address' => $row['C'],
+                'telp' => $row['D'],
+                'email' => $row['E'],
+                'angkatan' => $row['F'],
+                'jurusan_id' => $row['G'],
+                'job' => $row['H'],
+                'college' => $row['I'],
+              ));
+            }
+            $numrow++;
           }
-          $numrow++;
+
+          $insert = $this->insert_multiple($excel_data);
+
+          $this->vars['info'] = $insert;
+
+          if ($insert) {
+            $this->vars['message'] = 'Sukses mengimport data';
+            $this->vars['status'] = 'success';
+          } else {
+            $this->vars['status'] = 'failed';
+            $this->vars['message'] = 'Terjadi kesalahan saat mengimport data';
+          }
+
         }
-
-        $insert = $this->insert_multiple($excel_data);
-
-        $this->vars['info'] = $insert;
-
-        if ($insert) {
-          $this->vars['message'] = 'Sukses mengimport data';
-          $this->vars['status'] = 'success';
-        } else {
-          $this->vars['status'] = 'failed';
-          $this->vars['message'] = 'Terjadi kesalahan saat mengimport data';
-        }
-
       }
-    }
 
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($this->vars));
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      show_404();
+    }
   }
 
-  public function upload_excel() {
+  private function upload_excel() {
     $this->load->library('upload');
     
     $config['upload_path'] = './media_library/excel/';
@@ -258,7 +259,7 @@ class Alumni extends Admin_Controller {
     }
   }
 
-  public function insert_multiple($data){
+  private function insert_multiple($data){
     return $this->db->insert_batch('alumni', $data);
   }
 

@@ -119,6 +119,51 @@ class Login extends Public_Controller {
     redirect('login');
   }
 
+  public function change_password() {
+    $data = [
+      'title' => 'Ubah Password',
+      'content' => 'login/change_password',
+      'action' => site_url('login/change_password_action')
+    ];
+
+    $this->load->view('backend/index', $data);
+  }
+
+  public function change_password_action() {
+    if ($this->input->is_ajax_request()) { 
+      $user_id = $this->session->user_id;
+      $old_password = $this->input->post('old_password', true);
+      $new_password = password_hash($this->input->post('new_password', true), PASSWORD_DEFAULT);
+
+      $user = $this->model->get_row($this->pk, $user_id, $this->table);
+      $verify = password_verify($old_password, $user->password);
+
+      if ($verify) {
+        $update = $this->model->update($this->table, ['password' => $new_password], $user_id);
+
+        if ($update) {
+          $this->vars['message'] = 'Sukses mengubah password';
+          $this->vars['status'] = 'success';
+
+          $this->session->unset_userdata(['user_id', 'user_level']);
+          session_destroy();
+        } else {
+          $this->vars['message'] = 'Terjadi kesalahan saat mengubah password';
+          $this->vars['status'] = 'failed';
+        }
+      } else {
+        $this->vars['message'] = 'Password anda salah';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      show_404();
+    }
+  }
+
   private function validation() {
     $this->load->library('form_validation');
 
@@ -128,12 +173,6 @@ class Login extends Public_Controller {
     $val->set_rules('username', 'Username', 'trim|required');
     $val->set_rules('password', 'Password', 'trim|required');
     $val->set_error_delimiters('<div>&sdot; ', '</div>');
-
-    // name
-    // email
-    // username
-    // password
-    // confirm_password
     
     return $val->run();
   }

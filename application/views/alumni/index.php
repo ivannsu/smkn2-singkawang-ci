@@ -132,7 +132,8 @@
 
 <div class="pull-right">
   <div class="btn-group" role="group" aria-label="...">
-    <button type="button" href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> Import Excel</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload"></i> Import Excel</button>
+    <a href="<?= base_url('media_library/excel/contoh_excel_alumni.xlsx'); ?>" class="btn btn-link"><i class="fa fa-file"></i> Format File Excel</a>
   </div>
 </div>
 

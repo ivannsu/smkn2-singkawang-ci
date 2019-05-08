@@ -20,6 +20,7 @@
           res.data.forEach(row => {
             let tableRow = `
               <tr>
+                <td>${row.id}</td>
                 <td>
                   <a href="${detail_url + row.id}">
                   ${row.title}
@@ -93,6 +94,7 @@
 <table class="table table-bordered table-hover table-striped" id="datatables-table">
   <thead>
     <tr>
+      <th># ID</th>
       <th>NAMA</th>
       <th>PENULIS</th>
       <th></th>
