@@ -179,7 +179,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="<?= site_url('prestasi'); ?>">DATA ALUMNI</a></li>
+            <li><a href="<?= site_url('alumni'); ?>">DATA ALUMNI</a></li>
+            <li><a href="<?= site_url('alumni/create'); ?>">TAMBAH ALUMNI</a></li>
           </ul>
         </li>
         <!-- <li><a href=""><i class="fa fa-link"></i> <span>LINKS</span></a></li> -->

@@ -17,6 +17,7 @@ class Page extends Public_Controller {
       'm_prestasi',
       'm_albums',
       'm_photos',
+      'm_alumni',
     ]);
     $this->load->helper(['datetime']);
   }
@@ -92,6 +93,25 @@ class Page extends Public_Controller {
       $table = 'posts';
       $data['prestasi'] = $this->m_prestasi->get_all();
       $data['content'] = 'public/prestasi/index';
+    }
+
+    else if ($name == 'alumni') {
+      $alumni_jurusan = $this->uri->segment(5);
+      $alumni_angkatan = $this->uri->segment(6);
+
+      if ($alumni_jurusan AND ! $alumni_angkatan) {
+        $data['jurusan'] = $this->model->get_row('id', $alumni_jurusan, 'posts')->title;
+        $data['alumni'] = $this->m_alumni->getUniqAngkatanByJurusan($alumni_jurusan);
+      } else if ($alumni_jurusan AND $alumni_angkatan) {
+        $queryParam = ['jurusan_id' => $alumni_jurusan, 'angkatan' => $alumni_angkatan];
+        $data['alumni'] = $this->m_alumni->getByJurusanAngkatan($queryParam);
+      } else {
+        $data['jurusan'] = $this->m_jurusan->get_all();
+      }
+
+      $data['alumni_jurusan'] = $alumni_jurusan;
+      $data['alumni_angkatan'] = $alumni_angkatan;
+      $data['content'] = 'public/alumni/index';
     }
 
     else {
