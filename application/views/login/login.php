@@ -55,7 +55,7 @@
     <h3>Login</h3>
   </div> -->
   <p>
-    <input type="text" name="username" id="username" placeholder="Username" />
+    <input type="text" name="username" id="username" placeholder="Username / Email" />
   </p>
   <p>
     <input type="password" name="password" id="password" placeholder="Password" />

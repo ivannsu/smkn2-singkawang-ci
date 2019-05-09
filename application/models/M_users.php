@@ -9,9 +9,10 @@ class M_users extends CI_Model {
     parent::__construct();
   }
 
-  public function getByUsername($username) {
+  public function getByUsernameOREmail($username) {
     return $this->db
       ->where('username', $username)
+      ->or_where('email', $username)
       ->get(self::$table);
   }
 }

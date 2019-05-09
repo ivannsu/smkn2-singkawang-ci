@@ -31,7 +31,7 @@ class Login extends Public_Controller {
         $username = $this->input->post('username', true);
         $password = $this->input->post('password', true);
 
-        $user = $this->m_users->getByUsername($username);
+        $user = $this->m_users->getByUsernameOREmail($username);
 
         if ($user->num_rows() > 0) {
           $user_data = $user->row();
@@ -54,17 +54,6 @@ class Login extends Public_Controller {
           $this->vars['message'] = 'Username atau Password Salah';
           $this->vars['status'] = 'failed';
         }
-
-        // $data = $this->get_post_data();
-
-        // if ($this->model->create($this->table, $data)) {
-        //   $this->vars['message'] = 'Pendaftaran berhasil';
-        //   $this->vars['status'] = 'success';
-          
-        // } else {
-          // $this->vars['message'] = 'Terjadi kesalahan saat melakukan pendaftaran';
-          // $this->vars['status'] = 'failed';
-        // }
 
       } else {
         $this->vars['status'] = 'failed';
