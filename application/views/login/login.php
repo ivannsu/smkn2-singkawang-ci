@@ -18,12 +18,7 @@
         showToast(res.status, res.message)
       
         if (res.status == 'success') {
-          if (res.level == 'ADMIN') {
-            document.location = SITE_URL + '/dashboard'
-          } else if (res.level == 'STUDENTS') {
-            document.location = SITE_URL + '/welcome'
-          }
-
+          document.location = res.redirect_link
           clearForm()
         }
       },

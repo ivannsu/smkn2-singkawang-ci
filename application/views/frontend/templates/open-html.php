@@ -27,8 +27,10 @@
   <link rel="shortcut icon" href="<?= base_url('media_library/images/icon.ico'); ?>" type="image/x-icon">
   <?= link_tag('assets/boostrap4/bootstrap.min.css'); ?>
   <?= link_tag('assets/slick/slick.css'); ?>
-  <?= link_tag('assets/slick/slick-theme.css'); ?>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<?= link_tag('assets/slick/slick-theme.css'); ?>
+	<?= link_tag('assets/css/spinner.css'); ?>
+	<?= link_tag('assets/css/toastr/toastr.min.css'); ?>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <?= link_tag('assets/css/frontend.css'); ?>
 </head>
 <body>

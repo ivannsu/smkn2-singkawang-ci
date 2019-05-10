@@ -42,10 +42,17 @@ class Login extends Public_Controller {
               'user_id' => $user_data->id,
               'user_level' => $user_data->level
             ]);
+
+            if ($user_data->level == 'ADMIN') {
+              $this->vars['redirect_link'] = site_url('dashboard');
+            } else if ($user_data->level == 'STUDENTS') {
+              $this->vars['redirect_link'] = site_url('welcome');
+            } else if ($user_data->level == 'CANDIDATE_STUDENTS') {
+              $this->vars['redirect_link'] = site_url('public/ppdb/step/1');
+            }
             
             $this->vars['message'] = 'Login berhasil, Redirect dalam 3 detik';
             $this->vars['status'] = 'success';
-            $this->vars['level'] = $user_data->level;
           } else {
             $this->vars['message'] = 'Username atau Password Salah';
             $this->vars['status'] = 'failed';
