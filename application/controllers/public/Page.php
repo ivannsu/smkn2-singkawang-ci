@@ -28,7 +28,7 @@ class Page extends Public_Controller {
 
     $data['page'] = $name;
     $data['profile'] = $this->m_profile->get();
-    $data['navigations'] = $this->generate_navigations();
+    $data['navigations'] = $this->m_navigations->client_get_all();
     $data['information'] = $this->m_information->get_all(4);
     $data['articles'] = $this->m_posts->get_all(4, 0);
 
@@ -119,57 +119,6 @@ class Page extends Public_Controller {
     }
 
     $this->load->view('frontend/page', $data);
-  }
-
-  private function generate_navigations() {
-    $navigations = $this->m_navigations->get_all();
-    $new_navigations = [
-      'single' => [],
-      'dropdown' => []
-    ];
-    $tmp_nav_id = 0;
-    $tmp_nav_counter = -1;
-
-    foreach ($navigations as $row) {
-      $nav_id = $row->nav_id;
-      $nav_title = $row->nav_title;
-      $post_id = $row->post_id;
-      $post_title = $row->post_title;
-
-      // Single Nav
-      if ($nav_id == 0) {
-        array_push($new_navigations['single'], [
-          'post_id' => $post_id,
-          'post_title' => $post_title
-        ]);
-      }
-      // Dropdown Nav
-      else {
-        if ($nav_id != $tmp_nav_id) {
-          $tmp_nav_id = $nav_id;
-          $tmp_nav_counter += 1;
-
-          // Init Dropdown Child Data
-          array_push($new_navigations['dropdown'], [
-            'nav_title' => $nav_title,
-            'navs' => []
-          ]);
-          
-          // First Item
-          array_push($new_navigations['dropdown'][$tmp_nav_counter]['navs'], [
-            'post_id' => $post_id,
-            'post_title' => $post_title
-          ]);
-          
-        } else {
-          array_push($new_navigations['dropdown'][$tmp_nav_counter]['navs'], [
-            'post_id' => $post_id,
-            'post_title' => $post_title
-          ]);
-        }
-      }
-    }
-    return $new_navigations;
   }
 }
 

@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#"><span class="fas fa-home"></span> Home</a>
+        <a class="nav-link" href="<?= site_url('public/home'); ?>"><span class="fas fa-home"></span> Home</a>
       </li>
 
       <?php
