@@ -10,6 +10,33 @@ class M_students extends CI_Model {
     parent::__construct();
   }
 
+  public function get_by_user($user_id) {
+    return $this->db
+      ->select('
+        x1.*,
+        x2.id,
+        x2.name,
+        x2.email,
+        x2.level,
+        x3.id,
+        x3.title as jurusan
+      ')
+      ->join('users x2', 'x1.user_id = x2.id', 'LEFT')
+      ->join('posts x3', 'x1.jurusan_id = x3.id', 'LEFT')
+      ->where('x1.user_id', $user_id)
+      ->get(self::$table . ' x1')
+      ->row();
+  }
+
+  public function current_candidate_step($user_id) {
+    return $this->db
+      ->select('x1.current_candidate_step')
+      ->where('user_id', $user_id)
+      ->get(self::$table . ' x1')
+      ->row()
+      ->current_candidate_step;
+  }
+
   public function update($table, $data, $value) {
     $this->db->trans_start();
     $this->db->where(self::$pk_user, $value);
