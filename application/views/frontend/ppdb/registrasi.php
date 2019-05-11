@@ -1,18 +1,17 @@
-<?php $this->load->view('frontend/templates/open-html'); ?>
-
-  <?php $this->load->view('frontend/templates/header'); ?>
-  <?php $this->load->view('frontend/templates/navigations'); ?>
+<?php $this->load->view('frontend/templates-ppdb/open-html'); ?>
+  <?php $this->load->view('frontend/templates-ppdb/navigations'); ?>
+  <?php $this->load->view('frontend/templates-ppdb/header'); ?>
 
   <!-- CONTENT -->
-  <section class="section-ppdb">
-    <div class="container">
+  <div class="ppdb-main-content">
+    <div class="container" style="max-width: 450px">
       <div class="row">
         <div class="col-lg-12">
-          <h2 class="text-center">Daftar Online</h2>
-          <div class="text-center">
-            <a href="#"><span class="fas fa-book"></span> Panduan</a>
-          </div>
-          <div class="form-container">
+          <h3 class="text-center">Pendaftaran</h3>
+          <div style="margin-top: 60px;"></div>
+
+          <div class="ppdb-panel">
+
             <div class="form-group">
               <input type="text" name="fm-name" id="fm-name" class="form-control" placeholder="Full Name">
             </div>
@@ -35,14 +34,17 @@
             <div class="text-center">
               <a href="<?= site_url('public/ppdb/login'); ?>" class="btn btn-link">Login</a>
             </div>
-          </div>
+
+          </div> <!-- ./ppdb-panel -->
+
         </div>
       </div>
     </div>
-  </section>
-  <?php $this->load->view('frontend/templates/footer'); ?>
+  </div>
+  <?php $this->load->view('frontend/templates-ppdb/footer'); ?>
 
-<?php $this->load->view('frontend/templates/close-html'); ?>
+<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>
+
 <script>
   
   function submitPost() {

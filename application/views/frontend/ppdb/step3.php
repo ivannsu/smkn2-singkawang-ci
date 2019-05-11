@@ -12,38 +12,53 @@
 
           <div style="margin-top: 80px;"></div>
           
-          <h3 class="text-center">Langkah 1</h3>
+          <h3 class="text-center">Langkah 3</h3>
 
           <div style="margin-top: 60px;"></div>
 
           <div class="ppdb-panel">
-            <div class="form-group">
-              <label for="fm-name">Nama Lengkap</label>
-              <input type="text" name="fm-name" id="fm-name" class="form-control" disabled value="<?= $student_name; ?>">
-            </div>
-            <div class="form-group">
-              <label for="fm-prev_school_name">Asal SMP</label>
-              <input type="text" name="fm-prev_school_name" id="fm-prev_school_name" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="fm-prev_school_name">Alamat SMP</label>
-              <textarea name="fm-prev_school_address" id="fm-prev_school_address" rows="5" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="fm-jurusan_id">Kejuruan yang diminati</label>
-              <select name="fm-jurusan_id" class="form-control" id="fm-jurusan_id" required>
-                <option value="">Pilih</option>
-                <?php
-                foreach ($jurusan as $row) {
-                  echo '<option value="'.$row->id.'">'.$row->title.'</option>'; 
-                }
-                ?>
-              </select>
-            </div>
-            <div class="form-group">
-              <button name="fm-btn-save" id="fm-btn-save" class="btn btn-primary">Selanjutnya &rarr;</button>
-            </div>
+          <!-- style="border: 1px solid #dee2e6" -->
+            <table class="table table-bordered">
+              <thead>
+                <th>Berkas</th>
+                <th>Status</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="<?= site_url('public/ppdb/kartu_registrasi_sementara'); ?>">Kartu Registrasi Sementara</a></td>
+                  <!-- <td><span class="fas fa-check text-success"></span></td> -->
+                  <td><span class="fas fa-download"></span></td>
+                </tr>
+                <tr>
+                  <td>Fotocopy Ijazah yang telah dilegalisir</td>
+                  <!-- <td><span class="fas fa-check text-success"></span></td> -->
+                  <td><span class="fas fa-times text-danger"></span></td>
+                </tr>
+                <tr>
+                  <td>Fotocopy SKHUN yang telah dilegalisir</td>
+                  <!-- <td><span class="fas fa-check text-success"></span></td> -->
+                  <td><span class="fas fa-times text-danger"></span></td>
+                </tr>
+                <tr>
+                  <td>Fotocopy Akte Kelahiran</td>
+                  <!-- <td><span class="fas fa-check text-success"></span></td> -->
+                  <td><span class="fas fa-times text-danger"></span></td>
+                </tr>
+                <tr>
+                  <td>Fotocopy Kartu Keluarga</td>
+                  <!-- <td><span class="fas fa-check text-success"></span></td> -->
+                  <td><span class="fas fa-times text-danger"></span></td>
+                </tr>
+                <tr>
+                  <td>Pasfoto 3x4 berwarna 2 Lembar</td>
+                  <!-- <td><span class="fas fa-check text-success"></span></td> -->
+                  <td><span class="fas fa-times text-danger"></span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <!-- ./ppdb-panel -->
+
         </div>
       </div>
     </div>
@@ -51,6 +66,7 @@
   <?php $this->load->view('frontend/templates-ppdb/footer'); ?>
 
 <?php $this->load->view('frontend/templates-ppdb/close-html'); ?>
+
 <script>
 
   function getData() {
@@ -61,8 +77,8 @@
       method: 'GET',
       success: (res) => {
         console.log(res)
-        $('#fm-prev_school_name').val(res.row.prev_school_name)
-        $('#fm-prev_school_address').val(res.row.prev_school_address)
+        // $('#fm-prev_school_name').val(res.row.prev_school_name)
+        // $('#fm-prev_school_address').val(res.row.prev_school_address)
 
         $.each($('#fm-jurusan_id option'), function (i, elm) {
           if ($(this).val() == res.row.jurusan_id) {
