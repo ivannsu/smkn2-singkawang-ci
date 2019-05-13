@@ -53,10 +53,12 @@
           $('#fm-guardian_phone').val(res.row.guardian_phone)
           $('#fm-guardian_email').val(res.row.guardian_email)
 
-          $('#fm-exam_mtk_score').val(res.row.national_exam_scores.mtk)
-          $('#fm-exam_bi_score').val(res.row.national_exam_scores.bi)
-          $('#fm-exam_bingg_score').val(res.row.national_exam_scores.bing)
-          $('#fm-exam_ipa_score').val(res.row.national_exam_scores.ipa)
+          if (res.row.national_exam_scores) {
+            $('#fm-exam_mtk_score').val(res.row.national_exam_scores.mtk)
+            $('#fm-exam_bi_score').val(res.row.national_exam_scores.bi)
+            $('#fm-exam_bingg_score').val(res.row.national_exam_scores.bing)
+            $('#fm-exam_ipa_score').val(res.row.national_exam_scores.ipa)
+          }
 
           $.each($('#fm-gender option'), function (i, elm) {
             if ($(this).val() == res.row.gender) {

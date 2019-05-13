@@ -2,6 +2,12 @@
   <img class="ppdb-logo-img" src="<?= base_url('media_library/images/logo.png'); ?>">
   <h2>PPDB Online</h2>
   <a href="#" data-toggle="modal" data-target="#modalPanduan"><span class="fas fa-book"></span> Panduan</a>
+  /
+  <a href="#">Registrasi</a>
+  /
+  <a href="#">Login</a>
+  /
+  <a href="#">Logout</a>
 </header>
 
 <!-- Modal -->

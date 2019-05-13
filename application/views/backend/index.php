@@ -172,6 +172,21 @@
             <li><a href="<?= site_url('links/create'); ?>">TAMBAH BARU</a></li>
           </ul>
         </li>
+        <!-- PPDB -->
+        <li class="treeview">
+          <a href="#"><i class="fa fa-address-book-o"></i> <span>PPDB</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?= site_url('admission'); ?>">PENGATURAN ADMISI</a></li>
+            <li><a href="<?= site_url('ppdb'); ?>">DATA PENDAFTAR</a></li>
+            <li><a href="<?= site_url('ppdb/selection'); ?>">SELEKSI</a></li>
+            <li><a href="<?= site_url('ppdb'); ?>">DITERIMA</a></li>
+            <li><a href="<?= site_url('ppdb'); ?>">TIDAK DITERIMA</a></li>
+          </ul>
+        </li>
         <!-- DATA INDUK -->
         <li class="treeview">
           <a href="#"><i class="fa fa-address-book-o"></i> <span>DATA INDUK</span>

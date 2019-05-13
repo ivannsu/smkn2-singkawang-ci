@@ -29,6 +29,16 @@ class Ppdb extends Admin_Controller {
     $this->load->view('backend/index', $data);
   }
 
+  public function selection() {
+    $data = [
+      'title' => 'Seleksi PPDB',
+      'content' => 'ppdb/selection',
+      'action' => site_url('ppdb/selection_get_all_candidates'),
+    ];
+
+    $this->load->view('backend/index', $data);
+  }
+
   public function check() {
     $user_id = $this->uri->segment(3);
 
@@ -115,6 +125,27 @@ class Ppdb extends Admin_Controller {
     $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
+  }
+
+  public function selection_get_all_candidates() {
+    if ($this->input->is_ajax_request()) {
+      $data = $this->m_students->get_all_candidates('selection');
+
+      if ($data) {
+        $this->vars['message'] = 'Sukses menampilkan data';
+        $this->vars['status'] = 'success';
+        $this->vars['data'] = $data;
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      show_404();
+    }
   }
 
   public function get_all_candidates() {

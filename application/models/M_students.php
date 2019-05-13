@@ -10,8 +10,8 @@ class M_students extends CI_Model {
     parent::__construct();
   }
 
-  public function get_all_candidates($limit = '18446744073709551615', $offset = '0') {
-    return $this->db
+  public function get_all_candidates($type = '', $limit = '18446744073709551615', $offset = '0') {
+    $this->db
       ->select('
         x1.*,
         x2.id,
@@ -19,12 +19,26 @@ class M_students extends CI_Model {
         x2.email,
         x2.level,
         x3.id,
-        x3.title as jurusan
+        x3.title as jurusan,
+        x4.id,
+        x4.active
       ')
       ->join('users x2', 'x1.user_id = x2.id', 'LEFT')
       ->join('posts x3', 'x1.jurusan_id = x3.id', 'LEFT')
+      ->join('admission_phases x4', 'x1.admission_phase_id = x4.id')
       ->where('x1.is_candidate', 'true')
-      ->order_by('x1.id', 'DESC')
+      ->where('x4.active', 'true');
+
+    if ($type == 'selection') {
+      // For select verified (val: 4) candidates data
+      $this->db
+        ->where('x1.current_candidate_step', 4)
+        ->where('x1.passed_selection', 'on_going');
+    } else {
+      $this->db->order_by('x1.id', 'DESC');
+    }
+
+    return $this->db  
       ->limit($limit, $offset)
       ->get(self::$table . ' x1')
       ->result();

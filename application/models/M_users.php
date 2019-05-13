@@ -36,11 +36,18 @@ class M_users extends CI_Model {
     // Last Insert User ID
     $user_id = $this->db->insert_id();
     
+    // Load Admission Model to get active admission phase
+    $CI =& get_instance();
+    $CI->load->model('m_admission');
+
     // Create New Candidate Student
     $student = [
       'user_id' => $user_id,
       'registration_id' => uniqid(rand()),
-      'is_candidate' => 'true'
+      'is_candidate' => 'true',
+
+      // Set admission_phase_id with active admission phase
+      'admission_phase_id' => $CI->m_admission->get_active_phase()->id
     ];
     $this->db->insert('students', $student);
 
