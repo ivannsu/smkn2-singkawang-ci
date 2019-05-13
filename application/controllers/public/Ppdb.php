@@ -41,6 +41,7 @@ class Ppdb extends Public_Controller {
     
     $step = $this->uri->segment(4);
     $user_id = $this->session->user_id;
+    $last_step = $this->m_students->current_candidate_step($user_id);
 
     $data['profile'] = $this->m_profile->get();
     $data['navigations'] = $this->m_navigations->client_get_all();
@@ -49,11 +50,23 @@ class Ppdb extends Public_Controller {
     if ($step == '1') {
       $this->step1($user_id, $data);
     } else if ($step == '2') {
-      $this->step2($user_id, $data);
+      if ($last_step < $step) {
+        show_404();
+      } else {
+        $this->step2($user_id, $data);
+      }
     } else if ($step == '3') {
-      $this->step3($user_id, $data);
+      if ($last_step < $step) {
+        show_404();
+      } else {
+        $this->step3($user_id, $data);
+      }
     } else if ($step == '4') {
-      $this->step4($user_id, $data);
+      if ($last_step < $step) {
+        show_404();
+      } else {
+        $this->step4($user_id, $data);
+      }
     } else {
       show_404();
     }
@@ -107,10 +120,12 @@ class Ppdb extends Public_Controller {
     $user_level = $this->session->user_level;
 
     if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
+      include_once APPPATH.'/third_party/fpdf/fpdf.php';
+
+      $this->load->helper('format');
+
       $candidate = $this->m_students->get_by_user($user_id);
       $profile = $this->m_profile->get();
-
-      include_once APPPATH.'/third_party/fpdf/fpdf.php';
 
       $pdf = new FPDF('p', 'mm', 'A4');
       $pdf->AddPage();
@@ -125,7 +140,7 @@ class Ppdb extends Public_Controller {
       $pdf->Cell(0, 10, '', 'T', 1, 'C');
 
       $pdf->Cell(60, 10, 'No. Registrasi :');
-      $pdf->Cell(0, 10, $candidate->registration_id, 0, 1);
+      $pdf->Cell(0, 10, readbleUniqID($candidate->registration_id), 0, 1);
       $pdf->Cell(60, 10, 'Nama :');
       $pdf->Cell(0, 10, strtoupper($candidate->name), 0, 1);
       $pdf->Cell(60, 10, 'Asal SMP :');

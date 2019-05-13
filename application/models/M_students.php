@@ -10,6 +10,26 @@ class M_students extends CI_Model {
     parent::__construct();
   }
 
+  public function get_all_candidates($limit = '18446744073709551615', $offset = '0') {
+    return $this->db
+      ->select('
+        x1.*,
+        x2.id,
+        x2.name,
+        x2.email,
+        x2.level,
+        x3.id,
+        x3.title as jurusan
+      ')
+      ->join('users x2', 'x1.user_id = x2.id', 'LEFT')
+      ->join('posts x3', 'x1.jurusan_id = x3.id', 'LEFT')
+      ->where('x1.is_candidate', 'true')
+      ->order_by('x1.id', 'DESC')
+      ->limit($limit, $offset)
+      ->get(self::$table . ' x1')
+      ->result();
+  }
+
   public function get_by_user($user_id) {
     return $this->db
       ->select('
@@ -45,15 +65,6 @@ class M_students extends CI_Model {
 
     return $this->db->trans_status();
   }
-
-  // public function get_all($limit = '18446744073709551615', $offset = '0') {
-  //   return $this->db
-  //     ->where('type', 'article')
-  //     ->order_by(self::$pk, 'DESC')
-  //     ->limit($limit, $offset)
-  //     ->get(self::$table)
-  //     ->result();
-  // }
 
   // public function count_all() {
   //   return $this->db

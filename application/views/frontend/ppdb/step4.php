@@ -17,8 +17,9 @@
           <div style="margin-top: 60px;"></div>
 
           <div class="ppdb-panel">
-            <h2 class="text-center">DITERIMA</h2>
-
+            <h1 class="text-center">✅</h1>
+            <h3 class="text-center">Data telah diverifikasi</h3>
+            <p class="text-center">Dimohon untuk menunggu Hasil Penerimaan.</p>
           </div>
           <!-- ./ppdb-panel -->
 

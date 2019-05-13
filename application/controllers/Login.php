@@ -48,7 +48,7 @@ class Login extends Public_Controller {
             } else if ($user_data->level == 'STUDENTS') {
               $this->vars['redirect_link'] = site_url('welcome');
             } else if ($user_data->level == 'CANDIDATE_STUDENTS') {
-              $this->vars['redirect_link'] = site_url('public/ppdb/step/1');
+              $this->vars['redirect_link'] = site_url('public/ppdb/');
             }
             
             $this->vars['message'] = 'Login berhasil, Redirect dalam 3 detik';
