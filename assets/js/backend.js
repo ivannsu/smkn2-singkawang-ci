@@ -14,6 +14,25 @@ function showToast(type, msg) {
   }
 }
 
+function readbleUniqID(id) {
+  // 6061 5634 35cd 6e2b a45e 5f
+
+  let lengthOf = 4;
+  let calcLoop = id.length / lengthOf;
+  let startCounter = 0;
+  let endCounter = lengthOf;
+  let results = [];
+  
+  for (let i = 0; i < calcLoop; i++) {
+    results.push(id.slice(startCounter, endCounter));
+    
+    startCounter += lengthOf;
+    endCounter += lengthOf;
+  }
+  
+  return results.join('-');
+}
+
 $(document).ready(() => {
   if($('#ckeditor-textarea').length !== 0) {
     CKEDITOR.replace('ckeditor-textarea')
@@ -36,6 +55,8 @@ $(document).ready(() => {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
   }
+
+  readbleUniqID('6061563435cd6e2ba45e5f')
 
   // toastr["success"]("this is content", "Success")
   // toastr["error"]("this is content", "Error")
