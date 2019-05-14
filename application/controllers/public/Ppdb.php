@@ -99,6 +99,7 @@ class Ppdb extends Public_Controller {
   }
 
   private function step4($user_id, $data) {
+    $data['get_action'] = site_url('public/ppdb/get_candidate_data/');
 
     $this->load->view('public/ppdb/step4', $data);
   }
