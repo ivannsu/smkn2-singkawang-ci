@@ -37,8 +37,11 @@ class M_alumni extends CI_Model {
   }
 
   public function getByJurusan($jurusan_id, $limit = '18446744073709551615', $offset = '0') {
+    // where is verified only for client side, PLEASE NOTE THIS
+
     return $this->db
       ->where('jurusan_id', $jurusan_id)
+      ->where('is_verified', 'true')
       ->order_by(self::$pk, 'DESC')
       ->limit($limit, $offset)
       ->get(self::$table)
@@ -49,11 +52,14 @@ class M_alumni extends CI_Model {
     $jurusan_id = $data['jurusan_id'];
     $angkatan = $data['angkatan'];
 
+    // where is verified only for client side, PLEASE NOTE THIS
+
     return $this->db
       ->select('*, posts.title as jurusan, alumni.image as alumni_image')
       ->from(self::$table)
       ->join('posts', 'posts.id = alumni.jurusan_id')
       ->where('jurusan_id', $jurusan_id)
+      ->where('is_verified', 'true')
       ->where('angkatan', $angkatan)
       ->order_by('alumni.'.self::$pk, 'DESC')
       ->limit($limit, $offset)
@@ -62,10 +68,13 @@ class M_alumni extends CI_Model {
   }
 
   public function getUniqAngkatanByJurusan($jurusan_id) {
+    // where is verified only for client side, PLEASE NOTE THIS
+    
     return $this->db
       ->distinct()
       ->select('angkatan')
       ->where('jurusan_id', $jurusan_id)
+      ->where('is_verified', 'true')
       ->order_by(self::$pk, 'DESC')
       ->get(self::$table)
       ->result();
