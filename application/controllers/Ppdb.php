@@ -34,9 +34,29 @@ class Ppdb extends Admin_Controller {
       'title' => 'Seleksi PPDB',
       'content' => 'ppdb/selection',
       'action' => site_url('ppdb/selection_get_all_candidates'),
+      'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
     ];
 
     $this->load->view('backend/index', $data);
+  }
+
+  public function set_selection_status_action() {
+    $user_id = $this->input->post('user_id', true);
+    $passed_selection = $this->input->post('passed_selection', true);
+
+    $update = $this->m_students->update($this->table, ['passed_selection' => $passed_selection], $user_id);
+
+    if ($update) {
+      $this->vars['message'] = '1 Peserta seleksi telah diterima';
+      $this->vars['status'] = 'success';
+    } else {
+      $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';
+      $this->vars['status'] = 'failed';
+    }
+
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
   }
 
   public function check() {
