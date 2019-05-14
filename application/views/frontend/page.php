@@ -18,5 +18,4 @@
   </section>
 
   <?php $this->load->view('frontend/templates/footer'); ?>
-
 <?php $this->load->view('frontend/templates/close-html'); ?>

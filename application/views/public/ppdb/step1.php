@@ -50,7 +50,6 @@
   </div>
   <?php $this->load->view('frontend/templates-ppdb/footer'); ?>
 
-<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>
 <script>
 
   function getData() {
@@ -92,7 +91,7 @@
       method: 'POST',
       data: formData,
       contentType: false,
-			processData: false,
+      processData: false,
       success: (res) => {
         console.log(res)
         hideLoader()
@@ -112,7 +111,7 @@
     })
   }
 
-  $(document).ready(() => {
+  window.addEventListener('load', function() {
     getData()
 
     $('#fm-btn-save').on('click', () => {
@@ -121,3 +120,5 @@
   })
 
 </script>
+
+<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>

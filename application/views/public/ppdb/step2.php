@@ -284,8 +284,6 @@
 
   <?php $this->load->view('frontend/templates-ppdb/footer'); ?>
 
-<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>
-
 <script>
 
   function getData() {
@@ -444,12 +442,6 @@
         console.log(res)
         hideLoader()
         showToast(res.status, res.message)
-
-        // if (res.status == 'success') {
-        //   setTimeout(() => {
-        //     document.location = res.redirect_link
-        //   }, 1500);
-        // }
       },
       failed: (error) => {
         console.log(error)
@@ -459,7 +451,7 @@
     })
   }
 
-  $(document).ready(() => {
+  window.addEventListener('load', function() {
     getData()
 
     $('button[id^="fm-btn-save"]').each(function (i, elm) {
@@ -471,3 +463,5 @@
   })
 
 </script>
+
+<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>

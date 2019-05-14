@@ -43,8 +43,6 @@
   </div>
   <?php $this->load->view('frontend/templates-ppdb/footer'); ?>
 
-<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>
-
 <script>
   
   function submitPost() {
@@ -91,11 +89,12 @@
     $('input[type="text"], input[type="file"]').val('')
   }
 
-  $(document).ready(() => {
-    
+  window.addEventListener('load', function() {
     $('#fm-btn-registrasi').on('click', () => {
       submitPost()
     })
   })
 
-  </script>
+</script>
+
+<?php $this->load->view('frontend/templates-ppdb/close-html'); ?>
