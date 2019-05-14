@@ -11,7 +11,7 @@
       type: 'GET',
       success: (res) => {
         if (res.status == 'success') {
-          console.log(res)
+          // console.log(res)
 
           res.data.forEach(row => {
 
@@ -66,7 +66,7 @@
           id: id
         },
         success: (res) => {
-          console.log(res)
+          // console.log(res)
  
           tableBody.html('')
           getData()

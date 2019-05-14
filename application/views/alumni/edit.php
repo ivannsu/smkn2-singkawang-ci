@@ -74,7 +74,7 @@
       contentType: false,
 			processData: false,
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
       },

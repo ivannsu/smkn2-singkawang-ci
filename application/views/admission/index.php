@@ -10,7 +10,7 @@
       type: 'GET',
       success: (res) => {
         if (res.status == 'success') {
-          console.log(res)
+          // console.log(res)
 
           res.data.forEach(row => {
             let tableRow = `
@@ -63,7 +63,7 @@
         id: id
       },
       success: (res) => {
-        console.log(res)
+        // console.log(res)
 
         tableBody.html('')
         getData()
@@ -92,7 +92,7 @@
           id: id
         },
         success: (res) => {
-          console.log(res)
+          // console.log(res)
  
           tableBody.html('')
           getData()
@@ -125,7 +125,7 @@
       contentType: false,
 			processData: false,
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
 

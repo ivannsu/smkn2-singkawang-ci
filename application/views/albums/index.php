@@ -12,7 +12,7 @@
       type: 'GET',
       success: (res) => {
         if (res.status == 'success') {
-          console.log(res)
+          // console.log(res)
 
           res.data.forEach(row => {
             let tableRow = `

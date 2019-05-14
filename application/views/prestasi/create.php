@@ -25,7 +25,7 @@
       contentType: false,
 			processData: false,
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
         clearForm()

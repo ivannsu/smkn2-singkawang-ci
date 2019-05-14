@@ -14,7 +14,7 @@
       // },
       success: (res) => {
         if (res.status == 'success') {
-          // console.log(res)
+          // // console.log(res)
           let dropdown_nav_id = '0';
 
           res.data.forEach(row => {
@@ -112,7 +112,7 @@
           id: id
         },
         success: (res) => {
-          console.log(res)
+          // console.log(res)
           navData.html('')
           getData()
           hideLoader()

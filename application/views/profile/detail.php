@@ -10,7 +10,7 @@
       method: 'GET',
       success: (res) => {
         if (res.status == 'success') {
-          console.log(res)
+          // console.log(res)
           $('#p-address').text(res.row.address)
           $('#p-phone').text(res.row.phone)
           $('#p-email').text(res.row.email)

@@ -9,7 +9,7 @@
       url: action,
       method: 'GET',
       success: (res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.status == 'success') {
           $('#name').text(res.row.name)

@@ -11,7 +11,7 @@
       url: action,
       method: 'GET',
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         if (res.status == 'success') {
           $('#post-name').text(res.row.name)
           $('#post-content').html(res.row.content)

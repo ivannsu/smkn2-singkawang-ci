@@ -8,7 +8,7 @@
       type: 'GET',
       success: (res) => {
         if (res.status == 'success') {
-          console.log(res)
+          // console.log(res)
 
           $('#fm-name-2').val(res.row.name)
           $('#fm-prev_school_name').val(res.row.prev_school_name)
@@ -176,7 +176,7 @@
       contentType: false,
 			processData: false,
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
 
@@ -210,7 +210,7 @@
       contentType: false,
 			processData: false,
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
 
@@ -237,7 +237,7 @@
       contentType: false,
 			processData: false,
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
 

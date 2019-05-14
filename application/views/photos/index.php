@@ -12,7 +12,7 @@
         album_id: albumId
       },
       success: (res) => {
-        console.log(res)
+        // console.log(res)
 
         if (res.status == 'empty') {
           let href = BASE_URL + 'index.php/photos/create'
@@ -75,7 +75,7 @@
           id: id
         },
         success: (res) => {
-          console.log(res)
+          // console.log(res)
  
           $('#gallery').html('')
           getData()

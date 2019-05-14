@@ -15,7 +15,7 @@
       // },
       success: (res) => {
         if (res.status == 'success') {
-          console.log(res)
+          // console.log(res)
 
           res.data.forEach(row => {
             let tableRow = `
@@ -67,7 +67,7 @@
           id: id
         },
         success: (res) => {
-          console.log(res)
+          // console.log(res)
  
           tableBody.html('')
           getData()

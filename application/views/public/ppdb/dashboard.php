@@ -66,7 +66,7 @@
       url: '<?= $get_action; ?>',
       method: 'GET',
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         $('#fm-prev_school_name').val(res.row.prev_school_name)
         $('#fm-prev_school_address').val(res.row.prev_school_address)
 
@@ -100,7 +100,7 @@
       contentType: false,
 			processData: false,
       success: (res) => {
-        console.log(res)
+        // console.log(res)
         hideLoader()
         showToast(res.status, res.message)
 
