@@ -92,3 +92,12 @@ table.dataTable {
   border: 1px solid #dee2e6;
   border-top: none;
 }
+
+/* Turn Off Sort Button from User in DataTable */
+table.dataTable.no-sort-datatable thead .sorting:after, 
+table.dataTable.no-sort-datatable thead .sorting_asc:after,
+table.dataTable.no-sort-datatable thead .sorting_desc:after, 
+table.dataTable.no-sort-datatable thead .sorting_asc_disabled:after, 
+table.dataTable.no-sort-datatable thead .sorting_desc_disabled:after {
+  display: none;
+}

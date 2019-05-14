@@ -33,6 +33,31 @@ function readbleUniqID(id) {
   return results.join('-');
 }
 
+function readbleExamScores(exam_scores) {
+  let result = {};
+
+  exam_scores = exam_scores.split(',')
+
+  exam_scores.forEach((val, i) => {
+    let tmp = val.split('=')
+
+    result[tmp[0]] = parseInt(tmp[1])
+  })
+
+  return result
+}
+
+function getAverageOfScores(exam_scores) {
+  let obj = readbleExamScores(exam_scores)
+  let keysOfObj = Object.keys(obj)
+  let totalVal = 0
+
+  for (let i = 0; i < keysOfObj.length; i++) {
+    totalVal += obj[keysOfObj[i]]
+  }
+  return Math.round(totalVal / keysOfObj.length)
+}
+
 $(document).ready(() => {
   if($('#ckeditor-textarea').length !== 0) {
     CKEDITOR.replace('ckeditor-textarea')
@@ -55,8 +80,6 @@ $(document).ready(() => {
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
   }
-
-  readbleUniqID('6061563435cd6e2ba45e5f')
 
   // toastr["success"]("this is content", "Success")
   // toastr["error"]("this is content", "Error")
