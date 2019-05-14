@@ -30,23 +30,23 @@
                 </tr>
                 <tr>
                   <td>Fotocopy Ijazah yang telah dilegalisir</td>
-                  <td><span class="fas fa-times text-danger"></span></td>
+                  <td><span class="fas fa-times text-danger" id="fm-berkas_ijazah_status"></span></td>
                 </tr>
                 <tr>
                   <td>Fotocopy SKHUN yang telah dilegalisir</td>
-                  <td><span class="fas fa-times text-danger"></span></td>
+                  <td><span class="fas fa-times text-danger" id="fm-berkas_skhun_status"></span></td>
                 </tr>
                 <tr>
                   <td>Fotocopy Akte Kelahiran</td>
-                  <td><span class="fas fa-times text-danger"></span></td>
+                  <td><span class="fas fa-times text-danger" id="fm-berkas_akte_status"></span></td>
                 </tr>
                 <tr>
                   <td>Fotocopy Kartu Keluarga</td>
-                  <td><span class="fas fa-times text-danger"></span></td>
+                  <td><span class="fas fa-times text-danger" id="fm-berkas_kk_status"></span></td>
                 </tr>
                 <tr>
                   <td>Pasfoto 3x4 berwarna 2 Lembar</td>
-                  <td><span class="fas fa-times text-danger"></span></td>
+                  <td><span class="fas fa-times text-danger" id="fm-berkas_foto_status"></span></td>
                 </tr>
               </tbody>
             </table>
@@ -60,9 +60,61 @@
   <?php $this->load->view('frontend/templates-ppdb/footer'); ?>
 
 <script>
+  function getData() {
+    showLoader()
+
+    $.ajax({
+      url: '<?= $get_action; ?>',
+      method: 'GET',
+      success: (res) => {
+        
+        let berkas_ijazah = res.row.berkas_ijazah
+        let berkas_skhun = res.row.berkas_skhun
+        let berkas_akte = res.row.berkas_akte
+        let berkas_kk = res.row.berkas_kk
+        let berkas_foto = res.row.berkas_foto
+
+        if (berkas_ijazah) {
+          $('#fm-berkas_ijazah_status')[0].className = 'fas fa-check text-success'
+        } else {
+          $('#fm-berkas_ijazah_status')[0].className = 'fas fa-times text-danger'
+        }
+
+        if (berkas_skhun) {
+          $('#fm-berkas_skhun_status')[0].className = 'fas fa-check text-success'
+        } else {
+          $('#fm-berkas_skhun_status')[0].className = 'fas fa-times text-danger'
+        }
+
+        if (berkas_akte) {
+          $('#fm-berkas_akte_status')[0].className = 'fas fa-check text-success'
+        } else {
+          $('#fm-berkas_akte_status')[0].className = 'fas fa-times text-danger'
+        }
+
+        if (berkas_kk) {
+          $('#fm-berkas_kk_status')[0].className = 'fas fa-check text-success'
+        } else {
+          $('#fm-berkas_kk_status')[0].className = 'fas fa-times text-danger'
+        }
+
+        if (berkas_foto) {
+          $('#fm-berkas_foto_status')[0].className = 'fas fa-check text-success'
+        } else {
+          $('#fm-berkas_foto_status')[0].className = 'fas fa-times text-danger'
+        }
+
+        hideLoader()
+      },
+      failed: (error) => {
+        hideLoader()
+        showToast('failed', 'Oops something wrong... Please try again later.')
+      }
+    })
+  }
 
   window.addEventListener('load', function() {
-    
+    getData()
   })
   
 </script>
