@@ -293,7 +293,6 @@
       url: '<?= $get_action; ?>',
       method: 'GET',
       success: (res) => {
-        // console.log(res)
         
         $('#fm-birth_place').val(res.row.birth_place)
         $('#fm-birth_date').val(res.row.birth_date)
@@ -378,7 +377,7 @@
       },
       failed: (error) => {
         hideLoader()
-        console.log(error)
+        showToast('failed', 'Oops something wrong... Please try again later.')
       }
     })
   }
@@ -439,14 +438,14 @@
       contentType: false,
 			processData: false,
       success: (res) => {
-        console.log(res)
+        
         hideLoader()
         showToast(res.status, res.message)
       },
       failed: (error) => {
-        console.log(error)
+        
         hideLoader()
-        showToast('failed', error)
+        showToast('failed', 'Oops something wrong... Please try again later.')
       }
     })
   }

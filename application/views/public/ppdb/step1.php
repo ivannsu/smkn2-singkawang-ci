@@ -59,7 +59,7 @@
       url: '<?= $get_action; ?>',
       method: 'GET',
       success: (res) => {
-        console.log(res)
+        
         $('#fm-prev_school_name').val(res.row.prev_school_name)
         $('#fm-prev_school_address').val(res.row.prev_school_address)
 
@@ -73,7 +73,7 @@
       },
       failed: (error) => {
         hideLoader()
-        console.log(error)
+        showToast('failed', 'Oops something wrong... Please try again later.')
       }
     })
   }
@@ -93,7 +93,7 @@
       contentType: false,
       processData: false,
       success: (res) => {
-        console.log(res)
+        
         hideLoader()
         showToast(res.status, res.message)
 
@@ -104,9 +104,9 @@
         }
       },
       failed: (error) => {
-        console.log(error)
+        
         hideLoader()
-        showToast('failed', error)
+        showToast('failed', 'Oops something wrong... Please try again later.')
       }
     })
   }

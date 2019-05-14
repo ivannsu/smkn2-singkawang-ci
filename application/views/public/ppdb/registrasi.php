@@ -64,7 +64,7 @@
         contentType: false,
         processData: false,
         success: function (res) {
-          console.log(res)
+          
           hideLoader()
           showToast(res.status, res.message)
 
@@ -77,9 +77,9 @@
           }
         },
         failed: function (error) {
-          console.log(error)
+          
           hideLoader()
-          showToast('failed', error)
+          showToast('failed', 'Oops something wrong... Please try again later.')
         }
       })
     }

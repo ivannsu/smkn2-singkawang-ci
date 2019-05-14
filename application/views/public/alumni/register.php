@@ -1,3 +1,17 @@
+<style>
+@import url('<?= base_url('assets/css/spinner.css') ?>');
+@import url('<?= base_url('assets/css/toastr/toastr.min.css') ?>');
+</style>
+
+<!-- SPINNER -->
+<div class="loading-container">
+  <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+
+<h3>Registrasi Alumni</h3>
+<hr>
+<br>
+
 <div class="form-group">
   <label>Nama <span class="text-danger">*</span></label>
   <input type="text" class="form-control" name="name" id="name" required />
@@ -76,10 +90,49 @@
 
 <script>
 
-window.addEventListener('load', function() {
-  $('#btn-create').on('click', () => {
-    console.log('helo')
+  function submitPost() {
+    showLoader()
+
+    let formData = new FormData()
+    formData.append('name', $('#name').val())
+    formData.append('gender', $('input[name="gender"]:checked').val())
+    formData.append('address', $('#address').val())
+    formData.append('telp', $('#telp').val())
+    formData.append('email', $('#email').val())
+    formData.append('angkatan', $('#angkatan option:selected').val())
+    formData.append('jurusan_id', $('#jurusan_id option:selected').val())
+    formData.append('job', $('#job').val())
+    formData.append('college', $('#college').val())
+
+    $.ajax({
+      url: '<?= $action; ?>',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+			processData: false,
+      success: function (res) {
+        hideLoader()
+        showToast(res.status, res.message)
+
+        if (res.status == 'success') {
+          clearForm()
+        }
+      },
+      failed: function (error) {
+        hideLoader()
+        showToast('failed', 'Oops something wrong... Please try again later.')
+      }
+    })
+  }
+
+  function clearForm() {
+    $('input[type="text"], input[type="file"]').val('')
+  }
+
+  window.addEventListener('load', function() {
+    $('#btn-create').on('click', () => {
+      submitPost()
+    })
   })
-})
 
 </script>

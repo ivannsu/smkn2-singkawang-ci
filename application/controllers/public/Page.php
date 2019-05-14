@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Page extends Public_Controller {
 
+  private $vars = [];
+
   public function __construct() {
     parent::__construct();
     $this->load->model([
@@ -114,11 +116,84 @@ class Page extends Public_Controller {
       $data['content'] = 'public/alumni/index';
     }
 
+    else if ($name == 'register_alumni') {
+      $data['jurusan'] = $this->m_jurusan->get_all();
+      $data['content'] = 'public/alumni/register';
+      $data['action'] = site_url('public/page/save_alumni');
+    }
+
     else {
-      $data['content'] = 'public/404';
+      show_404();
     }
 
     $this->load->view('frontend/page', $data);
+  }
+
+  public function save_alumni() {
+    if ($this->input->is_ajax_request()) {
+      if ($this->alumni_validation()) {
+        $table = 'alumni';
+        $data = $this->get_alumni_post_data();
+
+        // $this->tmp['upload_failed'] = FALSE;
+        // if (! empty($_FILES['image'])) {
+        //   $upload = $this->upload_image();
+        //   if ($upload) {
+        //     $data['image'] = $upload['file_name'];
+        //   }
+        // }
+
+        // if ( ! $this->tmp['upload_failed']) {
+          if ($this->model->create($table, $data)) {
+            $this->vars['message'] = 'Registrasi Alumni berhasil';
+            $this->vars['status'] = 'success';
+            
+          } else {
+            $this->vars['message'] = 'Terjadi kesalahan saat registrasi data';
+            $this->vars['status'] = 'failed';
+          }
+        // }
+
+      } else {
+        $this->vars['status'] = 'failed';
+				$this->vars['message'] = validation_errors();
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    }
+  }
+
+  private function alumni_validation() {
+    $this->load->library('form_validation');
+
+    $val = $this->form_validation;
+    $val->set_rules('name', 'Nama', 'trim|required');
+    $val->set_rules('gender', 'Jenis Kelamin', 'trim|required');
+    $val->set_rules('address', 'Alamat', 'trim|required');
+    $val->set_rules('telp', 'No Telp', 'trim|required');
+    $val->set_rules('angkatan', 'Angkatan', 'trim|required');
+    $val->set_rules('jurusan_id', 'Jurusan', 'trim|required');
+    $val->set_error_delimiters('<div>&sdot; ', '</div>');
+    $val->set_message('required', '%s wajib diisi.');
+    
+		return $val->run();
+  }
+
+  private function get_alumni_post_data() {
+    return [
+      'name' => $this->input->post('name', true),
+      'gender' => $this->input->post('gender', true),
+      'address' => $this->input->post('address', true),
+      'telp' => $this->input->post('telp', true),
+      'email' => $this->input->post('email', true),
+      'angkatan' => $this->input->post('angkatan', true),
+      'jurusan_id' => $this->input->post('jurusan_id', true),
+      'job' => $this->input->post('job', true),
+      'college' => $this->input->post('college', true),
+      'is_verified' => 'false'
+    ];
   }
 }
 
