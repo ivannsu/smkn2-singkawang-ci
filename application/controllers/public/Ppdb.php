@@ -79,7 +79,7 @@ class Ppdb extends Public_Controller {
     $data['action'] = site_url('public/ppdb/step1_process');
     $data['get_action'] = site_url('public/ppdb/get_candidate_data/');
 
-    $this->load->view('frontend/ppdb/step1', $data);
+    $this->load->view('public/ppdb/step1', $data);
   }
 
   private function step2($user_id, $data) {
@@ -87,7 +87,7 @@ class Ppdb extends Public_Controller {
     $data['action'] = site_url('public/ppdb/step2_process');
     $data['get_action'] = site_url('public/ppdb/get_candidate_data/');
 
-    $this->load->view('frontend/ppdb/step2', $data);
+    $this->load->view('public/ppdb/step2', $data);
   }
 
   private function step3($user_id, $data) {
@@ -95,12 +95,12 @@ class Ppdb extends Public_Controller {
     $data['action'] = site_url('public/ppdb/step3_process');
     $data['get_action'] = site_url('public/ppdb/get_candidate_data/');
 
-    $this->load->view('frontend/ppdb/step3', $data);
+    $this->load->view('public/ppdb/step3', $data);
   }
 
   private function step4($user_id, $data) {
 
-    $this->load->view('frontend/ppdb/step4', $data);
+    $this->load->view('public/ppdb/step4', $data);
   }
 
   public function test() {
@@ -234,7 +234,7 @@ class Ppdb extends Public_Controller {
     $data['navigations'] = $this->m_navigations->client_get_all();
     $data['action'] = site_url('public/ppdb/registrasi_action');
 
-    $this->load->view('frontend/ppdb/registrasi', $data);
+    $this->load->view('public/ppdb/registrasi', $data);
   }
 
   public function login() {
@@ -242,7 +242,7 @@ class Ppdb extends Public_Controller {
     $data['navigations'] = $this->m_navigations->client_get_all();
     $data['action'] = site_url('login/login_action');
 
-    $this->load->view('frontend/ppdb/login', $data);
+    $this->load->view('public/ppdb/login', $data);
   }
 
   public function registrasi_action() {

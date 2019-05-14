@@ -9,12 +9,18 @@ class M_alumni extends CI_Model {
     parent::__construct();
   }
 
-  public function get_all($limit = '18446744073709551615', $offset = '0') {
-    return $this->db
+  public function get_all($verified = '', $limit = '18446744073709551615', $offset = '0') {
+    $this->db
       ->select('*, posts.title as jurusan, alumni.id as alumni_id')
       ->from(self::$table)
-      ->join('posts', 'posts.id = alumni.jurusan_id')
-      ->order_by('alumni.'.self::$pk, 'DESC')
+      ->join('posts', 'posts.id = alumni.jurusan_id');
+
+    if ($verified != '') {
+      $this->db->where('is_verified', $verified);
+    }
+
+    return $this->db->
+      order_by('alumni.'.self::$pk, 'DESC')
       ->limit($limit, $offset)
       ->get()
       ->result();

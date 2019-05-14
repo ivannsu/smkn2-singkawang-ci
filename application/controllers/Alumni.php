@@ -58,8 +58,9 @@ class Alumni extends Admin_Controller {
   
   public function create_action() {
     if ($this->input->is_ajax_request()) {
-      // if ($this->validation()) {
+      if ($this->validation()) {
         $data = $this->get_post_data();
+        $data['is_verified'] = 'true';
 
         // $this->tmp['upload_failed'] = FALSE;
         // if (! empty($_FILES['image'])) {
@@ -80,10 +81,10 @@ class Alumni extends Admin_Controller {
           }
         // }
 
-      // } else {
-      //   $this->vars['status'] = 'failed';
-			// 	$this->vars['message'] = validation_errors();
-      // }
+      } else {
+        $this->vars['status'] = 'failed';
+				$this->vars['message'] = validation_errors();
+      }
 
       $this->output
         ->set_content_type('application/json')
@@ -109,6 +110,7 @@ class Alumni extends Admin_Controller {
     $vars = [];
     $id = $this->get_post_id();
     $data = $this->get_post_data();
+    $data['is_verified'] = $this->input->post('is_verified', true);
 
     $action = $this->model->update($this->table, $data, $id);
   
@@ -284,9 +286,13 @@ class Alumni extends Admin_Controller {
   private function validation() {
     $this->load->library('form_validation');
 
-		$val = $this->form_validation;
-		$val->set_rules('title', 'Title', 'trim|required');
-		$val->set_rules('content', 'Content', 'trim|required');
+    $val = $this->form_validation;
+    $val->set_rules('name', 'Name', 'trim|required');
+    $val->set_rules('gender', 'Gender', 'trim|required');
+    $val->set_rules('address', 'Address', 'trim|required');
+    $val->set_rules('telp', 'Telp', 'trim|required');
+    $val->set_rules('angkatan', 'Angkatan', 'trim|required');
+    $val->set_rules('jurusan_id', 'Jurusan', 'trim|required');
     $val->set_error_delimiters('<div>&sdot; ', '</div>');
     
 		return $val->run();
