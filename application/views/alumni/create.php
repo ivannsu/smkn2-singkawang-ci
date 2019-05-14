@@ -26,7 +26,7 @@
         showToast(res.status, res.message)
 
         if (res.status == 'success') {
-          // clearForm()
+          clearForm()
         }
       },
       failed: function (error) {

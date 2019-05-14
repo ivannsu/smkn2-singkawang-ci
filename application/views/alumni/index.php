@@ -24,6 +24,7 @@
                 </td>
                 <td>${row.jurusan}</td>
                 <td>${row.angkatan}</td>
+                <td>${row.is_verified == 'true' ? '<i class="fa fa-check"></i>' : '<i class="fa fa-times"></i>'}</td>
                 <td>
                   <a href="${edit_url + row.alumni_id}" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a>
                   <button 
@@ -146,6 +147,7 @@
       <th>NAMA</th>
       <th>JURUSAN</th>
       <th>ANGKATAN</th>
+      <th>VALIDASI</th>
       <th></th>
     </tr>
   </thead>

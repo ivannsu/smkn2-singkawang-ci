@@ -29,6 +29,12 @@
           }
         })
 
+        $('#is_verified option').each(function (i, elm) {
+          if ($(this).val() == res.row.is_verified) {
+            $(this).attr('selected', 'selected')
+          }
+        })
+
         $.each($('#jurusan_id option'), function (i, elm) {
           if ($(this).val() == res.row.jurusan_id) {
             $(this).attr('selected', 'selected')
@@ -58,6 +64,7 @@
     formData.append('college', $('#college').val())
     formData.append('angkatan', $('#angkatan option:selected').val())
     formData.append('jurusan_id', $('#jurusan_id option:selected').val())
+    formData.append('is_verified', $('#is_verified option:selected').val())
     formData.append('gender', $('input[name="gender"]:checked').val())
 
     $.ajax({
@@ -152,6 +159,15 @@
 <div class="form-group">
   <h5>Perguruan Tinggi</h5>
   <input type="text" class="form-control" name="college" id="college" />
+</div>
+
+<div class="form-group">
+  <h5>Apakah data valid ? <span class="text-danger">*</span></h5>
+  <select name="is_verified" class="form-control" id="is_verified" required>
+    <option value="">Pilih</option>
+    <option value="true">YA</option>
+    <option value="false">TIDAK</option>
+  </select>
 </div>
 
 <div class="form-group">

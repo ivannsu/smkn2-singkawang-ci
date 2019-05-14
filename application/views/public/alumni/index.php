@@ -1,4 +1,4 @@
-<h3>Data Alumni</h3>
+<h3>Data Alumni <a href="<?= site_url('public/page/index/registrasi_alumni') ?>" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Registrasi</a></h3>
 <p>
 <?php
 // if ($alumni_jurusan AND !$alumni_angkatan) { 

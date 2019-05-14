@@ -51,6 +51,7 @@
       <a class="nav-link" href="<?= site_url('public/page/index/all_prestasi'); ?>">Prestasi</a>
       <a class="nav-link" href="<?= site_url('public/page/index/albums'); ?>">Gallery</a>
       <a class="nav-link" href="<?= site_url('public/page/index/alumni'); ?>">Alumni</a>
+      <a class="nav-link" href="<?= site_url('public/ppdb'); ?>">PPDB Online</a>
     </ul>
   </div>
 </div>
