@@ -89,7 +89,7 @@
         <h3>LINKS</h3>
       </div>
 
-      <div class="horizontal-slide">
+      <div class="row">
       <?php
       foreach ($links as $row) {
         $name = $row->name;
@@ -101,7 +101,11 @@
           '%img_src%' => base_url('media_library/links/'.$image),
           '%img_alt%' => "$name Link"
         ];
-        $template = '<a href="%link%"><img src="%img_src%" class="link-image" alt="%img_alt%"></a>';
+        $template = '
+          <div class="col-lg-3">
+            <a href="%link%"><img src="%img_src%" class="link-image" alt="%img_alt%"></a>
+          </div>
+        ';
 
         echo strtr($template, $vars);
       }
