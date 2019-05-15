@@ -58,6 +58,36 @@ function getAverageOfScores(exam_scores) {
   return Math.round(totalVal / keysOfObj.length)
 }
 
+function map_selection_data(data) {
+  let result = []
+
+  data.jurusan.forEach(obj => {
+    let jurusan_id = obj.id
+    let temp = { 
+      id: jurusan_id,
+      jurusan: obj.title, 
+      passed: 0, 
+      not_passed: 0 
+    }
+
+    data.passed.forEach(secondObj => {
+      if (secondObj.jurusan_id == jurusan_id) {
+        temp.passed = secondObj.total_students
+      }
+    })
+
+    data.not_passed.forEach(secondObj => {
+      if (secondObj.jurusan_id == jurusan_id) {
+        temp.not_passed = secondObj.total_students
+      }
+    })
+
+    result.push(temp)
+  })
+
+  return result
+}
+
 $(document).ready(() => {
   if($('#ckeditor-textarea').length !== 0) {
     CKEDITOR.replace('ckeditor-textarea')
