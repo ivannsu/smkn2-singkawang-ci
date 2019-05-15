@@ -124,7 +124,7 @@ class Page extends Public_Controller {
     }
 
     else {
-      show_404();
+      $this->show_404();
     }
 
     $this->load->view('frontend/page', $data);
