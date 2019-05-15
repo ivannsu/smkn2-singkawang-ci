@@ -51,24 +51,24 @@ class Ppdb extends Public_Controller {
       $this->step1($user_id, $data);
     } else if ($step == '2') {
       if ($last_step < $step) {
-        show_404();
+        $this->show_404();;
       } else {
         $this->step2($user_id, $data);
       }
     } else if ($step == '3') {
       if ($last_step < $step) {
-        show_404();
+        $this->show_404();;
       } else {
         $this->step3($user_id, $data);
       }
     } else if ($step == '4') {
       if ($last_step < $step) {
-        show_404();
+        $this->show_404();;
       } else {
         $this->step4($user_id, $data);
       }
     } else {
-      show_404();
+      $this->show_404();;
     }
     
   }

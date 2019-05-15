@@ -236,7 +236,7 @@ class Alumni extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      show_404();
+      $this->show_404();;
     }
   }
 
