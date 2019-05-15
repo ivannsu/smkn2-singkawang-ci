@@ -34,7 +34,18 @@ class M_students extends CI_Model {
       $this->db
         ->where('x1.current_candidate_step', 4)
         ->where('x1.passed_selection', 'on_going');
-    } else {
+    } 
+    else if ($type == 'passed') {
+      $this->db
+        ->where('x1.current_candidate_step', 4)
+        ->where('x1.passed_selection', 'passed');
+    } 
+    else if ($type == 'not_passed') {
+      $this->db
+        ->where('x1.current_candidate_step', 4)
+        ->where('x1.passed_selection', 'not_passed');
+    } 
+    else {
       $this->db->order_by('x1.id', 'DESC');
     }
 

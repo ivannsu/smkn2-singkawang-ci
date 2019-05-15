@@ -18,22 +18,22 @@
 
           <div class="ppdb-panel">
 
-            <div id="selection-is-on-going">
-              <h1 class="text-center">✅</h1>
-              <h3 class="text-center">Data telah diverifikasi</h3>
-              <p class="text-center">Dimohon untuk menunggu Hasil Penerimaan.</p>
+            <div id="selection-is-on-going" class="text-center">
+              <h1>✅</h1>
+              <h3>Data telah diverifikasi</h3>
+              <p>Dimohon untuk menunggu Hasil Penerimaan.</p>
             </div>
 
-            <div id="selection-is-passed">
-              <h1 class="text-center">🎉</h1>
-              <h3 class="text-center">Selamat Anda di Terima</h3>
-              <p class="text-center">Silahkan menunggu informasi selanjutnya.</p>
+            <div id="selection-is-passed" class="text-center">
+              <h1>🎉</h1>
+              <h3>Anda LULUS dalam seleksi</h3>
+              <p>Silahkan menunggu informasi selanjutnya.</p>
             </div>
 
-            <div id="selection-is-not-passed">
-              <h1 class="text-center">❌</h1>
-              <h3 class="text-center">Anda gagal dalam seleksi</h3>
-              <p class="text-center">Jangan menyerah, tetap semangat dan berusaha lebih keras.</p>
+            <div id="selection-is-not-passed" class="text-center">
+              <h1>❌</h1>
+              <h3>Anda GAGAL dalam seleksi</h3>
+              <p>Jangan menyerah, tetap semangat dan berusaha lebih keras.</p>
             </div>
 
           </div>

@@ -40,6 +40,28 @@ class Ppdb extends Admin_Controller {
     $this->load->view('backend/index', $data);
   }
 
+  public function passed_selection() {
+    $data = [
+      'title' => 'Pendaftar yang Lulus',
+      'content' => 'ppdb/passed_selection',
+      'action' => site_url('ppdb/get_all_passed_candidates'),
+      // 'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
+    ];
+
+    $this->load->view('backend/index', $data);
+  }
+
+  public function not_passed_selection() {
+    $data = [
+      'title' => 'Pendaftar yang Gagal',
+      'content' => 'ppdb/not_passed_selection',
+      'action' => site_url('ppdb/get_all_not_passed_candidates'),
+      // 'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
+    ];
+
+    $this->load->view('backend/index', $data);
+  }
+
   public function set_selection_status_action() {
     $user_id = $this->input->post('user_id', true);
     $passed_selection = $this->input->post('passed_selection', true);
@@ -150,6 +172,48 @@ class Ppdb extends Admin_Controller {
   public function selection_get_all_candidates() {
     if ($this->input->is_ajax_request()) {
       $data = $this->m_students->get_all_candidates('selection');
+
+      if ($data) {
+        $this->vars['message'] = 'Sukses menampilkan data';
+        $this->vars['status'] = 'success';
+        $this->vars['data'] = $data;
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      show_404();
+    }
+  }
+
+  public function get_all_passed_candidates() {
+    if ($this->input->is_ajax_request()) {
+      $data = $this->m_students->get_all_candidates('passed');
+
+      if ($data) {
+        $this->vars['message'] = 'Sukses menampilkan data';
+        $this->vars['status'] = 'success';
+        $this->vars['data'] = $data;
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      show_404();
+    }
+  }
+
+  public function get_all_not_passed_candidates() {
+    if ($this->input->is_ajax_request()) {
+      $data = $this->m_students->get_all_candidates('not_passed');
 
       if ($data) {
         $this->vars['message'] = 'Sukses menampilkan data';
