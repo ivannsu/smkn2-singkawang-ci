@@ -203,7 +203,7 @@ class Page extends Public_Controller {
     $config = [
       'upload_path' => './media_library/alumni/',
       'allowed_types' => 'jpg|png|jpeg|gif',
-      'max_size' => 0,
+      'max_size' => 2048,
       'encrypt_name' => true
     ];
     $this->load->library('upload', $config);
