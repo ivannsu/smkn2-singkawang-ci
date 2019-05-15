@@ -13,6 +13,7 @@
     formData.append('jurusan_id', $('#jurusan_id option:selected').val())
     formData.append('job', $('#job').val())
     formData.append('college', $('#college').val())
+    formData.append('image', $('input[name="image"]')[0].files[0])
 
     $.ajax({
       url: '<?= $action; ?>',
@@ -116,10 +117,10 @@
   <input type="text" class="form-control" name="college" id="college" />
 </div>
 
-<!-- <div class="form-group">
+<div class="form-group">
   <h5>Foto Profil <span class="text-danger">*</span></h5>
   <input type="file" name="image" required />
-</div> -->
+</div>
 
 <br>
 <div class="form-group">

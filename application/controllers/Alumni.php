@@ -62,15 +62,16 @@ class Alumni extends Admin_Controller {
         $data = $this->get_post_data();
         $data['is_verified'] = 'true';
 
-        // $this->tmp['upload_failed'] = FALSE;
-        // if (! empty($_FILES['image'])) {
-        //   $upload = $this->upload_image();
-        //   if ($upload) {
-        //     $data['image'] = $upload['file_name'];
-        //   }
-        // }
+        $this->tmp['upload_failed'] = FALSE;
 
-        // if ( ! $this->tmp['upload_failed']) {
+        if ( ! empty($_FILES['image'])) {
+          $upload = $this->upload_image();
+          if ($upload) {
+            $data['image'] = $upload['file_name'];
+          }
+        }
+
+        if ( ! $this->tmp['upload_failed']) {
           if ($this->model->create($this->table, $data)) {
             $this->vars['message'] = 'Data baru berhasil dibuat';
             $this->vars['status'] = 'success';
@@ -79,7 +80,7 @@ class Alumni extends Admin_Controller {
             $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';
             $this->vars['status'] = 'failed';
           }
-        // }
+        }
 
       } else {
         $this->vars['status'] = 'failed';
