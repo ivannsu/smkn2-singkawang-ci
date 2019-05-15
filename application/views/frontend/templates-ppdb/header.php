@@ -3,11 +3,11 @@
   <h2>PPDB Online</h2>
   <a href="#" data-toggle="modal" data-target="#modalPanduan"><span class="fas fa-book"></span> Panduan</a>
   /
-  <a href="#">Registrasi</a>
+  <a href="<?= site_url('public/ppdb/registrasi'); ?>">Registrasi</a>
   /
-  <a href="#">Login</a>
+  <a href="<?= site_url('public/ppdb/login'); ?>">Login</a>
   /
-  <a href="#">Logout</a>
+  <a href="<?= site_url('public/ppdb/logout'); ?>">Logout</a>
 </header>
 
 <!-- Modal -->
@@ -25,12 +25,12 @@
           </li>
           <br>
           <li>
-            Calon Siswa harus mengisi informasi di Halaman ini dengan data sebagai berikut: Nama, Asal SMP, Jurusan yang diminati, kemudian lanjut.
+            Calon Siswa harus mengisi informasi di Halaman Langkah ke-1 ini dengan data sebagai berikut: Nama, Asal SMP, Jurusan yang diminati, kemudian lanjut.
           </li>
           <br>
           <li>
             Calon Siswa dimohon untuk
-            melengkapi semua data di halaman ini seperti Data Diri, Data Ayah Kandung, Data Ibu Kandung, Data Wali dan Data Periodik.
+            melengkapi semua data di halaman Langkah ke-2 ini seperti Data Diri, Data Ayah Kandung, Data Ibu Kandung, Data Wali dan Data Periodik.
             <br>
             Setelah Calon Siswa yakin bahwa data sudah terisi semua, maka Calon Siswa dapat mendownload Kartu Registrasi Sementara di halaman selanjutnya.
           </li>
@@ -38,7 +38,7 @@
           <li>
             Calon Siswa diharapkan datang ke Sekolah yang didaftar, dengan membawa berkas sebagai berikut:
             <br>
-            - Kartu Sementara Calon Siswa
+            - Kartu Registrasi Sementara
             <br>
             - Fotocopy Ijazah & SKHUN yang telah dilegalisir
             <br>
@@ -57,6 +57,8 @@
           <br>
           <li>
             Setelah semua data sudah terverifikasi, silahkan menunggu hasil seleksi.
+            <br>
+            Hasil seleksi dapat dilihat di PPDB Online Langkah ke-4.
           </li>
         </ol>
       <!-- Langkah 1:
