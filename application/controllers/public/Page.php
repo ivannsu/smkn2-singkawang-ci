@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Page extends Public_Controller {
 
   private $vars = [];
+  private $tmp = [];
 
   public function __construct() {
     parent::__construct();
@@ -135,15 +136,15 @@ class Page extends Public_Controller {
         $table = 'alumni';
         $data = $this->get_alumni_post_data();
 
-        // $this->tmp['upload_failed'] = FALSE;
-        // if (! empty($_FILES['image'])) {
-        //   $upload = $this->upload_image();
-        //   if ($upload) {
-        //     $data['image'] = $upload['file_name'];
-        //   }
-        // }
+        $this->tmp['upload_failed'] = FALSE;
+        if (! empty($_FILES['image'])) {
+          $upload = $this->upload_image();
+          if ($upload) {
+            $data['image'] = $upload['file_name'];
+          }
+        }
 
-        // if ( ! $this->tmp['upload_failed']) {
+        if ( ! $this->tmp['upload_failed']) {
           if ($this->model->create($table, $data)) {
             $this->vars['message'] = 'Registrasi Alumni berhasil';
             $this->vars['status'] = 'success';
@@ -152,7 +153,7 @@ class Page extends Public_Controller {
             $this->vars['message'] = 'Terjadi kesalahan saat registrasi data';
             $this->vars['status'] = 'failed';
           }
-        // }
+        }
 
       } else {
         $this->vars['status'] = 'failed';
@@ -194,6 +195,69 @@ class Page extends Public_Controller {
       'college' => $this->input->post('college', true),
       'is_verified' => 'false'
     ];
+  }
+
+  private function upload_image() {
+    $config = [
+      'upload_path' => './media_library/alumni/',
+      'allowed_types' => 'jpg|png|jpeg|gif',
+      'max_size' => 0,
+      'encrypt_name' => true
+    ];
+    $this->load->library('upload', $config);
+
+    if ( ! $this->upload->do_upload('image')) {
+      $this->vars['status'] = 'failed';
+      $this->vars['message'] = $this->upload->display_errors();
+      $this->tmp['upload_failed'] = TRUE;
+
+      return FALSE;
+    } else {
+      $file = $this->upload->data();
+      $this->resize_image(FCPATH.'media_library/alumni', $file['file_name']);
+
+      return $file;
+    }
+  }
+
+  private function resize_image($path, $filename) {
+    $this->load->library('image_lib');
+
+		// Large Image
+		$large['image_library'] = 'gd2';
+		$large['source_image'] = $path .'/'. $filename;
+		$large['new_image'] = './media_library/alumni/lg_'. $filename;
+    $large['maintain_ratio'] = true;
+    $large['width'] = 800;
+    $large['height'] = 600;
+		$this->image_lib->initialize($large);
+		$this->image_lib->resize();
+    $this->image_lib->clear();
+    
+    // Medium Image
+		$medium['image_library'] = 'gd2';
+		$medium['source_image'] = $path .'/'. $filename;
+		$medium['new_image'] = './media_library/alumni/md_'. $filename;
+    $medium['maintain_ratio'] = true;
+    $medium['width'] = 460;
+    $medium['height'] = 308;
+		$this->image_lib->initialize($medium);
+		$this->image_lib->resize();
+    $this->image_lib->clear();
+    
+    // Small Image
+		$small['image_library'] = 'gd2';
+		$small['source_image'] = $path .'/'. $filename;
+		$small['new_image'] = './media_library/alumni/sm_'. $filename;
+    $small['maintain_ratio'] = true;
+    $small['width'] = 200;
+    $small['height'] = 150;
+		$this->image_lib->initialize($small);
+		$this->image_lib->resize();
+    $this->image_lib->clear();
+    
+    // Unlink Old Image
+    @unlink($path.'/'.$filename);
   }
 }
 

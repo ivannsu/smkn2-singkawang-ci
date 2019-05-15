@@ -78,14 +78,14 @@
   <input type="text" class="form-control" name="college" id="college" />
 </div>
 
-<!-- <div class="form-group">
-  <label>Foto Profil <span class="text-danger">*</span></label>
+<div class="form-group">
+  <div><label>Foto Profil <span class="text-danger">*</span></label></div>
   <input type="file" name="image" required />
-</div> -->
+</div>
 
 <br>
 <div class="form-group">
-  <button name="btn-create" id="btn-create" type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Simpan</button>
+  <button name="btn-create" id="btn-create" type="submit" class="btn btn-primary">Registrasi</button>
 </div>
 
 <script>
@@ -103,6 +103,7 @@
     formData.append('jurusan_id', $('#jurusan_id option:selected').val())
     formData.append('job', $('#job').val())
     formData.append('college', $('#college').val())
+    formData.append('image', $('input[name="image"]')[0].files[0])
 
     $.ajax({
       url: '<?= $action; ?>',
