@@ -30,11 +30,15 @@ class Ppdb extends Admin_Controller {
   }
 
   public function selection() {
+    $this->load->model('m_jurusan');
+
     $data = [
       'title' => 'Seleksi PPDB',
       'content' => 'ppdb/selection',
       'action' => site_url('ppdb/selection_get_all_candidates'),
-      'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
+      'set_selection_status_action' => site_url('ppdb/set_selection_status_action'),
+      'count_action' => site_url('ppdb/count_candidates_selection_by_jurusan'),
+      'jurusan' => json_encode($this->m_jurusan->get_all()),
     ];
 
     $this->load->view('backend/index', $data);
@@ -49,6 +53,29 @@ class Ppdb extends Admin_Controller {
     ];
 
     $this->load->view('backend/index', $data);
+  }
+
+  public function count_candidates_selection_by_jurusan() {
+    if ($this->input->is_ajax_request()) {
+      $passed_data = $this->m_students->count_candidates_selection_by_jurusan('passed');
+      $not_passed_data = $this->m_students->count_candidates_selection_by_jurusan('not_passed');
+
+      if ($passed_data AND $not_passed_data) {
+        $this->vars['message'] = 'Sukses menampilkan data';
+        $this->vars['status'] = 'success';
+        $this->vars['passed_data'] = $passed_data;
+        $this->vars['not_passed_data'] = $not_passed_data;
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      show_404();
+    }
   }
 
   public function not_passed_selection() {

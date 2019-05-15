@@ -91,12 +91,36 @@ class M_students extends CI_Model {
     return $this->db->trans_status();
   }
 
-  // public function count_all() {
-  //   return $this->db
-  //     ->where('type', 'article')
-  //     ->from(self::$table)
-  //     ->count_all_results();
-  // }
+  public function count_candidates_selection_by_jurusan($type = 'not_passed') {
+    $this->db
+      ->select('
+        COUNT(x1.id) as total_students,
+        x1.jurusan_id,
+        x2.title as jurusan,
+      ')
+      ->join('posts x2', 'x1.jurusan_id = x2.id', 'LEFT');
+
+    if ($type == 'selection') {
+      $this->db
+        ->where('x1.current_candidate_step', 4)
+        ->where('x1.passed_selection', 'on_going');
+    } 
+    else if ($type == 'passed') {
+      $this->db
+        ->where('x1.current_candidate_step', 4)
+        ->where('x1.passed_selection', 'passed');
+    } 
+    else if ($type == 'not_passed') {
+      $this->db
+        ->where('x1.current_candidate_step', 4)
+        ->where('x1.passed_selection', 'not_passed');
+    } 
+    
+    return $this->db
+      ->group_by('x1.jurusan_id')
+      ->get(self::$table . ' x1')
+      ->result();
+  }
 }
 
 ?>

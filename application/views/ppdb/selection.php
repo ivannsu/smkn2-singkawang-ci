@@ -52,6 +52,44 @@
     })
   }
 
+  function getCountingData() {
+    showLoader()
+
+    let tableBody = $('#count-table-body')
+
+    $.ajax({
+      url: '<?= $count_action; ?>',
+      type: 'GET',
+      success: (res) => {
+        if (res.status == 'success') {
+          let jurusan = JSON.parse('<?= $jurusan; ?>')
+          // console.log('<?= $jurusan; ?>')
+          // console.log(res.passed_data)
+          // console.log(res.not_passed_data)
+
+          let data = map_selection_data({ jurusan: jurusan, passed: res.passed_data, not_passed: res.not_passed_data })
+
+          data.forEach(row => {
+            let tableRow = `
+              <tr>
+                <td>${row.jurusan}</td>
+                <td>${row.passed}</td>
+                <td>${row.not_passed}</td>
+              </tr>
+            `
+            tableBody.append(tableRow)
+          })
+
+        }
+        hideLoader()
+      },
+      failed: (error) => {
+        console.log(error)
+        hideLoader()
+      }
+    })
+  }
+
   function setPassed(user_id) {
     showLoader()
 
@@ -93,9 +131,25 @@
 
   $(document).ready(() => {
     getData()
+    getCountingData()
   })
 
 </script>
+
+<table class="table table-bordered table-hover text-center">
+  <thead class="bg-gray">
+    <tr>
+      <th>JURUSAN</th>
+      <th>DITERIMA</th>
+      <th>TIDAK DITERIMA</th>
+    </tr>
+  </thead>
+  <tbody id="count-table-body">
+  </tbody>
+</table>
+
+<br>
+<br>
 
 <table class="table table-bordered table-hover table-striped no-sort-datatable" id="datatables-table">
   <thead class="bg-warning">
