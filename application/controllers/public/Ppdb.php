@@ -32,6 +32,13 @@ class Ppdb extends Public_Controller {
     }
   }
 
+  public function logout() {
+    $this->session->unset_userdata(['user_id', 'user_level']);
+    session_destroy();
+
+    redirect('public/ppdb/');
+  }
+
   public function step() {
     if ($this->session->user_level != 'CANDIDATE_STUDENTS') {
       redirect('public/ppdb/login');
