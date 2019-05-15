@@ -97,8 +97,10 @@ class M_students extends CI_Model {
         COUNT(x1.id) as total_students,
         x1.jurusan_id,
         x2.title as jurusan,
+        x3.active
       ')
-      ->join('posts x2', 'x1.jurusan_id = x2.id', 'LEFT');
+      ->join('posts x2', 'x1.jurusan_id = x2.id', 'LEFT')
+      ->join('admission_phases x3', 'x1.admission_phase_id = x3.id');
 
     if ($type == 'selection') {
       $this->db
@@ -117,6 +119,7 @@ class M_students extends CI_Model {
     } 
     
     return $this->db
+      ->where('x3.active', 'true')
       ->group_by('x1.jurusan_id')
       ->get(self::$table . ' x1')
       ->result();

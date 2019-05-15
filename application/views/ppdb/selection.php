@@ -63,10 +63,6 @@
       success: (res) => {
         if (res.status == 'success') {
           let jurusan = JSON.parse('<?= $jurusan; ?>')
-          // console.log('<?= $jurusan; ?>')
-          // console.log(res.passed_data)
-          // console.log(res.not_passed_data)
-
           let data = map_selection_data({ jurusan: jurusan, passed: res.passed_data, not_passed: res.not_passed_data })
 
           data.forEach(row => {
@@ -84,6 +80,7 @@
         hideLoader()
       },
       failed: (error) => {
+
         console.log(error)
         hideLoader()
       }

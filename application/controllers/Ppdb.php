@@ -66,6 +66,8 @@ class Ppdb extends Admin_Controller {
         $this->vars['passed_data'] = $passed_data;
         $this->vars['not_passed_data'] = $not_passed_data;
       } else {
+        $this->vars['passed'] = $passed_data;
+        $this->vars['not_passed'] = $not_passed_data;
         $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
         $this->vars['status'] = 'failed';
       }

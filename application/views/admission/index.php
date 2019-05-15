@@ -113,7 +113,9 @@
   function submitPost() {
     showLoader()
 
+    let tableBody = $('#table-body')
     let formData = new FormData()
+    
     formData.append('academic_year', $('#fm-academic_year').val())
     formData.append('phase_start_date', $('#fm-phase_start_date').val())
     formData.append('phase_end_date', $('#fm-phase_end_date').val())
@@ -131,6 +133,8 @@
 
         if (res.status == 'success') {
           clearForm()
+          tableBody.empty()
+          getData()
         }
       },
       failed: function (error) {
