@@ -110,85 +110,96 @@ class Alumni extends Admin_Controller {
   }
 
   public function edit_action() {
-    $vars = [];
-    $id = $this->get_post_id();
-    $data = $this->get_post_data();
-    $data['is_verified'] = $this->input->post('is_verified', true);
-
-    $action = $this->model->update($this->table, $data, $id);
-  
-    if ($action) {
-      $vars['message'] = 'Sukses mengedit data';
-      $vars['status'] = 'success';
-    } else {
-      $vars['message'] = 'Terjadi kesalahan saat mengedit data';
-      $vars['status'] = 'failed';
-    }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
-  }
-
-  public function get_all() {
     if ($this->input->is_ajax_request()) {
-      $vars = [];
-      $data = $this->m_alumni->get_all();
 
-      if ($data) {
-        $vars['message'] = 'Sukses menampilkan data';
-        $vars['status'] = 'success';
-        $vars['data'] = $data;
+      $id = $this->get_post_id();
+      $data = $this->get_post_data();
+      $data['is_verified'] = $this->input->post('is_verified', true);
+
+      $action = $this->model->update($this->table, $data, $id);
+    
+      if ($action) {
+        $this->vars['message'] = 'Sukses mengedit data';
+        $this->vars['status'] = 'success';
       } else {
-        $vars['message'] = 'Terjadi kesalahan saat menampilkan data';
-        $vars['status'] = 'failed';
+        $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
+        $this->vars['status'] = 'failed';
       }
 
       $this->output
         ->set_content_type('application/json')
-        ->set_output(json_encode($vars));
+        ->set_output(json_encode($this->vars));
+    } else {
+      $this->show_404();
+    }
+  }
+
+  public function get_all() {
+    if ($this->input->is_ajax_request()) {
+      $data = $this->m_alumni->get_all();
+
+      if ($data) {
+        $this->vars['message'] = 'Sukses menampilkan data';
+        $this->vars['status'] = 'success';
+        $this->vars['data'] = $data;
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menampilkan data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
     } else {
       $this->show_404();
     }
   }
 
   public function delete() {
-    $vars = [];
-    $id = $this->get_post_id();
-    // $tmp_image = $this->model->get_row($this->pk, $id, $this->table)->image;
+    if ($this->input->is_ajax_request()) {
+      $id = $this->get_post_id();
+      // $tmp_image = $this->model->get_row($this->pk, $id, $this->table)->image;
 
-    $action = $this->model->delete($this->table, $id);
+      $action = $this->model->delete($this->table, $id);
 
-    if ($action) {
-      // @unlink($this->image_path.'lg_'.$tmp_image);
-      // @unlink($this->image_path.'md_'.$tmp_image);
-      // @unlink($this->image_path.'sm_'.$tmp_image);
+      if ($action) {
+        // @unlink($this->image_path.'lg_'.$tmp_image);
+        // @unlink($this->image_path.'md_'.$tmp_image);
+        // @unlink($this->image_path.'sm_'.$tmp_image);
 
-      $vars['message'] = 'Sukses menghapus data';
-      $vars['status'] = 'success';
+        $this->vars['message'] = 'Sukses menghapus data';
+        $this->vars['status'] = 'success';
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menghapus data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
     } else {
-      $vars['message'] = 'Terjadi kesalahan saat menghapus data';
-      $vars['status'] = 'failed';
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   public function get_by_id() {
-    $id = $this->uri->segment(3);
-    $row = $this->m_alumni->get_by_id($id);
+    if ($this->input->is_ajax_request()) {
 
-    if ($row) {
-      $this->vars['message'] = 'Sukses menampilkan data';
-      $this->vars['status'] = 'success';
-      $this->vars['row'] = $row;
+      $id = $this->uri->segment(3);
+      $row = $this->m_alumni->get_by_id($id);
+
+      if ($row) {
+        $this->vars['message'] = 'Sukses menampilkan data';
+        $this->vars['status'] = 'success';
+        $this->vars['row'] = $row;
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($this->vars));
   }
 
   public function import_excel() {

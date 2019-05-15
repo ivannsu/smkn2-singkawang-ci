@@ -78,21 +78,25 @@ class Admission extends Admin_Controller {
   }
 
   public function set_active_action() {
-    $id = $this->get_post_id();
+    if ($this->input->is_ajax_request()) {
+      $id = $this->get_post_id();
 
-    $action = $this->m_admission->set_active_phase($id);
+      $action = $this->m_admission->set_active_phase($id);
 
-    if ($action) {
-      $this->vars['message'] = 'Data telah diaktifkan';
-      $this->vars['status'] = 'success';
+      if ($action) {
+        $this->vars['message'] = 'Data telah diaktifkan';
+        $this->vars['status'] = 'success';
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat mengaktifkan data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
     } else {
-      $this->vars['message'] = 'Terjadi kesalahan saat mengaktifkan data';
-      $this->vars['status'] = 'failed';
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($this->vars));
   }
 
   public function edit() {
@@ -147,20 +151,24 @@ class Admission extends Admin_Controller {
   }
 
   public function delete() {
-    $id = $this->get_post_id();
-    $action = $this->model->delete($this->table, $id);
+    if ($this->input->is_ajax_request()) {
+      $id = $this->get_post_id();
+      $action = $this->model->delete($this->table, $id);
 
-    if ($action) {
-      $this->vars['message'] = 'Sukses menghapus data';
-      $this->vars['status'] = 'success';
+      if ($action) {
+        $this->vars['message'] = 'Sukses menghapus data';
+        $this->vars['status'] = 'success';
+      } else {
+        $this->vars['message'] = 'Terjadi kesalahan saat menghapus data';
+        $this->vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
     } else {
-      $this->vars['message'] = 'Terjadi kesalahan saat menghapus data';
-      $this->vars['status'] = 'failed';
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($this->vars));
   }
 
   public function get_by_id() {

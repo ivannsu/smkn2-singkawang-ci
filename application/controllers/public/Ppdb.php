@@ -104,18 +104,6 @@ class Ppdb extends Public_Controller {
     $this->load->view('public/ppdb/step4', $data);
   }
 
-  public function test() {
-    $user_id = $this->session->user_id;
-
-    $data['session_user_id'] = $user_id;
-
-    $data['data'] = $this->m_students->get_by_user($user_id);
-
-    $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($data));
-  }
-
   public function kartu_registrasi_sementara() {
     $user_id = $this->session->user_id;
     $user_level = $this->session->user_level;
@@ -156,8 +144,6 @@ class Ppdb extends Public_Controller {
         ->set_header('Expires: Sat, 26 Jul 1997 05:00:00 GMT')
         ->set_header('Cache-Control: no-store, no-cache, must-revalidate')
         ->set_output($pdf_stream);
-
-      // $pdf->Output();
     }
   }
 
@@ -165,15 +151,19 @@ class Ppdb extends Public_Controller {
     $user_id = $this->session->user_id;
     $user_level = $this->session->user_level;
 
-    if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
-      $data = $this->model->get_row('user_id', $user_id, 'students');
+    if ($this->input->is_ajax_request()) {
+      if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
+        $data = $this->model->get_row('user_id', $user_id, 'students');
 
-      $this->vars['status'] = 'success';
-      $this->vars['row'] = $data;
+        $this->vars['status'] = 'success';
+        $this->vars['row'] = $data;
 
-      $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($this->vars));
+        $this->output
+          ->set_content_type('application/json')
+          ->set_output(json_encode($this->vars));
+      }
+    } else {
+      $this->show_404();
     }
   }
 
@@ -181,25 +171,29 @@ class Ppdb extends Public_Controller {
     $user_id = $this->session->user_id;
     $user_level = $this->session->user_level;
 
-    if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
-      $data = $this->get_step1_data();
-      $update = $this->m_students->update('students', $data, $user_id);
+    if ($this->input->is_ajax_request()) {
+      if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
+        $data = $this->get_step1_data();
+        $update = $this->m_students->update('students', $data, $user_id);
 
-      if ($update) {
-        // Update Last Candidate Step
-        $this->m_students->update('students', ['current_candidate_step' => 2], $user_id);
+        if ($update) {
+          // Update Last Candidate Step
+          $this->m_students->update('students', ['current_candidate_step' => 2], $user_id);
 
-        $this->vars['message'] = 'Data berhasil disimpan';
-        $this->vars['status'] = 'success';
-        $this->vars['redirect_link'] = site_url('public/ppdb/step/2');
-      } else {
-        $this->vars['message'] = 'Terjadi kesalahan saat melakukan menyimpan akun';
-        $this->vars['status'] = 'failed';
-      }    
+          $this->vars['message'] = 'Data berhasil disimpan';
+          $this->vars['status'] = 'success';
+          $this->vars['redirect_link'] = site_url('public/ppdb/step/2');
+        } else {
+          $this->vars['message'] = 'Terjadi kesalahan saat melakukan menyimpan akun';
+          $this->vars['status'] = 'failed';
+        }    
 
-      $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($this->vars));
+        $this->output
+          ->set_content_type('application/json')
+          ->set_output(json_encode($this->vars));
+      }
+    } else {
+      $this->show_404();
     }
   }
 
@@ -207,26 +201,30 @@ class Ppdb extends Public_Controller {
     $user_id = $this->session->user_id;
     $user_level = $this->session->user_level;
 
-    if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
-      $data = $this->get_step2_data();
-      $update = $this->m_students->update('students', $data, $user_id);
+    if ($this->input->is_ajax_request()) {
+      if ( ! empty($user_id) AND ($user_level == 'CANDIDATE_STUDENTS')) {
+        $data = $this->get_step2_data();
+        $update = $this->m_students->update('students', $data, $user_id);
 
-      if ($update) {
-        // Update Last Candidate Step
-        $this->m_students->update('students', ['current_candidate_step' => 3], $user_id);
+        if ($update) {
+          // Update Last Candidate Step
+          $this->m_students->update('students', ['current_candidate_step' => 3], $user_id);
 
-        // $this->vars['data'] = $data;
-        $this->vars['message'] = 'Data berhasil disimpan';
-        $this->vars['status'] = 'success';
-        // $this->vars['redirect_link'] = site_url('public/ppdb/step/2');
-      } else {
-        $this->vars['message'] = 'Terjadi kesalahan saat melakukan menyimpan akun';
-        $this->vars['status'] = 'failed';
-      }    
+          // $this->vars['data'] = $data;
+          $this->vars['message'] = 'Data berhasil disimpan';
+          $this->vars['status'] = 'success';
+          // $this->vars['redirect_link'] = site_url('public/ppdb/step/2');
+        } else {
+          $this->vars['message'] = 'Terjadi kesalahan saat melakukan menyimpan akun';
+          $this->vars['status'] = 'failed';
+        }    
 
-      $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($this->vars));
+        $this->output
+          ->set_content_type('application/json')
+          ->set_output(json_encode($this->vars));
+      }
+    } else {
+      $this->show_404();
     }
   }
 

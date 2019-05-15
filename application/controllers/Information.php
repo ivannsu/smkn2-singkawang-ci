@@ -101,23 +101,28 @@ class Information extends Admin_Controller {
   }
 
   public function edit_action() {
-    $id = $this->get_post_id();
-    $data = $this->get_post_data();
+    if ($this->input->is_ajax_request()) {
 
-    $action = $this->model->update($this->table, $data, $id);
-    $vars = [];
+      $id = $this->get_post_id();
+      $data = $this->get_post_data();
 
-    if ($action) {
-      $vars['message'] = 'Sukses mengedit data';
-      $vars['status'] = 'success';
+      $action = $this->model->update($this->table, $data, $id);
+      $vars = [];
+
+      if ($action) {
+        $vars['message'] = 'Sukses mengedit data';
+        $vars['status'] = 'success';
+      } else {
+        $vars['message'] = 'Terjadi kesalahan saat mengedit data';
+        $vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($vars));
     } else {
-      $vars['message'] = 'Terjadi kesalahan saat mengedit data';
-      $vars['status'] = 'failed';
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   public function get_all() {
@@ -147,36 +152,46 @@ class Information extends Admin_Controller {
   }
 
   public function delete() {
-    $id = $this->get_post_id();
-    $action = $this->model->delete($this->table, $id);
-    $vars = [];
+    if ($this->input->is_ajax_request()) {
 
-    if ($action) {
-      $vars['message'] = 'Sukses menghapus data';
-      $vars['status'] = 'success';
+      $id = $this->get_post_id();
+      $action = $this->model->delete($this->table, $id);
+      $vars = [];
+
+      if ($action) {
+        $vars['message'] = 'Sukses menghapus data';
+        $vars['status'] = 'success';
+      } else {
+        $vars['message'] = 'Terjadi kesalahan saat menghapus data';
+        $vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($vars));
     } else {
-      $vars['message'] = 'Terjadi kesalahan saat menghapus data';
-      $vars['status'] = 'failed';
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   public function get_by_id() {
-    $id = $this->uri->segment(3);
-    $row = $this->model->get_row($this->pk, $id, $this->table);
+    if ($this->input->is_ajax_request()) {
 
-    if ($row) {
-      $vars['message'] = 'Sukses menampilkan data';
-      $vars['status'] = 'success';
-      $vars['row'] = $row;
+      $id = $this->uri->segment(3);
+      $row = $this->model->get_row($this->pk, $id, $this->table);
+
+      if ($row) {
+        $vars['message'] = 'Sukses menampilkan data';
+        $vars['status'] = 'success';
+        $vars['row'] = $row;
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($vars));
+    } else {
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   private function get_post_data() {

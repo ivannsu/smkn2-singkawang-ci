@@ -103,40 +103,45 @@ class Headmaster extends Admin_Controller {
   }
 
   public function edit_action() {
-    $id = $this->get_post_id();
-    $data = $this->get_post_data();
-    $tmp_data = $this->model->get_row($this->pk, $id, $this->table);
+    if ($this->input->is_ajax_request()) {
 
-    $this->tmp['upload_failed'] = FALSE;
+      $id = $this->get_post_id();
+      $data = $this->get_post_data();
+      $tmp_data = $this->model->get_row($this->pk, $id, $this->table);
 
-    if ( ! empty($_FILES['image'])) {
-      echo 'masuk sini';
-      
-      $upload = $this->upload_image();
-      if ($upload) {
-        $data['image'] = $upload['file_name'];
+      $this->tmp['upload_failed'] = FALSE;
+
+      if ( ! empty($_FILES['image'])) {
+        echo 'masuk sini';
+        
+        $upload = $this->upload_image();
+        if ($upload) {
+          $data['image'] = $upload['file_name'];
+        }
       }
-    }
 
-    if ( ! $this->tmp['upload_failed']) {
-      $action = $this->model->update($this->table, $data, $id);
+      if ( ! $this->tmp['upload_failed']) {
+        $action = $this->model->update($this->table, $data, $id);
 
-      if ($action) {
-        @unlink($upload['file_path'].'lg_'.$tmp_data->image);
-        @unlink($upload['file_path'].'md_'.$tmp_data->image);
-        @unlink($upload['file_path'].'sm_'.$tmp_data->image);
+        if ($action) {
+          @unlink($upload['file_path'].'lg_'.$tmp_data->image);
+          @unlink($upload['file_path'].'md_'.$tmp_data->image);
+          @unlink($upload['file_path'].'sm_'.$tmp_data->image);
 
-        $this->vars['message'] = 'Sukses mengedit data';
-        $this->vars['status'] = 'success';
-      } else {
-        $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
-        $this->vars['status'] = 'failed';
+          $this->vars['message'] = 'Sukses mengedit data';
+          $this->vars['status'] = 'success';
+        } else {
+          $this->vars['message'] = 'Terjadi kesalahan saat mengedit data';
+          $this->vars['status'] = 'failed';
+        }
       }
-    }
 
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($this->vars));
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      $this->show_404();
+    }
   }
 
   public function get_all() {
@@ -184,18 +189,23 @@ class Headmaster extends Admin_Controller {
   }
 
   public function get_by_id() {
-    $id = $this->uri->segment(3);
-    $row = $this->model->get_row($this->pk, $id, $this->table);
+    if ($this->input->is_ajax_request()) {
 
-    if ($row) {
-      $vars['message'] = 'Sukses menampilkan data';
-      $vars['status'] = 'success';
-      $vars['row'] = $row;
+      $id = $this->uri->segment(3);
+      $row = $this->model->get_row($this->pk, $id, $this->table);
+
+      if ($row) {
+        $vars['message'] = 'Sukses menampilkan data';
+        $vars['status'] = 'success';
+        $vars['row'] = $row;
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($vars));
+    } else {
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   private function get_post_data() {

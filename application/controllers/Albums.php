@@ -88,32 +88,32 @@ class Albums extends Admin_Controller {
   }
 
   public function edit_action() {
-    $id = $this->get_post_id();
-    $data = $this->get_post_data();
+    if ($this->input->is_ajax_request()) {
+      $id = $this->get_post_id();
+      $data = $this->get_post_data();
 
-    $action = $this->model->update($this->table, $data, $id);
-    $vars = [];
+      $action = $this->model->update($this->table, $data, $id);
+      $vars = [];
 
-    if ($action) {
-      $vars['message'] = 'Sukses mengedit data';
-      $vars['status'] = 'success';
+      if ($action) {
+        $vars['message'] = 'Sukses mengedit data';
+        $vars['status'] = 'success';
+      } else {
+        $vars['message'] = 'Terjadi kesalahan saat mengedit data';
+        $vars['status'] = 'failed';
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($vars));
     } else {
-      $vars['message'] = 'Terjadi kesalahan saat mengedit data';
-      $vars['status'] = 'failed';
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   public function get_all() {
     if ($this->input->is_ajax_request()) {
       $vars = [];
-      // $count = $this->model->count_all($this->table);
-      // $limit = 5;
-      // $offset = ($this->input->get('page') * $limit) - $limit;
-      // $data = $this->m_albums->get_all($limit, $offset);
       $data = $this->m_albums->get_all();
 
       if ($data) {
@@ -134,54 +134,51 @@ class Albums extends Admin_Controller {
   }
 
   public function delete() {
-    $vars = [];
-    // TODO: 
-    // 1. Get Album ID & assign it to variable `album_id`
-    // 2. Count all photos with Album ID = `album_id`
-    // 3. If Counting == 0 it means no images with `album_id`, DELETE PROCESS CONTINUE
-    // 4. Else CANCEL DELETE PROCESS, & TELL USER
+    if ($this->input->is_ajax_request()) {
+      $id = $this->get_post_id();
+      $count = $this->m_photos->count_by_album($id);
 
-    // Todo #1
-    $id = $this->get_post_id();
+      if ($count == 0) {
+        $action = $this->model->delete($this->table, $id);
+        $action = TRUE;
 
-    // Todo #2
-    $count = $this->m_photos->count_by_album($id);
-
-    // Todo #3
-    if ($count == 0) {
-      $action = $this->model->delete($this->table, $id);
-      $action = TRUE;
-
-      if ($action) {
-        $vars['message'] = 'Sukses menghapus data';
-        $vars['status'] = 'success';
+        if ($action) {
+          $this->vars['message'] = 'Sukses menghapus data';
+          $this->vars['status'] = 'success';
+        } else {
+          $this->vars['message'] = 'Terjadi kesalahan saat menghapus data';
+          $this->vars['status'] = 'failed';
+        }
       } else {
-        $vars['message'] = 'Terjadi kesalahan saat menghapus data';
-        $vars['status'] = 'failed';
+        $this->vars['message'] = 'Masih ada Foto di dalam Album, Hapus Semua Foto di Album terlebih dahulu !';
+        $this->vars['status'] = 'failed';
       }
-    } else {
-      $vars['message'] = 'Masih ada Foto di dalam Album, Hapus Semua Foto di Album terlebih dahulu !';
-      $vars['status'] = 'failed';
-    }
 
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($this->vars));
+    } else {
+      $this->show_404();
+    }
   }
 
   public function get_by_id() {
-    $id = $this->uri->segment(3);
-    $row = $this->model->get_row($this->pk, $id, $this->table);
+    if ($this->input->is_ajax_request()) {
+      $id = $this->uri->segment(3);
+      $row = $this->model->get_row($this->pk, $id, $this->table);
 
-    if ($row) {
-      $vars['message'] = 'Sukses menampilkan data';
-      $vars['status'] = 'success';
-      $vars['row'] = $row;
+      if ($row) {
+        $vars['message'] = 'Sukses menampilkan data';
+        $vars['status'] = 'success';
+        $vars['row'] = $row;
+      }
+
+      $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($vars));
+    } else {
+      $this->show_404();
     }
-
-    $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($vars));
   }
 
   private function get_post_data() {
