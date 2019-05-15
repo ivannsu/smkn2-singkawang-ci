@@ -72,6 +72,8 @@ class Admission extends Admin_Controller {
       $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
+    } else {
+      $this->show_404();
     }
   }
 
@@ -139,6 +141,8 @@ class Admission extends Admin_Controller {
       $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
+    } else {
+      $this->show_404();
     }
   }
 

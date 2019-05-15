@@ -76,7 +76,7 @@ class Ppdb extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      $this->show_404();;
+      $this->show_404();
     }
   }
 
@@ -215,7 +215,7 @@ class Ppdb extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      $this->show_404();;
+      $this->show_404();
     }
   }
 
@@ -236,7 +236,7 @@ class Ppdb extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      $this->show_404();;
+      $this->show_404();
     }
   }
 
@@ -257,7 +257,7 @@ class Ppdb extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      $this->show_404();;
+      $this->show_404();
     }
   }
 
@@ -278,7 +278,7 @@ class Ppdb extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      $this->show_404();;
+      $this->show_404();
     }
   }
 
@@ -305,7 +305,7 @@ class Ppdb extends Admin_Controller {
         ->set_content_type('application/json')
         ->set_output(json_encode($this->vars));
     } else {
-      $this->show_404();;
+      $this->show_404();
     }
   }
 
