@@ -603,7 +603,7 @@ p.blockquote {
 /* END TIMELINE */
 
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   
 }
 

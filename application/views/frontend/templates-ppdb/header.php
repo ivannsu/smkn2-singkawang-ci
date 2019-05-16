@@ -2,12 +2,14 @@
   <img class="ppdb-logo-img" src="<?= base_url('media_library/images/logo.png'); ?>">
   <h2>PPDB Online</h2>
   <a href="#" data-toggle="modal" data-target="#modalPanduan"><span class="fas fa-book"></span> Panduan</a>
-  /
-  <a href="<?= site_url('public/ppdb/registrasi'); ?>">Registrasi</a>
-  /
-  <a href="<?= site_url('public/ppdb/login'); ?>">Login</a>
-  /
+  / &nbsp;
+  <a href="<?= site_url('public/ppdb/registrasi'); ?>"><span class="fas fa-user-plus"></span> Registrasi</a>
+  / &nbsp;
+  <a href="<?= site_url('public/ppdb/login'); ?>"><span class="fas fa-sign-in-alt"></span> Login</a>
+  <?php if ($this->session->user_id) { ?>
+  / &nbsp;
   <a href="<?= site_url('public/ppdb/logout'); ?>">Logout</a>
+  <?php } ?>
 </header>
 
 <!-- Modal -->

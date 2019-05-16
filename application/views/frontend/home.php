@@ -102,7 +102,7 @@
           '%img_alt%' => "$name Link"
         ];
         $template = '
-          <div class="col-lg-3">
+          <div class="col-lg-3 text-center">
             <a href="%link%"><img src="%img_src%" class="link-image" alt="%img_alt%"></a>
           </div>
         ';
