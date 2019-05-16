@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 14, 2019 at 04:35 PM
+-- Generation Time: May 16, 2019 at 02:05 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -41,7 +41,7 @@ CREATE TABLE `admission_phases` (
 --
 
 INSERT INTO `admission_phases` (`id`, `academic_year`, `phase_start_date`, `phase_end_date`, `active`) VALUES
-(1, 2019, '2019-06-12', '2019-06-26', 'true');
+(4, 2019, '2019-05-11', '2019-05-16', 'true');
 
 -- --------------------------------------------------------
 
@@ -129,7 +129,7 @@ CREATE TABLE `links` (
 --
 
 INSERT INTO `links` (`id`, `name`, `href`, `image`) VALUES
-(3, 'sample', 'www.sample.com', 'f34fa23e80feb53664c4917dbb1de059.jpg');
+(3, 'sample', 'http://localhost:8080/public/ci-smkn2-singkawang/index.php/public/page/index/register_alumni', 'f34fa23e80feb53664c4917dbb1de059.jpg');
 
 -- --------------------------------------------------------
 
@@ -338,9 +338,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `registration_id`, `user_id`, `jurusan_id`, `admission_phase_id`, `is_student`, `is_candidate`, `is_alumni`, `passed_selection`, `national_exam_scores`, `gender`, `birth_place`, `birth_date`, `religion`, `street_address`, `rt`, `rw`, `village`, `sub_district`, `district`, `postal_code`, `phone`, `hobby`, `ambition`, `mileage`, `travelling_time`, `height`, `weight`, `siblings_number`, `prev_school_name`, `prev_school_address`, `berkas_ijazah`, `berkas_skhun`, `berkas_akte`, `berkas_kk`, `berkas_foto`, `father_name`, `father_education`, `father_job`, `father_monthly_income`, `father_phone`, `father_email`, `father_condition`, `mother_name`, `mother_education`, `mother_job`, `mother_monthly_income`, `mother_phone`, `mother_email`, `mother_condition`, `guardian_name`, `guardian_education`, `guardian_job`, `guardian_monthly_income`, `guardian_phone`, `guardian_email`, `current_candidate_step`) VALUES
-(1, '1464782855cd5239a39801', 2, 42, 1, 'false', 'true', 'false', 'passed', 'mtk=95,bi=98,bing=95,ipa=90', 'L', 'singkawang', '2000-06-05', 'buddha', 'kurau no 12 a', '051', '055', 'condong', 'singkawang tengah', 'singkawang', 72111, '098123123123', 'ngerjain', 'jadisukses', 123456, 123456, 170, 50, 2, 'smp bruder', 'singkawang,kalbar', '5e7ae6682fea367a876d4903856bc365.png', '15b7b54a80a8c256aadf824d148d4412.png', '3a7ced375076326ff5002ef7bed5c78c.png', 'be3352516bcbac55326743cb083ae38d.png', '85a387d46e7b9edcbfc589d45030b0d6.png', 'ayahku', 'sma', 'pedagang', 1000000, '08123123112', '', 'alive', 'ibuku', 'sma', 'ibu rumah tangga', 1000000, '08123123123123', '', 'alive', '', '', '', 0, '', '', 3),
-(4, '6061563435cd6e2ba45e5f', 5, 43, 1, 'false', 'true', 'false', 'on_going', 'mtk=54,bi=78,bing=95,ipa=90', 'P', 'singkawang', '2008-04-15', 'buddha', 'kurau no 12a', '028', '006', 'condong', 'singkawang tengah', 'singkawang', 72111, '0814147124', 'bermain', 'pemain', 123, 123, 123, 123, 123, 'smp pengabdi', 'jalan singkawang', '5e7ae6682fea367a876d4903856bc365.png', '15b7b54a80a8c256aadf824d148d4412.png', '3a7ced375076326ff5002ef7bed5c78c.png', 'be3352516bcbac55326743cb083ae38d.png', '85a387d46e7b9edcbfc589d45030b0d6.png', '', '', '', 0, '', '', '', '', '', '', 0, '', '', '', '', '', '', 0, '', '', 4),
-(6, '9238912045cd923f4a5011', 7, 43, 1, 'false', 'true', 'false', 'on_going', 'mtk=77,bi=78,bing=100,ipa=72', 'P', 'singkawang', '2008-04-15', 'buddha', 'kurau no 12a', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5e7ae6682fea367a876d4903856bc365.png', '15b7b54a80a8c256aadf824d148d4412.png', '3a7ced375076326ff5002ef7bed5c78c.png', 'be3352516bcbac55326743cb083ae38d.png', '85a387d46e7b9edcbfc589d45030b0d6.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4);
+(1, '15076939485cdcfd88739f1', 2, 42, 4, 'false', 'true', 'false', 'on_going', 'mtk=12,bi=12,bing=12,ipa=12', 'L', 'singkawang', '2019-05-16', 'buddha', 'singkawang', '01', '01', 'singkawang', 'skw', 'skw', 1111, '1111111', '', '', 0, 0, 0, 0, 0, 'smp bruder', 'singkawang', NULL, NULL, NULL, NULL, NULL, '', '', '', 200000, '', '', '', '', '', '', 0, '', '', '', '', '', '', 0, '', '', 4);
 
 -- --------------------------------------------------------
 
@@ -363,9 +361,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `level`) VALUES
 (1, 'admin', 'admin', 'admin@mail.com', '$2y$10$PwnVQfX/6t3nxfduM2uLfeRckNwOGMRsE7kkF9xB693Djl97D4D6S', 'ADMIN'),
-(2, 'ivan', 'ivan', 'ivansu.webmail@gmail.com', '$2y$10$Y4lMpuSw9jxT8X9I877ytOt0OWTjTp4A6enJA.NG6vEcfVPHUJhC.', 'CANDIDATE_STUDENTS'),
-(5, 'ivanna', 'ivanna', 'ivanna@mail.com', '$2y$10$vxxFSvHjiu.b3iLFp/RakuBmeJKrbAXQNmE8otjq2b8dt0hmUtFZq', 'CANDIDATE_STUDENTS'),
-(7, 'ivannie', 'ivannie', 'ivannie@mail.com', '$2y$10$E.RU3AlwT0crML3oavKJ4OAoAFbzLt1YUcFsK9EmcGmodhhVXev2.', 'CANDIDATE_STUDENTS');
+(2, 'ivan', 'ivan', 'ivansu@mail.com', '$2y$10$F0PE9dHvgNROopG4.lZMhe9UGdIIT722CW6G1i2kSovZwrZQ/kzAu', 'CANDIDATE_STUDENTS');
 
 --
 -- Indexes for dumped tables
@@ -452,7 +448,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admission_phases`
 --
 ALTER TABLE `admission_phases`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `albums`
@@ -500,7 +496,7 @@ ALTER TABLE `photos`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `profile`
@@ -512,13 +508,13 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
