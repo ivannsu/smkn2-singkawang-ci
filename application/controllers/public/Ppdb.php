@@ -14,11 +14,27 @@ class Ppdb extends Public_Controller {
       'm_profile',
       'm_navigations',
       'm_students',
-      'm_users'
+      'm_users',
+      'm_admission',
     ]);
 
     $this->pk = M_students::$pk;
     $this->table = M_students::$table;
+
+    // If Current Datetime not Active Phase, Show Closed Page
+    $phase_end_date = explode('-', $this->m_admission->get_active_phase()->phase_end_date);
+    
+    $end_date = (int) $phase_end_date[2];
+    $now_date = (int) Date('d');
+
+    $end_month = (int) $phase_end_date[1];
+    $now_month = (int) Date('m');
+
+    if ($now_month == $end_month) {
+      if ($now_date > $end_date) {
+        redirect('public/page/index/ppdb_closed');
+      }
+    }
   }
 
   public function index() {
@@ -30,6 +46,10 @@ class Ppdb extends Public_Controller {
     } else {
       redirect('public/ppdb/registrasi');
     }
+  }
+
+  public function closed() {
+
   }
 
   public function logout() {

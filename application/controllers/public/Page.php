@@ -123,6 +123,10 @@ class Page extends Public_Controller {
       $data['action'] = site_url('public/page/save_alumni');
     }
 
+    else if ($name == 'ppdb_closed') {
+      $data['content'] = 'public/ppdb/closed';
+    }
+
     else {
       $this->show_404();
     }
