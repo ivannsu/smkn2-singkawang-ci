@@ -11,10 +11,20 @@ class M_jurusan extends CI_Model {
 
   public function get_all($limit = '18446744073709551615', $offset = '0') {
     return $this->db
+      ->select('
+        x1.id,
+        x1.title,
+        x1.image,
+        x1.type,
+        x1.created_at,
+        x1.updated_at,
+        x2.name as author_name
+      ')
+      ->join('users x2', 'x1.author = x2.id')
       ->where('type', 'jurusan')
       ->order_by(self::$pk, 'DESC')
       ->limit($limit, $offset)
-      ->get(self::$table)
+      ->get(self::$table . ' x1')
       ->result();
   }
 

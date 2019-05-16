@@ -26,7 +26,7 @@
                   ${row.title}
                   </a>
                 </td>
-                <td>${row.author}</td>
+                <td>${row.author_name}</td>
                 <td>
                   <a href="${edit_url + row.id}" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a>
                   <button 
