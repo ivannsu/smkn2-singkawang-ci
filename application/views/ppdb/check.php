@@ -53,6 +53,10 @@
           $('#fm-guardian_phone').val(res.row.guardian_phone)
           $('#fm-guardian_email').val(res.row.guardian_email)
 
+          $('#fm-father_monthly_income').val(res.row.father_monthly_income)
+          $('#fm-mother_monthly_income').val(res.row.mother_monthly_income)
+          $('#fm-guardian_monthly_income').val(res.row.guardian_monthly_income)
+
           if (res.row.national_exam_scores) {
             $('#fm-exam_mtk_score').val(res.row.national_exam_scores.mtk)
             $('#fm-exam_bi_score').val(res.row.national_exam_scores.bi)
@@ -72,18 +76,6 @@
             }
           })
 
-          $.each($('#fm-father_monthly_income option'), function (i, elm) {
-            if ($(this).val() == res.row.father_monthly_income) {
-              $(this).attr('selected', 'selected')
-            }
-          })
-
-          $.each($('#fm-mother_monthly_income option'), function (i, elm) {
-            if ($(this).val() == res.row.mother_monthly_income) {
-              $(this).attr('selected', 'selected')
-            }
-          })
-
           $.each($('#fm-father_condition option'), function (i, elm) {
             if ($(this).val() == res.row.father_condition) {
               $(this).attr('selected', 'selected')
@@ -92,12 +84,6 @@
 
           $.each($('#fm-mother_condition option'), function (i, elm) {
             if ($(this).val() == res.row.mother_condition) {
-              $(this).attr('selected', 'selected')
-            }
-          })
-
-          $.each($('#fm-guardian_monthly_income option'), function (i, elm) {
-            if ($(this).val() == res.row.guardian_monthly_income) {
               $(this).attr('selected', 'selected')
             }
           })
@@ -451,10 +437,7 @@
             </div>
             <div class="form-group">
               <label for="fm-father_monthly_income">Penghasilan perbulan</label>
-              <select name="fm-father_monthly_income" id="fm-father_monthly_income" class="form-control">
-                <option value="">Pilih</option>
-                <option value="1000000">Kurang dari 1 Juta</option>
-              </select>
+              <input type="number" name="fm-father_monthly_income" id="fm-father_monthly_income" class="form-control">
             </div>
             <div class="form-group">
               <label for="fm-father_phone">No Telp</label>
@@ -494,10 +477,7 @@
             </div>
             <div class="form-group">
               <label for="fm-mother_monthly_income">Penghasilan perbulan</label>
-              <select name="fm-mother_monthly_income" id="fm-mother_monthly_income" class="form-control">
-                <option value="">Pilih</option>
-                <option value="1000000">Kurang dari 1 Juta</option>
-              </select>
+              <input type="number" name="fm-mother_monthly_income" id="fm-mother_monthly_income" class="form-control">
             </div>
             <div class="form-group">
               <label for="fm-mother_phone">No Telp</label>
@@ -537,10 +517,7 @@
             </div>
             <div class="form-group">
               <label for="fm-guardian_monthly_income">Penghasilan perbulan</label>
-              <select name="fm-guardian_monthly_income" id="fm-guardian_monthly_income" class="form-control">
-                <option value="">Pilih</option>
-                <option value="1000000">Kurang dari 1 Juta</option>
-              </select>
+              <input type="number" name="fm-guardian_monthly_income" id="fm-guardian_monthly_income" class="form-control">
             </div>
             <div class="form-group">
               <label for="fm-guardian_phone">No Telp</label>
