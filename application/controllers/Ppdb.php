@@ -49,7 +49,18 @@ class Ppdb extends Admin_Controller {
       'title' => 'Pendaftar yang Lulus',
       'content' => 'ppdb/passed_selection',
       'action' => site_url('ppdb/get_all_passed_candidates'),
-      // 'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
+      'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
+    ];
+
+    $this->load->view('backend/index', $data);
+  }
+
+  public function not_passed_selection() {
+    $data = [
+      'title' => 'Pendaftar yang Gagal',
+      'content' => 'ppdb/not_passed_selection',
+      'action' => site_url('ppdb/get_all_not_passed_candidates'),
+      'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
     ];
 
     $this->load->view('backend/index', $data);
@@ -60,7 +71,7 @@ class Ppdb extends Admin_Controller {
       $passed_data = $this->m_students->count_candidates_selection_by_jurusan('passed');
       $not_passed_data = $this->m_students->count_candidates_selection_by_jurusan('not_passed');
 
-      if ($passed_data AND $not_passed_data) {
+      if ($passed_data OR $not_passed_data) {
         $this->vars['message'] = 'Sukses menampilkan data';
         $this->vars['status'] = 'success';
         $this->vars['passed_data'] = $passed_data;
@@ -80,17 +91,6 @@ class Ppdb extends Admin_Controller {
     }
   }
 
-  public function not_passed_selection() {
-    $data = [
-      'title' => 'Pendaftar yang Gagal',
-      'content' => 'ppdb/not_passed_selection',
-      'action' => site_url('ppdb/get_all_not_passed_candidates'),
-      // 'set_selection_status_action' => site_url('ppdb/set_selection_status_action')
-    ];
-
-    $this->load->view('backend/index', $data);
-  }
-
   public function set_selection_status_action() {
     $user_id = $this->input->post('user_id', true);
     $passed_selection = $this->input->post('passed_selection', true);
@@ -98,7 +98,13 @@ class Ppdb extends Admin_Controller {
     $update = $this->m_students->update($this->table, ['passed_selection' => $passed_selection], $user_id);
 
     if ($update) {
-      $this->vars['message'] = '1 Peserta seleksi telah diterima';
+
+      if ($passed_selection == 'passed') {
+        $this->vars['message'] = '1 Peserta seleksi telah diterima';
+      } else if ($passed_selection == 'on_going') {
+        $this->vars['message'] = 'Pembatalan berhasil';
+      }
+
       $this->vars['status'] = 'success';
     } else {
       $this->vars['message'] = 'Terjadi kesalahan saat menyimpan data';

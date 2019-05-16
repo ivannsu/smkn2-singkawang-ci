@@ -19,6 +19,14 @@
                 <td>${row.name}</td>
                 <td>${row.jurusan}</td>
                 <td>${getAverageOfScores(row.national_exam_scores)}</td>
+                <td>
+                  <button 
+                    class="btn btn-danger btn-xs"
+                    id="cancel-selection-btn"
+                    onclick="cancelSelection(${row.user_id})">
+                      Batalkan
+                  </button>
+                </td>
               </tr>
             `
             tableBody.append(tableRow)
@@ -44,6 +52,45 @@
     })
   }
 
+  function cancelSelection(user_id) {
+    showLoader()
+
+    let tableBody = $('#table-body')
+    let formData = new FormData()
+
+    formData.append('user_id', user_id)
+    formData.append('passed_selection', 'on_going')
+
+    $.ajax({
+      url: '<?= $set_selection_status_action; ?>',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+			processData: false,
+      success: function (res) {
+        // console.log(res)
+        hideLoader()
+        showToast(res.status, res.message)
+
+        if (res.status == 'success') {
+          // Destory Initialized Table
+          $('#datatables-table').DataTable().destroy()
+
+          // Empty all Table before append any data
+          $('#table-body').empty()
+
+          // Request Data, Append it, and Init Again DataTables
+          getData()
+        }
+      },
+      failed: function (error) {
+        console.log(error)
+        hideLoader()
+        showToast('failed', error)
+      }
+    })
+  }
+
   $(document).ready(() => {
     getData()
   })
@@ -57,6 +104,7 @@
       <th>NAMA</th>
       <th>JURUSAN</th>
       <th>RATA-RATA</th>
+      <th></th>
     </tr>
   </thead>
   <tbody id="table-body">

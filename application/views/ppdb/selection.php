@@ -22,9 +22,13 @@
                 <td>
                   <button 
                     class="btn btn-success btn-xs"
-                    id="set-passed-btn"
-                    onclick="setPassed(${row.user_id})">
+                    onclick="setSelectionStatus(${row.user_id}, 'passed')">
                       Terima
+                  </button>
+                  <button 
+                    class="btn btn-danger btn-xs"
+                    onclick="setSelectionStatus(${row.user_id}, 'not_passed')">
+                      Tolak
                   </button>
                 </td>
               </tr>
@@ -87,14 +91,14 @@
     })
   }
 
-  function setPassed(user_id) {
+  function setSelectionStatus(user_id, status) {
     showLoader()
 
     let tableBody = $('#table-body')
     let formData = new FormData()
 
     formData.append('user_id', user_id)
-    formData.append('passed_selection', 'passed')
+    formData.append('passed_selection', status)
 
     $.ajax({
       url: '<?= $set_selection_status_action; ?>',
@@ -113,9 +117,11 @@
 
           // Empty all Table before append any data
           $('#table-body').empty()
+          $('#count-table-body').empty()
 
           // Request Data, Append it, and Init Again DataTables
           getData()
+          getCountingData()
         }
       },
       failed: function (error) {
