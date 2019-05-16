@@ -331,7 +331,7 @@ class Navigations extends Admin_Controller {
     return [
       'title' => $this->input->post('title', true),
       'content' => $this->input->post('content'),
-      'author' => 1,
+      'author' => $this->session->user_id,
       'type' => 'page'
     ];
   }
